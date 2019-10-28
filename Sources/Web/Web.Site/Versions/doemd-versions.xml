@@ -1,0 +1,123 @@
+<ProductVersionsDto xmlns:i="http://www.w3.org/2001/XMLSchema-instance" z:Id="i1" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/" xmlns="TXSoftware.DataObjectsNetEntityModel">
+  <ProductVersionDto z:Id="i2">
+    <Changes>
+      <ProductVersionChangeDto z:Id="i3">
+        <Content>New version check on opening designer.</Content>
+        <Id>11</Id>
+        <Order>5</Order>
+        <Owner z:Ref="i2" />
+        <Title>New version check on opening designer</Title>
+        <Type>Feature</Type>
+        <Url>http://doemd.codeplex.com/workitem/8084</Url>
+        <WorkItemId>8084</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i4">
+        <Content>Redesign Add Association dialog to be simpler, there will be 2 modes of defining new association: Simple and Advanced.</Content>
+        <Id>10</Id>
+        <Order>4</Order>
+        <Owner z:Ref="i2" />
+        <Title>Redesign Add Association dialog to be simpler</Title>
+        <Type>Feature</Type>
+        <Url>http://doemd.codeplex.com/workitem/8325</Url>
+        <WorkItemId>8325</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i5">
+        <Content>Introduce [DataContract] settings(like IsReference and others) for persistent types and [DataMember] settings for propertiers.</Content>
+        <Id>9</Id>
+        <Order>3</Order>
+        <Owner z:Ref="i2" />
+        <Title>Introduce DataContract and DataMember settings in Designer</Title>
+        <Type>Feature</Type>
+        <Url>http://doemd.codeplex.com/workitem/8292</Url>
+        <WorkItemId>8292</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i6">
+        <Content>User should define external type (simple - by defining namespace name and type name, like DSL designer does) which can be used as type for scalar properties.</Content>
+        <Id>8</Id>
+        <Order>2</Order>
+        <Owner z:Ref="i2" />
+        <Title>Introduce simple 'external type' definition for scalar properties</Title>
+        <Type>Feature</Type>
+        <Url>http://doemd.codeplex.com/workitem/8181</Url>
+        <WorkItemId>8181</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i7">
+        <Content>T4 template (only C# project item template) was updated to decorate generated entity or DTO classes with [DataContract] and [DataMember] attributes required for WCF.</Content>
+        <Id>7</Id>
+        <Order>1</Order>
+        <Owner z:Ref="i2" />
+        <Title>Update T4 templates to decorate classes with DataContract and DataMember attributes</Title>
+        <Type>Feature</Type>
+        <Url>http://doemd.codeplex.com/workitem/8142</Url>
+        <WorkItemId>8142</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i8">
+        <Content>T4 template (only C# project item template) was updated to generate DTO classes as an mirror to generated 'real' entity classes defined in entity model</Content>
+        <Id>6</Id>
+        <Order>0</Order>
+        <Owner z:Ref="i2" />
+        <Title>Update T4 templates to generate also POCO classes</Title>
+        <Type>Feature</Type>
+        <Url>http://doemd.codeplex.com/workitem/8140</Url>
+        <WorkItemId>8140</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i9">
+        <Content>In 'Add Association' dialog you can now specify Structure type in source of association.</Content>
+        <Id>5</Id>
+        <Order>4</Order>
+        <Owner z:Ref="i2" />
+        <Title>Allow source of association to be Structure</Title>
+        <Type>Issue</Type>
+        <Url>http://doemd.codeplex.com/workitem/8228</Url>
+        <WorkItemId>8228</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i10">
+        <Content>Allow to set access modifier on get/set of property.</Content>
+        <Id>4</Id>
+        <Order>3</Order>
+        <Owner z:Ref="i2" />
+        <Title>Allow to set access modifier on get/set of property</Title>
+        <Type>Issue</Type>
+        <Url>http://doemd.codeplex.com/workitem/8222</Url>
+        <WorkItemId>8222</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i11">
+        <Content>Add possibility to define Key settings on navigation properties.</Content>
+        <Id>3</Id>
+        <Order>2</Order>
+        <Owner z:Ref="i2" />
+        <Title>Allow define Key settings on navigation property</Title>
+        <Type>Issue</Type>
+        <Url>http://doemd.codeplex.com/workitem/8221</Url>
+        <WorkItemId>8221</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i12">
+        <Content>When creating association (from dialog) and pointing properties to same type member 'ToSelf', then it generate 2 properties with same name and type in entity.</Content>
+        <Id>2</Id>
+        <Order>1</Order>
+        <Owner z:Ref="i2" />
+        <Title>Create 'ToSelf' association creates duplicate properties</Title>
+        <Type>Issue</Type>
+        <Url>http://doemd.codeplex.com/workitem/8169</Url>
+        <WorkItemId>8169</WorkItemId>
+      </ProductVersionChangeDto>
+      <ProductVersionChangeDto z:Id="i13">
+        <Content>Definition of scalar property type is redesigned, now is able to define boolean, timespan or any other external type.</Content>
+        <Id>1</Id>
+        <Order>0</Order>
+        <Owner z:Ref="i2" />
+        <Title>Unable to add boolean as type for scalar property</Title>
+        <Type>Issue</Type>
+        <Url>http://doemd.codeplex.com/workitem/8139</Url>
+        <WorkItemId>8139</WorkItemId>
+      </ProductVersionChangeDto>
+    </Changes>
+    <Description>Alpha version 1.0.5.0 of DataObjects.Net Entity Model Designer</Description>
+    <IsLatest>true</IsLatest>
+    <Private>false</Private>
+    <Published>2011-06-06T21:29:42.6263866</Published>
+    <PublishedOffset>PT1H</PublishedOffset>
+    <Url>http://doemd.codeplex.com/releases/view/63777</Url>
+    <Version>1.0.5.0</Version>
+  </ProductVersionDto>
+</ProductVersionsDto>

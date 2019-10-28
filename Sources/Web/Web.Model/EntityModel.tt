@@ -1,0 +1,1081 @@
+﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ DONetEntityModelDesigner processor="DONetEntityModelDesignerDirectiveProcessor" requires="fileName='EntityModel.dom'" #>
+<#@ include file="DOM.Utility.CS.ttinclude" #>
+<#@ include file="Dto.Generator.CS.ttinclude" #>
+<#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Dsl" #>
+<#@ import namespace="System.Collections.ObjectModel" #>
+
+<# //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+	// REMARKS:
+	// To setup generator, update value of "fileName='EntityModel.dom'" in DONetEntityModelDesigner tag to point to existing entity model file *.dom
+	// path is relative to current template (*.tt) file
+	// 
+
+	// Initialize enviroment variables required to generate entities
+	InitializeEnviroment();
+
+	// Method where you can customize some settings of generate process (e.g. enable/disable of generating partial types, etc...)
+	CustomizeSettings();
+	
+	// Validate customized settings
+	ValidateSettings();
+
+	// Generate process - generates entity model classes extracted from model file defined in attribute 'requires'/'fileName' above (relative path to file)
+	GenerateEntities();
+#>
+<#+
+void CustomizeSettings()
+{
+	// ======================================================================================================
+	// ======================= Entities variables section ===================================================
+	// ========= This section contain settings for entity classes to be generated from model ================
+	// ======================================================================================================
+
+	// Variables.Common.OutputProjectName - string
+	//   Output project in current solution where will be generated classes.
+	//   Allowed values:
+	//    - empty/null string represents actual project where current template(.tt) file is placed
+	//    - name of any existing project in current solution
+	// Default value:
+	Variables.Common.OutputProjectName = "Web.Model";
+	
+	// Variables.Common.OutputFolder - string 
+	//   Output folder where will be generated classes. Folder must exist on disk and must be included in current project.
+	//   Allowed values: 
+	//	  - empty/null represents current directory
+	// 	  - relative path from current directory where current template (.tt) file is placed
+	// Default value:
+	Variables.Common.OutputFolder = "Model\\Generated";
+
+	// Variables.Common.VirtualProperties - bool
+	//   Value 'true' to allow generated properties to be marked as 'virtual'.
+	// Default value:
+	// Variables.Common.VirtualProperties = true;
+	
+	// Variables.Common.PartialTypes - bool
+	//   Value 'true' to allow generated types to be marked as 'partial'.
+	// Default value:
+	// Variables.Common.PartialTypes = true;
+
+	// Variables.Common.ClassNameFormat - string
+    //   Format string used to generate class names according to defined name from entity model.
+    //   Allowed values:
+    //    - at least value {0} must be used which is place holder for original class name defined in entity model
+	// Default value:
+    // Variables.Common.ClassNameFormat = "{0}";
+	
+	// Variables.Common.ExtraUsings - string[]
+	//   List of extra usings to be added to each generated class
+	// Default value:
+	// Variables.Common.ExtraUsings = new string[0];
+	
+	// Variables.Common.ConstructorsForKeyFields - bool
+	//   Value 'true' to generate set of special constructors with key fields as parameters.
+	// Default value:
+	// Variables.Common.ConstructorsForKeyFields = true;
+	
+	// Variables.Common.ContractDecorators - bool
+	//   Value 'true' to allow generated types to be decorated with [DataContract] and properties with [DataMember] attributes.
+    //   Advanced settings for [DataContract] like 'IsReference' with settings for [DataMember] are taken from entity model.
+	// Default value:
+	// Variables.Common.ContractDecorators = false;
+	
+	
+	
+	// ======================================================================================================
+	// Remarks: 
+	//  If 'Variables.DTO.OutputFolder' and 'Variables.OutputFolder' points to same folder then at least
+	//  one value of variables 'Variables.DTO.NamespaceNameFormat' and 'Variables.DTO.ClassNameFormat' must be different than default "{0}"
+	//  to not have collision of generated DO4 entity classes and generated DTO classes (either in class names or class namespaces)
+	// ======================================================================================================
+
+
+	// ======================================================================================================
+	// ======================================= DTO variables section ========================================
+	// ========= This section contain settings for DTO classes to be generated from model ===================
+	// ======================================================================================================
+	CustomizeDTOSettings();
+}
+
+void CustomizeDTOSettings()
+{
+	// Variables.DTO.Enabled - bool
+	//   Value 'true' to generate DTO classes as an mirror to generated 'entity classes'.
+	// Default:
+	Variables.DTO.Enabled = true;
+
+    // ==============================================================================================
+    // Remarks:
+    // All other DTO variables described below has meaning only when 'Variables.DTO.Enabled' is true.
+    // ==============================================================================================
+
+	string dtoOutputProjectName = "Web.Shared";
+	string dtoOutputFolder = "PocoModel\\Generated";
+	
+
+    // ==============================================================================================
+    // List of variables which has equal meaning as described in section 'Entities variables section'
+	Variables.DTO.OutputProjectName = dtoOutputProjectName;
+    Variables.DTO.OutputFolder = dtoOutputFolder;
+    // Variables.DTO.VirtualProperties
+	// Variables.DTO.PartialTypes
+	// Variables.DTO.ExtraUsings
+	// Variables.DTO.ConstructorsForKeyFields
+	Variables.DTO.ContractDecorators = true;
+    Variables.DTO.ClassNameFormat = "{0}Dto";
+    // ==============================================================================================
+	
+	
+    // ======================================
+	// Variables specific only to DTO section
+    // ======================================
+	
+
+	// Variables.DTO.NamespaceNameFormat - string
+    //   Format string used to generate namespace name for DTO classes according to defined name from entity model.
+    //   Allowed values:
+    //    - at least value {0} must be used which is place holder for original namespace name defined in entity model
+    // Default value:
+    Variables.DTO.NamespaceNameFormat = "TXSoftware.DataObjectsNetEntityModel";
+	
+    
+    // ==============================================================================================
+    // Remarks:
+    // All next variables: Variables.DTO.DtoRootInterface, Variables.DTO.DtoUtilsClass, 
+    // Variables.DTO.DtoRepositoryClass, Variables.DTO.DtoMappingProxyClass contains settings for
+    // 'OutputProjectName' and 'OutputFolder'.
+    // ==============================================================================================
+	
+    // ================================================
+    // ======== Variables.DTO.DtoRootInterface ========
+    //
+    // Variables.DTO.DtoRootInterface.Enabled - bool
+    //   Value 'true' to allow generate 'root' DTO interface.
+    // Remarks:
+    // 'root' DTO interface is used as base interface for all other generated DTO classes which inherits from this interface,
+    //  where such interface is used later in 'Dto Repository Class'
+    // Default value:
+    // Variables.DTO.DtoRootInterface.Enabled = true;
+
+    // Variables.DTO.DtoRootInterface.InterfaceName - string
+    //   Define name for 'root' DTO interface, this name is also used for file name.
+    // Default value:
+    // Variables.DTO.DtoRootInterface.InterfaceName = "IObjectDto";
+	
+	// Variables.DTO.DtoRootInterface.NamespaceName - string
+	//   Define name for namespace for generated class.
+	//   When value is empty/null then value is retrieved from entity model global namespace definition.
+	// Default value:
+	// Variables.DTO.DtoRootInterface.NamespaceName = "";
+
+	Variables.DTO.DtoRootInterface.OutputProjectName = dtoOutputProjectName;
+    Variables.DTO.DtoRootInterface.OutputFolder = dtoOutputFolder;
+	Variables.DTO.DtoRootInterface.NamespaceName = Variables.DTO.NamespaceNameFormat;
+    // ================================================
+
+
+    // ================================================
+    // ========== Variables.DTO.DtoUtilsClass =========
+    //
+    // Variables.DTO.DtoUtilsClass.Enabled - bool
+    //   Value 'true' to allow generate DTO utils class used as helper class for DTO repository.
+    // Default value:
+    // Variables.DTO.DtoUtilsClass.Enabled = true;
+
+    // Variables.DTO.DtoUtilsClass.ClassName - string
+    //   Define name for DTO utils class, this name is also used for file name.
+    // Default value:
+    // Variables.DTO.DtoUtilsClass.ClassName = "DtoUtils";
+	
+	// Variables.DTO.DtoUtilsClass.NamespaceName - string
+	//   Define name for namespace for generated class.
+	//   When value is empty/null then value is retrieved from entity model global namespace definition.
+	// Default value:
+	// Variables.DTO.DtoUtilsClass.NamespaceName = "";
+
+	Variables.DTO.DtoUtilsClass.OutputProjectName = Variables.Common.OutputProjectName;
+    Variables.DTO.DtoUtilsClass.OutputFolder = Variables.Common.OutputFolder;
+    // ================================================
+
+	
+    // ================================================
+    // ======= Variables.DTO.DtoRepositoryClass =======
+    //
+    // Variables.DTO.DtoRepositoryClass.Enabled - bool
+    //   Value 'true' to allow generate DTO reposity class used to transform 'real' entities to DTO class
+    // Default value:
+    // Variables.DTO.DtoRepositoryClass.Enabled - true;
+
+    // Variables.DTO.DtoRepositoryClass.ClassName - string
+    //   Define name for DTO repository class, this name is also used for file name.
+    // Default value:
+    // Variables.DTO.DtoRepositoryClass.ClassName = "DtoRepository";
+	
+	// Variables.DTO.DtoRepositoryClass.NamespaceName - string
+	//   Define name for namespace for generated class.
+	//   When value is empty/null then value is retrieved from entity model global namespace definition.
+	// Default value:
+	// Variables.DTO.DtoRepositoryClass.NamespaceName = "";
+
+	Variables.DTO.DtoRepositoryClass.OutputProjectName = Variables.Common.OutputProjectName;
+    Variables.DTO.DtoRepositoryClass.OutputFolder = Variables.Common.OutputFolder;
+	// ================================================
+	
+
+    // ================================================
+    // ====== Variables.DTO.DtoMappingProxyClass ======
+    //
+    // Variables.DTO.DtoMappingProxyClass.Enabled - bool
+    //   Value 'true' to allow generate DTO mapping proxy class used to define mappings between 'real' entity and DTO classes.
+    // Default value:
+    // Variables.DTO.DtoMappingProxyClass.Enabled = true;
+
+    // Variables.DTO.DtoMappingProxyClass.ClassName - string
+    //   Define name for DTO mapping proxy class, this name is also used for file name.
+    // Default value:
+    // Variables.DTO.DtoMappingProxyClass.ClassName = "DtoMappings";
+	
+	// Variables.DTO.DtoMappingProxyClass.NamespaceName - string
+	//   Define name for namespace for generated class.
+	//   When value is empty/null then value is retrieved from entity model global namespace definition.
+	// Default value:
+	// Variables.DTO.DtoMappingProxyClass.NamespaceName = "";
+
+	Variables.DTO.DtoMappingProxyClass.OutputProjectName = Variables.Common.OutputProjectName;
+    Variables.DTO.DtoMappingProxyClass.OutputFolder = Variables.Common.OutputFolder;
+    // ================================================	
+}
+
+void InitializeEnviroment()
+{
+	// builds global variables
+	BuildVariables(this);
+	
+	// prepare file manager which is responsible for saving generated code into multiple files in defined output folder
+	PrepareFileManager();
+
+	// validate entity model
+    ValidateModel();
+
+	// build global namespace value
+	ResolveNamespace();
+}
+#>
+<#+
+// class 'Variables'
+static class Variables
+{
+	// properties setable by users
+	public static GeneratorSettings Common;
+	public static DTOGeneratorSettings DTO;
+
+	// runtime variables - DO NOT EDIT!!
+	public static string TemplateFile;
+	public static string CurrentDirectory;
+	public static FileManager Manager;
+	public static IModelRoot ModelRoot;
+	public static CodeGenerationTools Code;
+	public static string GlobalNamespace;
+	public static InternalVariables Internal;
+	
+	public static void Initialize()
+	{
+		Common = new GeneratorSettings();
+		DTO = new DTOGeneratorSettings();
+		Internal = new InternalVariables();
+	}
+}
+
+sealed class DTOGeneratorSettings: GeneratorSettings
+{
+	public bool Enabled = false;
+	
+	public string NamespaceNameFormat = NamespaceNameFormatDefault;
+	
+	public DtoRootInterfaceSettings DtoRootInterface;
+	public DtoRepositoryClassSettings DtoRepositoryClass;
+	public DtoMappingProxyClassSettings DtoMappingProxyClass;
+	public DtoUtilsClassSettings DtoUtilsClass;
+	
+	public DTOGeneratorSettings()
+	{
+		DtoRootInterface = new DtoRootInterfaceSettings();
+		DtoRepositoryClass = new DtoRepositoryClassSettings();
+		DtoMappingProxyClass = new DtoMappingProxyClassSettings();
+		DtoUtilsClass = new DtoUtilsClassSettings();
+	}
+}
+
+class GeneratorSettings: OutputSettings
+{
+	public string[] ExtraUsings = new string[0];
+	public bool PartialTypes = true;
+	public bool VirtualProperties = true;
+	public bool ConstructorsForKeyFields = true;
+	public bool ContractDecorators = false;
+
+	public string ClassNameFormat = ClassNameFormatDefault;
+	
+	public const string ClassNameFormatDefault = "{0}";
+	public const string NamespaceNameFormatDefault = "{0}";
+
+	public void AssignFrom(GeneratorSettings other)
+	{
+		this.OutputFolder = other.OutputFolder;
+		this.OutputProjectName = other.OutputProjectName;
+		this.ExtraUsings = other.ExtraUsings;
+		this.PartialTypes = other.PartialTypes;
+		this.VirtualProperties = other.VirtualProperties;
+		this.ConstructorsForKeyFields = other.ConstructorsForKeyFields;
+		this.ContractDecorators = other.ContractDecorators;
+	}
+}
+
+class DtoRootInterfaceSettings: FileGenerateSettings
+{
+	public string InterfaceName = "IObjectDto";
+	public string MappingKeyPropertyName = "_MappingKey";
+	
+	public DtoRootInterfaceSettings(): base(true)
+	{}
+}
+
+class DtoRepositoryClassSettings: FileGenerateSettings
+{
+	public string ClassName = "DtoRepository";
+	
+	public DtoRepositoryClassSettings(): base(true)
+	{}
+}
+
+class DtoMappingProxyClassSettings: FileGenerateSettings
+{
+	public string ClassName = "DtoMappings";
+	
+	public DtoMappingProxyClassSettings(): base(true)
+	{}
+}
+
+class DtoUtilsClassSettings: FileGenerateSettings
+{
+	public string ClassName = "DtoUtils";
+	
+	public DtoUtilsClassSettings(): base(true)
+	{}
+}
+
+abstract class FileGenerateSettings: OutputSettings
+{
+	public bool Enabled = false;
+	
+	public string NamespaceName = "";
+	
+	protected FileGenerateSettings(bool enabled)
+	{
+		this.Enabled = enabled;
+	}
+}
+
+abstract class OutputSettings
+{
+	public string OutputFolder;
+	public string OutputProjectName;
+}
+
+class InternalVariables
+{
+	public Dictionary<IPersistentType, KeyPair> GeneratedEntityNames;
+	public Dictionary<IPersistentType, IPropertyBase[]> EntityKeyFields;
+	public Dictionary<IPersistentType, string> OriginalEntityNames;
+	
+	public InternalVariables()
+	{
+		// in KeyPair, Key1 - "real" do4 escaped entity name, Key2 - DTO escaped entity name
+		GeneratedEntityNames = new Dictionary<IPersistentType, KeyPair>();
+		EntityKeyFields = new Dictionary<IPersistentType, IPropertyBase[]>();
+		
+		// original DO4 "real" entity names before changed to new name according to "ClassNameFormat" variable
+		// "real" entity name means name defined in entity model diagram.
+		OriginalEntityNames = new Dictionary<IPersistentType, string>();
+	}
+}
+
+void GenerateEntities()
+{
+	try
+	{
+		GenerateDomainClasses();
+		GenerateDTOClasses();
+		GenerateDtoMappingsClasses();
+	}
+	finally
+	{
+		Variables.Manager.Flush();
+	}
+}
+
+void GenerateDomainClasses()
+{
+	FixUpEntitiesChanges(Variables.ModelRoot.PersistentTypes);
+
+	foreach(IPersistentType persistentType in Variables.ModelRoot.PersistentTypes)
+	{
+		WriteEntity(persistentType);
+	}
+}
+
+void GenerateDTOClasses()
+{
+	if (!Variables.DTO.Enabled) { return; }
+
+	PrepareDTO();
+	try
+	{
+		GenerateDomainClasses();
+	}
+	finally
+	{
+		Variables.Code.ActiveDTOStage = false;
+	}
+}
+
+void GenerateDtoMappingsClasses()
+{
+	if (!Variables.DTO.Enabled) { return; }
+	
+	if (Variables.DTO.DtoRootInterface.Enabled)
+	{
+		GenerateDtoBaseInterface();
+	}
+	
+	if (Variables.DTO.DtoMappingProxyClass.Enabled)
+	{
+		GenerateDtoMappingBuilderProxy(Variables.ModelRoot.PersistentTypes);
+	}
+	
+	if (Variables.DTO.DtoRepositoryClass.Enabled)
+	{
+		GenerateDtoRepository();
+	}
+	
+	if (Variables.DTO.DtoUtilsClass.Enabled)
+	{
+		GenerateDtoUtilsClass();
+	}
+}
+
+void BuildVariables(object textTransformation)
+{
+	Variables.Initialize();
+	Variables.Code = new CodeGenerationTools(textTransformation);
+	Variables.TemplateFile = Variables.Code.TemplateFile;
+	Variables.CurrentDirectory = Path.GetDirectoryName(Variables.TemplateFile);
+	PropertyOwnerContext.Initialize();
+}
+
+void ValidateSettings()
+{
+	if (Variables.DTO.Enabled)
+	{
+		if (Util.StringEqual(Variables.Common.OutputFolder, Variables.DTO.OutputFolder, true))
+		{
+			if (Util.StringEqual(Variables.DTO.ClassNameFormat, DTOGeneratorSettings.ClassNameFormatDefault, true) ||
+				Util.StringEqual(Variables.DTO.ClassNameFormat, Variables.Common.ClassNameFormat, true))
+			{
+				throw new ApplicationException("'OutputFolder' and 'DTO.OutputFolder' points to the same folder, if this is expected then update value of 'DTO.ClassNameFormat' to have some prefix/suffix.");
+			}
+		}
+	}
+	
+	if (Variables.DTO.Enabled)
+	{
+		if (Variables.DTO.DtoRepositoryClass.Enabled && !Variables.DTO.DtoRootInterface.Enabled)
+		{
+			throw new ApplicationException("Value of 'DTO.DtoRootInterface.Enabled' must also be true when value of 'DTO.DtoRepositoryClass.Enabled' is true.");
+		}
+	}
+}
+
+void ResolveNamespace()
+{
+	Variables.GlobalNamespace = Variables.Code.EscapeNamespace(Variables.ModelRoot.Namespace);
+	if (string.IsNullOrEmpty(Variables.GlobalNamespace))
+	{
+		Variables.GlobalNamespace = Variables.Code.EscapeNamespace(Variables.Manager.ResolveNamespace());
+	}
+	
+	Variables.Code.GlobalNamespace = Variables.GlobalNamespace;
+}
+
+void ValidateModel()
+{
+	Variables.ModelRoot = this.EntityModel.ModelRoot;
+	Variables.ModelRoot.Validate(TemplateVersion);
+	PropertiesBuilderContext.Initialize(Variables.ModelRoot);
+}
+
+void PrepareFileManager()
+{
+	Variables.Manager = FileManager.Create(this);
+}
+
+void PrepareDTO()
+{
+	Variables.Common.AssignFrom(Variables.DTO);
+	Variables.Code.ActiveDTOStage = true;
+}
+
+string ResolveNamespaceForDto(FileGenerateSettings settings)
+{
+	return string.IsNullOrEmpty(settings.NamespaceName) 
+		? Variables.GlobalNamespace : Variables.Code.Escape(settings.NamespaceName);
+}
+
+string[] usingsCommon = new string[] 
+	{ "System", "System.Collections", "System.Collections.Generic", "System.Collections.ObjectModel", "System.Collections.Specialized" };
+	
+string[] usingsXtensive = new string[]
+	{"Xtensive.Core", "Xtensive.Orm"};
+
+void WriteHeaderForEntityAndDTOFile()
+{
+    Variables.Manager.StartHeader();
+	
+	IEnumerable<string> usings = Variables.Code.ActiveDTOStage ? usingsCommon : usingsCommon.Concat(usingsXtensive);
+	WriteFileHeader(usings);
+
+    Variables.Manager.EndHeader();
+}
+#>
+<#+
+void PushIndent()
+{
+	this.PushIndent(new String(' ', 4));
+}
+
+string GetEntityNamespace(IPersistentType entity)
+{
+	return Variables.Code.EscapeNamespace(entity);
+}
+
+void FixUpEntitiesChanges(IEnumerable<IPersistentType> entities)
+{
+	string namespaceNameFormat = Variables.Code.ActiveDTOStage ? Variables.DTO.NamespaceNameFormat: GeneratorSettings.NamespaceNameFormatDefault;
+	string classNameFormat = Variables.Code.ActiveDTOStage ? Variables.DTO.ClassNameFormat : Variables.Common.ClassNameFormat;
+	
+	bool changeNamespaces = namespaceNameFormat != DTOGeneratorSettings.NamespaceNameFormatDefault;
+	bool changeNames = classNameFormat != DTOGeneratorSettings.ClassNameFormatDefault;
+	
+	foreach(var entity in entities)
+	{
+		if (changeNamespaces)
+		{
+			if (string.IsNullOrEmpty(entity.Namespace))
+			{
+				entity.Namespace = GetEntityNamespace(entity);
+			}
+			
+			entity.Namespace = string.Format(namespaceNameFormat, entity.Namespace);
+		}
+		
+		string entityName = Variables.Code.Escape(entity);
+		
+		if (Variables.Code.ActiveDTOStage)
+		{
+			entityName = Variables.Internal.OriginalEntityNames[entity];
+		}
+		else
+		{
+			Variables.Internal.OriginalEntityNames.Add(entity, entityName);
+		}
+		
+		if (changeNames)
+		{			
+			entityName = Variables.Code.Escape(string.Format(classNameFormat, entityName));
+		}
+		
+		entity.Name = entityName;
+	}
+}
+
+void WriteEntity(IPersistentType entity)
+{
+	string entityFileName = Variables.Code.Escape(entity);
+	
+	KeyPair entityNames;
+	if (Variables.Internal.GeneratedEntityNames.ContainsKey(entity))
+	{
+		entityNames = Variables.Internal.GeneratedEntityNames[entity];
+	}
+	else
+	{
+		entityNames = new KeyPair();
+		Variables.Internal.GeneratedEntityNames.Add(entity, entityNames);
+	}
+
+	StartNewFile(entityFileName + ".cs", Variables.Common);
+	WriteHeaderForEntityAndDTOFile();
+	
+	var propBuilder = Variables.Code.PropertiesBuilderForType(entity);
+	List<string> allTypeAttrs = Variables.Code.CreateTypeAttributes(entity, propBuilder).Select(attr => "[" + attr + "]").ToList();
+	
+	string decoratorAttribute;
+	if (Variables.Code.CanDecorateWithContract(Variables.Common.ContractDecorators, entity, out decoratorAttribute))
+	{
+		allTypeAttrs.Add(decoratorAttribute);
+	}
+	
+	string typeAttributes = string.Join(Environment.NewLine, allTypeAttrs);
+	bool hasTypeAttributes = !string.IsNullOrEmpty(typeAttributes);
+	string entityInheritance = string.Join(",", Variables.Code.InheritanceList(entity));
+	
+	if (string.IsNullOrEmpty(entityInheritance) &&
+		Variables.Code.ActiveDTOStage && Variables.DTO.Enabled && Variables.DTO.DtoRootInterface.Enabled)
+	{
+		entityInheritance = Variables.Code.Escape(Variables.DTO.DtoRootInterface.InterfaceName);
+	}
+	
+	string entityNamespace = GetEntityNamespace(entity);
+	
+	string entityNameWithNamespace = string.Format("{0}.{1}", entityNamespace, entityFileName);
+	if (Variables.Code.ActiveDTOStage)
+	{
+		entityNames.Key2 = entityNameWithNamespace;
+	}
+	else
+	{
+		entityNames.Key1 = entityNameWithNamespace;
+	}
+#>
+namespace <#= entityNamespace #>
+{
+<#+
+	this.PushIndent();
+#>
+<#=Variables.Code.StringAfter(typeAttributes, Environment.NewLine)#><#=Variables.Code.AccessibilityForType(entity)#> <#=Variables.Code.SpaceAfter(Variables.Code.InheritanceModifier(entity))#><#=Variables.Code.StringOptional("partial ", Variables.Common.PartialTypes)#><#=Variables.Code.SpaceAfter(Variables.Code.TypeIdent(entity))#><#=entityFileName#><#=Variables.Code.StringBefore(": ", entityInheritance)#>
+{
+<#+
+	this.PushIndent();
+	RetrieveKeyFields(entity);
+	WriteProperties(entity, entity.Properties, "Scalar Properties");
+#>
+<#+
+	WriteProperties(entity, entity.NavigationProperties, "Navigation Properties");
+#>
+<#+
+	WriteInheritedProperties(entity);
+	WriteConstructors(entity);
+	WriteBaseDtoImplementationStub(entity);
+	this.PopIndent();
+#>
+}
+<#+
+	this.PopIndent();
+#>
+}
+<#+
+	Variables.Manager.EndNewFile();
+}
+#>
+<#+
+void WriteInheritedProperties(IPersistentType entity)
+{
+	if (entity is IInterface)
+	{
+		IInterface @interface = (IInterface)entity;
+		if (@interface is IEntityBase)
+		{
+			IEntityBase entityBase = (IEntityBase)@interface;
+
+			var propBuilder = Variables.Code.PropertiesBuilderForType(entity);
+			var propertiesToImplement = /*Variables.PropertiesBuilder*/ propBuilder.GetInheritedProperties();
+			
+			IEnumerable<IPropertyBase> scalarPropertiesToImplement = propertiesToImplement.Where(item => item.PropertyKind != PropertyKind.Navigation).ToList();
+			IEnumerable<IPropertyBase> navigationPropertiesToImplement = propertiesToImplement.Where(item => item.PropertyKind == PropertyKind.Navigation).ToList();
+			
+			if (scalarPropertiesToImplement.Count() > 0)
+			{
+				using(PropertyOwnerContext.Current.ImpersonateAsOwner(entity, scalarPropertiesToImplement))
+				{
+					WriteProperties(entity, scalarPropertiesToImplement, "Inherited Scalar Properties");
+				}
+			}
+			
+			if (navigationPropertiesToImplement.Count() > 0)
+			{
+				using(PropertyOwnerContext.Current.ImpersonateAsOwner(entity, navigationPropertiesToImplement))
+				{
+					WriteProperties(entity, navigationPropertiesToImplement, "Inherited Navigation Properties");
+				}
+			}
+		}
+	}
+}
+
+void WriteProperties(IPersistentType owningEntity, IEnumerable<IPropertyBase> properties, string regionName)
+{
+	bool lastProperty = false;
+	int propertiesCount = properties.Count();
+	
+	if (propertiesCount > 0)
+	{#>
+
+#region <#= regionName #>
+
+<#+}
+	
+	int propertyIdx = 0;
+	foreach(IPropertyBase sourceProperty in properties)
+	{
+		var propBuilder = Variables.Code.PropertiesBuilderForTypeByOwner(sourceProperty);
+		
+		var currentProperty = propBuilder.GetProperty(sourceProperty, InheritanceMember.Current);
+		var inheritedProperty = propBuilder.GetProperty(sourceProperty, InheritanceMember.Inherited);
+		
+		List<string> allPropertyTypeAttrs = Variables.Code.CreateTypeAttributes(currentProperty, propBuilder)
+												.Select(attr => "[" + attr + "]").ToList();
+		
+		string decoratorAttribute;
+		if (Variables.Code.CanDecorateWithContract(Variables.Common.ContractDecorators, currentProperty, out decoratorAttribute))
+		{
+			allPropertyTypeAttrs.Add(decoratorAttribute);
+		}
+		
+		string propertyTypeAttributes = string.Join(Environment.NewLine, allPropertyTypeAttrs);
+		bool propertyHasTypeAttributes = !string.IsNullOrEmpty(propertyTypeAttributes);
+		bool setterVisible = Variables.Code.VisibleSetter(currentProperty, propBuilder);
+		string accessibilityForProperty = Variables.Code.AccessibilityForType(currentProperty);
+
+		// if real owner of current property is NOT interface and real owner of inherited property IS interface
+		// then accesibility for property must be public
+		bool mustBePublic = currentProperty.GetRealOwner() != inheritedProperty.GetRealOwner() &&
+							inheritedProperty.GetRealOwner().TypeKind == PersistentTypeKind.Interface;
+		
+		// or if real owner of current property IS interface as real owner of inherited property IS also interface
+		// then accesibility for property must be public
+		if (!mustBePublic && owningEntity.TypeKind != PersistentTypeKind.Interface)
+		{
+			mustBePublic = currentProperty.GetRealOwner().TypeKind == PersistentTypeKind.Interface && 
+							inheritedProperty.GetRealOwner().TypeKind == PersistentTypeKind.Interface;
+		}
+		
+		if (mustBePublic)
+		{
+			accessibilityForProperty = Variables.Code.AccessibilityToString(PropertyAccessModifier.Public);
+		}
+		
+		lastProperty = propertyIdx == (propertiesCount-1);
+#>
+<#=Variables.Code.StringAfter(propertyTypeAttributes, Environment.NewLine)#><#=Variables.Code.SpaceAfter(accessibilityForProperty)#><#=Variables.Code.SpaceAfter(Variables.Code.StringOptional(Variables.Code.InheritanceModifier(currentProperty), Variables.Common.VirtualProperties))#><#=Variables.Code.EscapeType(inheritedProperty)#> <#= Variables.Code.Escape(currentProperty.Name)#>
+{
+<#+ this.PushIndent(); #>
+<#=Variables.Code.SpaceAfter(Variables.Code.ForGetter(currentProperty))#>get;<#=Variables.Code.StringOptional(Environment.NewLine, setterVisible)#><#=Variables.Code.StringOptional(Variables.Code.SpaceAfter(Variables.Code.ForSetter(currentProperty, propBuilder)), setterVisible)#><#=Variables.Code.StringOptional("set;", setterVisible)#>
+<#+ this.PopIndent(); #>
+}<#=Variables.Code.StringOptional(Environment.NewLine, !lastProperty)#>
+<#+
+		propertyIdx++;
+	}
+	if (propertiesCount > 0)
+	{#>
+
+#endregion <#= regionName #>
+<#+}
+}
+
+void WriteConstructors(IPersistentType entity)
+{
+	if (!entity.TypeKind.In(PersistentTypeKind.Entity, PersistentTypeKind.TypedEntitySet))
+	{
+		return;
+	}
+#>
+
+#region Constructors
+
+<#+
+	if (entity.TypeKind == PersistentTypeKind.Entity)
+	{
+		WriteConstructorsForEntity(entity);
+	}
+	
+	if (entity.TypeKind == PersistentTypeKind.TypedEntitySet)
+	{
+		WriteConstructorsTypedEntitySet(entity);
+	}
+#>
+
+#endregion Constructors
+
+<#+}
+
+void RetrieveKeyFields(IPersistentType entity)
+{
+	if (Variables.Code.ActiveDTOStage)
+	{
+		return;
+	}
+	
+	var propertiesToImplement = entity.GetAllProperties(true).Where(item => item.PropertyKind.In(PropertyKind.Scalar, PropertyKind.Navigation));
+	
+	Func<IPropertyBase, OrmKeyAttribute> getKeyAttrFunc = 
+		(prop) => 
+		{
+			return (prop is IScalarProperty) ? (prop as IScalarProperty).KeyAttribute : (prop as INavigationProperty).KeyAttribute;
+		};
+	
+	var keyFields = propertiesToImplement
+					.Where(property => getKeyAttrFunc(property).Enabled)
+					.OrderBy(property => getKeyAttrFunc(property).Position.GetValueOrDefault(0))
+					.ToArray();
+
+	Variables.Internal.EntityKeyFields.Add(entity, keyFields);
+}
+
+void WriteConstructorsForEntity(IPersistentType entity)
+{
+	var notScalarProperties = entity.AllProperties.Where(prop => prop.PropertyKind != PropertyKind.Scalar);
+	string entityName = Variables.Code.Escape(entity);
+	if (!Variables.Code.ActiveDTOStage)
+	{
+#>
+<#=Variables.Code.SpaceAfter(Variables.Code.AccessibilityForType(entity))#><#=Variables.Code.StringAfter(entityName, "(")#><#=Variables.Code.StringAfter(Variables.Code.BuildXtensiveType(OrmType.Session), " session)")#><#= Variables.Code.SpaceBefore(": base(session)")#>
+{}
+<#+ } #>
+
+<#=Variables.Code.SpaceAfter(Variables.Code.AccessibilityForType(entity))#><#=Variables.Code.StringAfter(entityName, "()")#>
+<#+ if (Variables.Code.ActiveDTOStage && notScalarProperties.Count() > 0) { #>
+{
+<#+ 
+	foreach(var property in notScalarProperties)
+	{
+		var propBuilder = Variables.Code.PropertiesBuilderForTypeByOwner(property);
+		
+		var currentProperty = propBuilder.GetProperty(property, InheritanceMember.Current);
+		var inheritedProperty = propBuilder.GetProperty(property, InheritanceMember.Inherited);
+
+		bool initializePropertyToNull = false;
+		if (inheritedProperty is INavigationProperty)
+		{
+			initializePropertyToNull = (inheritedProperty as INavigationProperty).Multiplicity == MultiplicityKind.ZeroOrOne;
+		}
+		
+		string propType = Variables.Code.EscapeType(inheritedProperty);
+		string propName = Variables.Code.Escape(currentProperty.Name);
+		string propInitialization = initializePropertyToNull ? "null" : string.Format("new {0}()", propType);
+#>
+	this.<#=propName#> = <#=propInitialization#>;
+<#+
+	}
+#>
+}
+
+<#+ } else { #>
+{}
+<#+ } #>
+
+<#+ 
+	List<string> constructorKeyFields = new List<string>();
+	List<string> constructorKeyNames = new List<string>();
+	List<string> classProperties = new List<string>();
+
+	var keyFields = Variables.Internal.EntityKeyFields[entity];
+
+	if (Variables.Common.ConstructorsForKeyFields)
+	{
+		foreach(var keyField in keyFields)
+		{
+			var propBuilder = Variables.Code.PropertiesBuilderForTypeByOwner(keyField);
+			
+			var currentProperty = propBuilder.GetProperty(keyField, InheritanceMember.Current);
+			var inheritedProperty = propBuilder.GetProperty(keyField, InheritanceMember.Inherited);
+			
+			string classProperty = Variables.Code.Escape(currentProperty.Name);
+			classProperties.Add(classProperty);
+			string propertyName = classProperty.ToLower();
+			
+			constructorKeyFields.Add(string.Format("{0} {1}", Variables.Code.EscapeType(inheritedProperty), propertyName));
+			constructorKeyNames.Add(propertyName);
+		}
+		
+		if (constructorKeyFields.Count > 0 && !Variables.Code.ActiveDTOStage)
+		{
+			constructorKeyFields.Insert(0, string.Format("{0} session", Variables.Code.BuildXtensiveType(OrmType.Session)));
+		}
+	}
+#>
+
+<#+ if (constructorKeyFields.Count > 0) { #>
+<#+ if (!Variables.Code.ActiveDTOStage) { #>
+<#=Variables.Code.SpaceAfter(Variables.Code.AccessibilityForType(entity))#><#=Variables.Code.StringAfter(entityName, "(")#><#=Variables.Code.StringAfter(string.Join(",", constructorKeyFields), ")")#><#= Variables.Code.SpaceBefore(": base(session,")#><#=Variables.Code.StringAfter(string.Join(",", constructorKeyNames), ")")#>
+{}
+<#+
+	if (entity is IEntityBase && (entity as IEntityBase).InheritanceModifier != InheritanceModifiers.Sealed)
+	{ #>
+protected <#=Variables.Code.StringAfter(entityName, "(")#><#=Variables.Code.StringAfter(string.Join(",", constructorKeyFields), ", params System.Object[] values)")#><#= Variables.Code.SpaceBefore(": base(session,")#><#=Variables.Code.StringAfter(string.Join(",", constructorKeyNames), ", values)")#>
+{}
+<#+
+	}
+} else { #>
+<#=Variables.Code.SpaceAfter(Variables.Code.AccessibilityForType(entity))#><#=Variables.Code.StringAfter(entityName, "(")#><#=Variables.Code.StringAfter(string.Join(",", constructorKeyFields), ")")#>: this()
+{
+<#+ for(int i = 0; i < classProperties.Count; i++) { #>
+	this.<#=classProperties[i]#> = <#=constructorKeyNames[i]#>;
+<#+	} #>
+}
+<#+ } #>
+<#+ } #>
+<#+
+}
+
+void WriteConstructorsTypedEntitySet(IPersistentType entity)
+{
+	string entityName = Variables.Code.Escape(entity);
+	ITypedEntitySet entitySet = (ITypedEntitySet)entity;
+	if (Variables.Code.ActiveDTOStage) {
+		string itemType = Variables.Code.EscapeNameWithNamespace(entitySet.ItemType, entitySet);
+#>
+public<#=Variables.Code.SpaceBefore(entityName)#>()
+{}
+
+public<#=Variables.Code.SpaceBefore(entityName)#>(System.Collections.Generic.IEnumerable<#=string.Format("<{0}>", itemType)#> collection): base(collection)
+{}
+<#+ } else { #>
+protected<#=Variables.Code.SpaceBefore(entityName)#>(<#=Variables.Code.BuildXtensiveType(OrmType.Entity)#> owner, <#=Variables.Code.BuildXtensiveType(OrmType.FieldInfo)#> field) : base(owner, field)
+{}
+
+protected<#=Variables.Code.SpaceBefore(entityName)#>(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context)
+{}
+<#+ }
+}
+
+void WriteBaseDtoImplementationStub(IPersistentType entity)
+{
+	if (Variables.Code.ActiveDTOStage && Variables.DTO.Enabled && Variables.DTO.DtoRootInterface.Enabled)
+	{
+		IEntityBase @interface = entity as IEntityBase;
+		if (@interface != null)
+		{
+			string baseDtoInterfaceName = Variables.Code.Escape(Variables.DTO.DtoRootInterface.InterfaceName);
+			string mappingKeyPropertyName = Variables.Code.Escape(Variables.DTO.DtoRootInterface.MappingKeyPropertyName);
+			bool mustImplementBaseDtoInterface = @interface.GetCurrentLevelInheritedInterfaces().Count(item => item.TypeKind != PersistentTypeKind.Interface) == 0;
+			if (mustImplementBaseDtoInterface)
+			{
+				bool isStructure = entity.TypeKind == PersistentTypeKind.Structure;
+#>
+
+#region Implementation of <#=baseDtoInterfaceName#>
+
+public <#=baseDtoInterfaceName#> OriginalObject { get; set; }
+
+public string <#=mappingKeyPropertyName#> { get; set; }
+
+public <#=Variables.Code.SpaceAfter(Variables.Code.StringOptional("virtual", !isStructure))#>void UpdateKeyFields(<#=baseDtoInterfaceName#> sourceDto)
+{
+<#+
+	WriteUpdateKeyFieldsMethodContent(entity);
+#>
+}
+
+#endregion
+<#+
+			}
+			else // need to overwrite method 'UpdateKeyFields'
+			{
+				// find only key fields on current level of type
+				IPropertyBase[] entityKeyFields = Variables.Internal.EntityKeyFields[entity].Where(prop => prop.GetRealOwner() == entity).ToArray();
+				if (entityKeyFields.Length > 0)
+				{
+#>
+#region Implementation of <#=baseDtoInterfaceName#>
+
+public override void UpdateKeyFields(<#=baseDtoInterfaceName#> sourceDto)
+{
+	base.UpdateKeyFields(sourceDto);
+<#+
+	WriteUpdateKeyFieldsMethodContent(entity, entityKeyFields);
+#>
+}
+
+#endregion
+<#+
+				}
+			}
+		}
+	}
+}
+
+void WriteUpdateKeyFieldsMethodContent(IPersistentType entity, IPropertyBase[] entityKeyFields = null)
+{
+	string ownerType = Variables.Code.Escape(entity);
+	bool dtoUtilsEnabled = Variables.DTO.Enabled && Variables.DTO.DtoUtilsClass.Enabled;
+	string dtoUtilsClassName = dtoUtilsEnabled ? Variables.Code.Escape(Variables.DTO.DtoUtilsClass.ClassName) : string.Empty;
+
+#>
+	if (sourceDto is <#=ownerType#>)
+	{
+		var _sourceDto = (<#=ownerType#>)sourceDto;
+<#+
+	if (entityKeyFields == null)
+	{
+		entityKeyFields = Variables.Internal.EntityKeyFields[entity];
+	}
+	
+	foreach(var property in entityKeyFields)
+	{
+		string propName = Variables.Code.Escape(property);
+		if (property is IScalarProperty)
+		{
+#>
+		this.<#=propName#> = _sourceDto.<#=propName#>;
+<#+
+		}
+		else // navigation property
+		{
+			string propType = Variables.Code.EscapeType(property);
+			if (dtoUtilsEnabled)
+			{
+#>
+		this.<#=propName#> = (<#=propType#>)<#=dtoUtilsClassName#>.Clone(_sourceDto.<#=propName#>);
+<#+
+			}
+			else
+			{
+#>
+		// NOTE: Generating of 'DtoUtilsClass' is disabled there is NO buildin cloning feature (contained in 'DtoUtilsClass'),
+		//       then you should provide cloning feature on your side, something similar to below. This part should 
+		//       handle only 'navigation properties'. 
+		// this.<#=propName#> = (<#=propType#>)XYZ.Clone(_sourceDto.<#=propName#>);
+<#+
+			}
+		}
+	}
+#>
+	}
+<#+
+}
+
+void StartNewFile(string fileNameWithExtension, OutputSettings outputSettings)
+{
+	Variables.Manager.StartNewFile(fileNameWithExtension, outputSettings.OutputProjectName, outputSettings.OutputFolder);
+}
+
+void WriteFileHeader(IEnumerable<string> usings = null)
+{
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     <#= TXSoftware.DataObjectsNetEntityModel.Dsl.ModelApp.ProductName #>
+//     Template version: <#= TemplateVersion #>
+//     This code was generated from a template.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+<#=Variables.Code.StringOptional(()=>Environment.NewLine + string.Join(Environment.NewLine, usings.Select(usingItem => "using " + usingItem + ";").ToArray()), usings != null && usings.Count() > 0)#>
+<#+
+}
+
+string TemplateVersion = "1.0.5.0";
+#>

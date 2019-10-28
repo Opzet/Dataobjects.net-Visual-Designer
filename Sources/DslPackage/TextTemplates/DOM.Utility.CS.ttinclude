@@ -1,0 +1,1989 @@
+<#@ assembly name="System.Core"
+#><#@ assembly name="System.Data.Linq"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="System.Xml"
+#><#@ assembly name="System.Xml.Linq"
+#><#@ import namespace="System"
+#><#@ import namespace="System.CodeDom"
+#><#@ import namespace="System.CodeDom.Compiler"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Data.Linq"
+#><#@ import namespace="System.Data.Linq.Mapping"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="EnvDTE"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="System.Xml.Linq"
+#><#@ import namespace="System.Globalization"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#><#@ import namespace="Microsoft.CSharp"
+#><#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Common"
+#><#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Common.UIEditors"
+#><#+
+
+
+public class FileManager
+{
+    #region class OutputTarget
+
+    public class OutputTarget
+    {
+        public string ProjectName { get; set; }
+
+        /// <summary>
+        /// Project relative path, supports subfolders syntax like "Dir1\SubDir1\SubSubDir1"
+        /// </summary>
+        public string ProjectPath { get; set; }
+
+        //internal ProjectItem ProjectItem { get; set; }
+        internal ProjectItems ProjectItemsHolder { get; set; }
+
+        internal string OutputDirectory
+        {
+            get
+            {
+                //string fileName = this.ProjectItem.FileNames[0];
+                string fileName = GetProjectItemFileName(); //this.GetProjectItem().FileNames[0];
+                return Path.GetDirectoryName(fileName);
+            }
+        }
+
+        public OutputTarget(string projectName, string projectPath)
+        {
+            this.ProjectName = projectName;
+            this.ProjectPath = projectPath;
+        }
+
+        internal OutputTarget(ProjectItem projectItem)
+        {
+            Update(projectItem.ProjectItems);
+        }
+
+        public override string ToString()
+        {
+            return GetProjectItemFileName();
+        }
+
+        private string GetProjectItemFileName()
+        {
+            var parent = ProjectItemsHolder.Parent;
+            ProjectItem projectItem = parent as ProjectItem;
+            Project project = parent as Project;
+
+            return project != null ? project.FileName : projectItem.FileNames[0];
+        }
+
+        private ProjectItem GetProjectItem()
+        {
+            return (ProjectItem)ProjectItemsHolder.Parent;
+        }
+
+        internal void Update(ProjectItems holder)
+        {
+            this.ProjectItemsHolder = holder;
+            var projectItem = GetProjectItem();
+
+            this.ProjectName = projectItem.ContainingProject.Name;
+
+            object parent = projectItem.Kind == Constants.vsProjectItemKindPhysicalFolder
+                            ? (object)projectItem
+                            : projectItem.Collection.Parent;
+            List<string> pathItems = new List<string>();
+            int loop = 0;
+            while (parent != null)
+            {
+                ProjectItem parentItem = parent as ProjectItem;
+                if (parentItem != null)
+                {
+                    if (parentItem.Kind == Constants.vsProjectItemKindPhysicalFolder)
+                    {
+                        pathItems.Add(parentItem.Name);
+
+                        parent = parentItem.Collection.Parent as ProjectItem;
+                    }
+                }
+                else
+                {
+                    parent = null;
+                }
+
+                loop++;
+                if (loop == 20)
+                {
+                    System.Diagnostics.Debugger.Break();
+                }
+            }
+
+            if (pathItems.Count > 0)
+            {
+                pathItems.Reverse();
+                this.ProjectPath = string.Join("\\", pathItems);
+            }
+            else
+            {
+                this.ProjectPath = string.Empty;
+            }
+        }
+    }
+
+    #endregion class OutputTarget
+
+    #region class FileBlock
+
+    private class FileBlock : BlockData
+    {
+        public String Name;
+        public BlockData Header;
+        public BlockData Footer;
+        public OutputTarget Target;
+
+        internal string TargetFileName { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} [{1}]", Name, TargetFileName);
+        }
+
+        public override string GetData(StringBuilder sb)
+        {
+            int st = this.Start;
+            int len = this.Length;
+            if (this.Header != null && this.Header.Length > 0)
+            {
+                st += this.Header.Length;
+                len -= this.Header.Length;
+            }
+
+            if (this.Footer != null && this.Footer.Length > 0)
+            {
+                len -= this.Footer.Length;
+            }
+
+            return sb.ToString(st, len);
+        }
+    }
+
+    private class BlockData
+    {
+        public int Start;
+        public int Length;
+
+        public virtual string GetData(StringBuilder sb)
+        {
+            return sb.ToString(Start, Length);
+        }
+    }
+
+    #endregion class Block
+
+
+    private readonly List<FileBlock> files = new List<FileBlock>();
+//    private Block footer = new Block();
+//    private Block header = new Block();
+    protected DynamicTextTransformation _textTransformation;
+    private FileBlock currentFileBlock;
+    //protected List<String> generatedFileNames = new List<String>();
+    //protected string outputPath;
+    private string templateDirectory;
+    protected string templateFile;
+
+    private FileManager(DynamicTextTransformation textTransformation)
+    {
+        this._textTransformation = textTransformation;
+        this.templateFile = textTransformation.Host.TemplateFile;
+        this.templateDirectory = Path.GetDirectoryName(templateFile);
+    }
+
+    public string TemplateFile
+    {
+        get { return templateFile; }
+    }
+
+    //public string OutputProjectName { get; set; }
+
+    public OutputTarget TemplateFileAsOutputTarget { get; protected set; }
+
+//    public String OutputPath
+//    {
+//        get { return outputPath; }
+//        set
+//        {
+//            if (value != outputPath)
+//            {
+//                outputPath = value;
+//                if (outputPath != null && outputPath[outputPath.Length - 1] != Path.DirectorySeparatorChar)
+//                {
+//                    outputPath += Path.DirectorySeparatorChar;
+//                }
+//            }
+//        }
+//    }
+
+//    protected virtual string ResolveOutputPath()
+//    {
+//        string result = this.OutputPath;
+//
+//        if (!string.IsNullOrEmpty(this.OutputPath))
+//        {
+//            if (!Path.IsPathRooted(this.OutputPath))
+//            {
+//                result = Path.Combine(templateDirectory, this.OutputPath);
+//            }
+//        }
+//        else
+//        {
+//            result = templateDirectory;
+//        }
+//
+//        return result;
+//    }
+
+    public virtual String DefaultProjectNamespace
+    {
+        get { return null; }
+    }
+
+    public static FileManager Create(object textTransformation)
+    {
+        FileManager result = null;
+        bool inVSNET = false;
+
+        DynamicTextTransformation transformation = DynamicTextTransformation.Create(textTransformation);
+        IDynamicHost host = transformation.Host;
+
+        try
+        {
+
+#if !PREPROCESSED_TEMPLATE
+            if (host.AsIServiceProvider() != null)
+            {
+                inVSNET = true;
+            }
+#endif
+
+            result = inVSNET ? new VSManager(transformation) : new FileManager(transformation);
+        }
+        catch (Exception e)
+        {
+            //host.LogError(e);
+        }
+        return result;
+    }
+
+    public void StartNewFile(String name)
+    {
+        StartNewFile(name, TemplateFileAsOutputTarget);
+    }
+
+    public void StartNewFile(String name, string projectName, string projectPath)
+    {
+        StartNewFile(name, new OutputTarget(projectName, projectPath));
+    }
+
+    public virtual void StartNewFile(String name, OutputTarget outputTarget)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException("name");
+        }
+
+        CurrentFileBlock = new FileBlock
+                       {
+                           Name = name,
+                           Target = outputTarget
+                       };
+    }
+
+    public void EndNewFile()
+    {
+        //EndFileBlock();
+    }
+
+    public void StartFooter()
+    {
+        if (CurrentFileBlock == null)
+        {
+            throw new InvalidOperationException(
+                "CurrentFileBlock is not initialized, call 'StartNewFile' prior using 'StartFooter' !");
+        }
+
+        CurrentFileBlock.Footer = new BlockData();
+        StartBlockData(CurrentFileBlock.Footer);
+    }
+
+    public void EndFooter()
+    {
+        if (CurrentFileBlock == null)
+        {
+            throw new InvalidOperationException(
+                "CurrentFileBlock is not initialized, call 'StartNewFile' prior using 'EndFooter' !");
+        }
+
+        EndBlockData(CurrentFileBlock.Footer);
+    }
+
+    public void StartHeader()
+    {
+        if (CurrentFileBlock == null)
+        {
+            throw new InvalidOperationException(
+                "CurrentFileBlock is not initialized, call 'StartNewFile' prior using 'StartHeader' !");
+        }
+
+        CurrentFileBlock.Header = new BlockData();
+        StartBlockData(CurrentFileBlock.Header);
+    }
+
+    public void EndHeader()
+    {
+        if (CurrentFileBlock == null)
+        {
+            throw new InvalidOperationException(
+                "CurrentFileBlock is not initialized, call 'StartNewFile' prior using 'EndHeader' !");
+        }
+
+        EndBlockData(CurrentFileBlock.Header);
+    }
+
+    private FileBlock CurrentFileBlock
+    {
+        get { return currentFileBlock; }
+        set
+        {
+            if (CurrentFileBlock != null)
+            {
+                EndFileBlock();
+            }
+
+            if (value != null)
+            {
+                //value.Start = this._textTransformation.GenerationEnvironment.Length;
+                StartBlockData(value);
+            }
+
+            currentFileBlock = value;
+        }
+    }
+
+    private void StartBlockData(BlockData blockData)
+    {
+        if (blockData != null)
+        {
+            blockData.Start = Template.Length;
+        }
+    }
+
+    private void EndBlockData(BlockData blockData)
+    {
+        if (blockData != null)
+        {
+            blockData.Length = this.Template.Length - blockData.Start;
+        }
+    }
+
+    private void EndFileBlock()
+    {
+        if (CurrentFileBlock == null)
+            return;
+
+        EndBlockData(CurrentFileBlock); //.Length = this.Template.Length - CurrentBlock.Start;
+        //if (CurrentBlock != header && CurrentBlock != footer)
+        files.Add(CurrentFileBlock);
+        currentFileBlock = null;
+    }
+
+    public void Flush()
+    {
+        this.Process();
+    }
+
+    protected StringBuilder Template
+    {
+        get { return this._textTransformation.GenerationEnvironment; }
+    }
+
+    public virtual void CleanUp()
+    {
+        //this.footer = new Block();
+        //this.header = new Block();
+        this.files.Clear();
+        //this.generatedFileNames.Clear();
+        this.CurrentFileBlock = null;
+        this.Template.Clear();
+    }
+
+    protected internal virtual void Process()
+    {
+        EndFileBlock();
+
+//        String headerText = this.Template.ToString(header.Start, header.Length);
+//        String footerText = this.Template.ToString(footer.Start, footer.Length);
+
+        //String outputPath = ResolveOutputPath();
+
+        files.Reverse();
+        foreach (var fileBlock in files)
+        {
+            string outputDir = fileBlock.Target.OutputDirectory;
+            String fileName = Path.Combine(outputDir, fileBlock.Name);
+
+            string headerText = fileBlock.Header == null ? string.Empty : fileBlock.Header.GetData(this.Template);
+            string footerText = fileBlock.Footer == null ? string.Empty : fileBlock.Footer.GetData(this.Template);
+
+            string content = headerText + fileBlock.GetData(this.Template) + footerText;
+            
+            //generatedFileNames.Add(fileName);
+
+            CreateFile(fileName, content);
+
+            fileBlock.TargetFileName = fileName;
+
+            //this.Template.Remove(fileBlock.Start, fileBlock.Length);
+        }
+
+        this.Template.Clear();
+    }
+
+    protected virtual void CreateFile(String fileName, String content)
+    {
+        if (IsFileContentDifferent(fileName, content))
+        {
+            File.WriteAllText(fileName, content);
+        }
+    }
+
+    public virtual String GetCustomToolNamespace(String fileName)
+    {
+        return null;
+    }
+
+    public virtual string GetTemplateItemCustomToolNamespace()
+    {
+        return string.Empty;
+    }
+
+    public string ResolveNamespace()
+    {
+        if (!string.IsNullOrEmpty(this.DefaultProjectNamespace))
+        {
+            return this.DefaultProjectNamespace;
+        }
+
+        return GetTemplateItemCustomToolNamespace();
+    }
+
+    protected bool IsFileContentDifferent(String fileName, String newContent)
+    {
+        return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
+    }
+
+    #region Nested type: VSManager
+
+    private class VSManager : FileManager
+    {
+        private readonly Action<String> checkOutAction;
+        private readonly DTE dte;
+        //private readonly Action<IEnumerable<String>> projectSyncAction;
+        private readonly Action<IEnumerable<FileBlock>> projectSyncAction;
+        private ProjectItem templateProjectItem;
+        //private ProjectItem outputPathProjectItem;
+        private List<ProjectItem> oldProjectItemsToDelete = new List<ProjectItem>();
+
+        internal VSManager(DynamicTextTransformation templatingHost)
+            : base(templatingHost)
+        {
+            var hostServiceProvider = _textTransformation.Host.AsIServiceProvider();
+            if (hostServiceProvider == null)
+            {
+                throw new ArgumentNullException("Could not obtain hostServiceProvider");
+            }
+
+            dte = (EnvDTE.DTE) hostServiceProvider.GetService(typeof (EnvDTE.DTE));
+            if (dte == null)
+                throw new ArgumentNullException("Could not obtain DTE from host");
+            templateProjectItem = dte.Solution.FindProjectItem(templateFile);
+            TemplateFileAsOutputTarget = new OutputTarget(templateProjectItem);
+
+            //BuildOldTemplateProjectFilesToDelete(templateProjectItem);
+
+            checkOutAction = (String fileName) => dte.SourceControl.CheckOutItem(fileName);
+            
+            projectSyncAction =
+                (IEnumerable<FileBlock> generatedFiles) =>
+                ProjectSync(templateProjectItem, generatedFiles, oldProjectItemsToDelete);
+        }
+
+        public override void StartNewFile(String name, OutputTarget outputTarget)
+        {
+            base.StartNewFile(name, outputTarget);
+
+            if (this.CurrentFileBlock.Target.ProjectItemsHolder == null)
+            {
+                ResolveOutputTargetProjectItem(this.CurrentFileBlock);
+            }
+        }
+
+        private void ResolveOutputTargetProjectItem(FileBlock fileBlock)
+        {
+            OutputTarget outputTarget = fileBlock.Target;
+
+            Project project = string.IsNullOrEmpty(outputTarget.ProjectName) 
+                ? null
+                : FindProjectByName(dte, outputTarget.ProjectName);
+
+            ProjectItems targetProjectItems = null;
+
+            if (project != null)
+            {
+                if (!string.IsNullOrEmpty(outputTarget.ProjectPath))
+                {
+                    var pathItems = outputTarget.ProjectPath.Split('\\');
+                    var projectItems = project.ProjectItems;
+                    foreach (var pathItem in pathItems)
+                    {
+                        var projItem = FindProjectItem(dte, projectItems, pathItem, Constants.vsProjectItemKindPhysicalFolder);
+                        if (projItem != null)
+                        {
+                            if (projItem.ProjectItems.Count > 0)
+                            {
+                                projectItems = projItem.ProjectItems;
+                            }
+
+                            if (pathItem == pathItems.Last())
+                            {
+                                targetProjectItems = projItem.ProjectItems;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    var dir = Path.GetDirectoryName(project.FileName);
+                    var templateFileDir = TemplateFileAsOutputTarget.OutputDirectory;
+
+                    if (dir != templateFileDir)
+                    {
+                        targetProjectItems = project.ProjectItems;
+                    }
+                }
+            }
+
+            //outputTarget.ProjectItem = targetProjectItem ?? TemplateFileAsOutputTarget;
+            if (targetProjectItems != null)
+            {
+                outputTarget.Update(targetProjectItems);
+            }
+            else
+            {
+                fileBlock.Target = TemplateFileAsOutputTarget;
+            }
+        }
+
+        public override void CleanUp()
+        {
+            base.CleanUp();
+            this.oldProjectItemsToDelete.Clear();
+        }
+
+        private void BuildListOfProjectItemsToDelete()
+        {
+            oldProjectItemsToDelete.Clear();
+
+            foreach (var fileBlock in files)
+            {
+                var items = fileBlock.Target.ProjectItemsHolder.OfType<ProjectItem>()
+                    .Where(projItem => !oldProjectItemsToDelete.Contains(projItem))
+                    .ToList();
+
+                oldProjectItemsToDelete.AddRange(items);
+            }
+        }
+
+        public override String DefaultProjectNamespace
+        {
+            get { return templateProjectItem.ContainingProject.Properties.Item("DefaultNamespace").Value.ToString(); }
+        }
+
+        public override String GetCustomToolNamespace(string fileName)
+        {
+            return dte.Solution.FindProjectItem(fileName).Properties.Item("CustomToolNamespace").Value.ToString();
+        }
+
+        public virtual string GetTemplateItemCustomToolNamespace()
+        {
+            return templateProjectItem != null
+                       ? templateProjectItem.Properties.Item("CustomToolNamespace").Value.ToString()
+                       : string.Empty;
+        }
+
+        protected override void CreateFile(String fileName, String content)
+        {
+            if (IsFileContentDifferent(fileName, content))
+            {
+                CheckoutFileIfRequired(fileName);
+                File.WriteAllText(fileName, content);
+            }
+        }
+
+        private static Project FindProjectByName(DTE vsObj, string name)
+        {
+            Project result = null;
+            if (!string.IsNullOrEmpty(name))
+            {
+                foreach (Project project in vsObj.Solution.Projects)
+                {
+                    string projName = project.Name;
+                    if (string.Compare(projName, name, true) == 0)
+                    {
+                        result = project;
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static ProjectItem FindProjectItem(DTE vsObj, ProjectItems inProjectItems,
+            string ProjectItemName, string projectItemKind, bool byName = true)
+        {
+            foreach (ProjectItem projItem in inProjectItems)
+            {
+                string _name = projItem.Name;
+                for (short i = 0; i < projItem.FileCount; i++)
+                {
+                    bool kindOk = (projectItemKind == null || projItem.Kind == projectItemKind);
+                    string prjName = byName ? projItem.Name : projItem.FileNames[i];
+                    bool nameOk = prjName == ProjectItemName;
+                    if (nameOk && kindOk)
+                    {
+                        return projItem;
+                    }
+                    else if (projItem.ProjectItems.Count > 0)
+                    {
+                        ProjectItem found = FindProjectItem(vsObj, projItem.ProjectItems, ProjectItemName, projectItemKind);
+                        if (found != null)
+                        {
+                            return found;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        protected internal override void Process()
+        {
+            if (templateProjectItem.ProjectItems == null)
+            {
+                return;
+            }
+
+            base.Process();
+            BuildListOfProjectItemsToDelete();
+            //projectSyncAction.EndInvoke(projectSyncAction.BeginInvoke(generatedFileNames, null, null));
+            projectSyncAction.EndInvoke(projectSyncAction.BeginInvoke(files, null, null));
+        }
+
+        private static void ProjectSync(ProjectItem templateProjectItem, IEnumerable<FileBlock> generatedFileBlocks, List<ProjectItem> projectItemsToDelete)
+        {
+            var generatedFiles = generatedFileBlocks.Select(item => item.Target);
+            string templateFileName = templateProjectItem.FileNames[0];
+            var keepFileNames = generatedFileBlocks.Select(item => item.TargetFileName);
+
+            Dictionary<ProjectItems, List<string>> projectItemExistingFiles = new Dictionary<ProjectItems, List<string>>();
+            foreach (var genProjItems in generatedFiles.Select(item => item.ProjectItemsHolder))
+            {
+                if (!projectItemExistingFiles.ContainsKey(genProjItems))
+                {
+                    var projectItems = genProjItems.OfType<ProjectItem>();
+                    projectItemExistingFiles.Add(genProjItems, projectItems.Select(item => item.FileNames[0]).ToList());
+                }
+            }
+
+            if (projectItemsToDelete != null)
+            {
+                foreach (var oldProjectItem in projectItemsToDelete)
+                {
+                    string oldFileName = oldProjectItem.FileNames[0];
+                    if (oldFileName != templateFileName && !keepFileNames.Contains(oldFileName))
+                    {
+                        oldProjectItem.Delete();
+                    }
+                }
+            }
+
+            // Add missing files to the project
+            foreach (var generatedFile in generatedFileBlocks)
+            {
+                var target = generatedFile.Target;
+                string ts = target.ToString();
+                var existingFiles = projectItemExistingFiles[target.ProjectItemsHolder];
+                string targetFileName = generatedFile.TargetFileName;
+                if (!existingFiles.Contains(targetFileName))
+                {
+                    target.ProjectItemsHolder.AddFromFile(targetFileName);
+                }
+            }
+        }
+
+        private void CheckoutFileIfRequired(String fileName)
+        {
+            SourceControl sc = dte.SourceControl;
+            if (sc != null && sc.IsItemUnderSCC(fileName) && !sc.IsItemCheckedOut(fileName))
+                checkOutAction.EndInvoke(checkOutAction.BeginInvoke(fileName, null, null));
+        }
+
+        //        private void BuildOldTemplateProjectFilesToDelete(ProjectItem sourceProjectItem)
+        //        {
+        //            oldProjectItemsToDelete = sourceProjectItem.ProjectItems.OfType<ProjectItem>().ToList();
+        //        }
+
+        /*protected override string ResolveOutputPath()
+        {
+            Project outputProject = FindOutputProject(dte);
+            if (outputProject != null)
+            {
+                templateDirectory = Path.GetDirectoryName(outputProject.FileName);
+            }
+            else
+            {
+                outputProject = templateProjectItem.ContainingProject;
+            }
+
+            string result = base.ResolveOutputPath();
+
+            outputPathProjectItem = FindProjectItem(dte, outputProject.ProjectItems, result);
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                string dir = File.Exists(result) ? Path.GetDirectoryName(result) : result;
+                if (Directory.Exists(dir))
+                {
+                    string templateFileName = templateProjectItem.FileNames[0];
+                    string templateDir = Path.GetDirectoryName(templateFileName);
+
+                    if (string.Compare(dir, templateDir, true) == 0)
+                    {
+                        outputPathProjectItem = templateProjectItem;
+                    }
+                }
+            }
+
+            if (outputPathProjectItem == null)
+            {
+                outputPathProjectItem = templateProjectItem;
+            }
+            else
+            {
+                string templateFileName = templateProjectItem.FileNames[0];
+                string outputPathProjectItemFileName = outputPathProjectItem.FileNames[0];
+                if (string.Compare(templateFileName, outputPathProjectItemFileName, true) != 0)
+                {
+                    //templateProjectItem = outputPathProjectItem;
+                    BuildOldTemplateProjectFilesToDelete(outputPathProjectItem);
+                }
+            }
+
+            return result;
+        }*/
+
+        /*private Project FindOutputProject(DTE vsObj)
+        {
+            Project result = null;
+            if (!string.IsNullOrEmpty(OutputProjectName))
+            {
+                foreach (Project project in vsObj.Solution.Projects)
+                {
+                    string projName = project.Name;
+                    if (string.Compare(projName, OutputProjectName, true) == 0)
+                    {
+                        result = project;
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }*/
+    }
+
+    #endregion
+}
+
+/// <summary>
+/// Reponsible for abstracting the use of Host between times
+/// when it is available and not
+/// </summary>
+public interface IDynamicHost
+{
+    /// <summary>
+    /// An abstracted call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolveParameterValue
+    /// </summary>
+    string ResolveParameterValue(string id, string name, string otherName);
+
+    /// <summary>
+    /// An abstracted call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolvePath
+    /// </summary>
+    string ResolvePath(string path);
+
+    /// <summary>
+    /// An abstracted call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost TemplateFile
+    /// </summary>
+    string TemplateFile { get; }
+
+    /// <summary>
+    /// Returns the Host instance cast as an IServiceProvider
+    /// </summary>
+    IServiceProvider AsIServiceProvider();
+}
+
+/// <summary>
+/// Reponsible for implementing the IDynamicHost as a dynamic
+/// shape wrapper over the Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost interface
+/// rather than type dependent wrapper.  We don't use the
+/// interface type so that the code can be run in preprocessed mode
+/// on a .net framework only installed machine.
+/// </summary>
+public class DynamicHost : IDynamicHost
+{
+    private readonly object _instance;
+    private readonly MethodInfo _resolveParameterValue;
+    private readonly MethodInfo _resolvePath;
+    private readonly PropertyInfo _templateFile;
+
+    /// <summary>
+    /// Creates an instance of the DynamicHost class around the passed in
+    /// Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost shapped instance passed in.
+    /// </summary>
+    public DynamicHost(object instance)
+    {
+        _instance = instance;
+        Type type = _instance.GetType();
+        _resolveParameterValue = type.GetMethod("ResolveParameterValue", new Type[]
+                                                                         {
+                                                                             typeof (string), typeof (string),
+                                                                             typeof (string)
+                                                                         });
+        _resolvePath = type.GetMethod("ResolvePath", new Type[]
+                                                     {
+                                                         typeof (string)
+                                                     });
+        _templateFile = type.GetProperty("TemplateFile");
+
+    }
+
+    /// <summary>
+    /// A call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolveParameterValue
+    /// </summary>
+    public string ResolveParameterValue(string id, string name, string otherName)
+    {
+        return (string) _resolveParameterValue.Invoke(_instance, new object[]
+                                                                 {
+                                                                     id, name, otherName
+                                                                 });
+    }
+
+    /// <summary>
+    /// A call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolvePath
+    /// </summary>
+    public string ResolvePath(string path)
+    {
+        return (string) _resolvePath.Invoke(_instance, new object[]
+                                                       {
+                                                           path
+                                                       });
+    }
+
+    /// <summary>
+    /// A call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost TemplateFile
+    /// </summary>
+    public string TemplateFile
+    {
+        get { return (string) _templateFile.GetValue(_instance, null); }
+    }
+
+    /// <summary>
+    /// Returns the Host instance cast as an IServiceProvider
+    /// </summary>
+    public IServiceProvider AsIServiceProvider()
+    {
+        return _instance as IServiceProvider;
+    }
+}
+
+/// <summary>
+/// Reponsible for implementing the IDynamicHost when the
+/// Host property is not available on the TextTemplating type. The Host
+/// property only exists when the hostspecific attribute of the template
+/// directive is set to true.
+/// </summary>
+public class NullHost : IDynamicHost
+{
+    /// <summary>
+    /// An abstraction of the call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolveParameterValue
+    /// that simply retuns null.
+    /// </summary>
+    public string ResolveParameterValue(string id, string name, string otherName)
+    {
+        return null;
+    }
+
+    /// <summary>
+    /// An abstraction of the call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolvePath
+    /// that simply retuns the path passed in.
+    /// </summary>
+    public string ResolvePath(string path)
+    {
+        return path;
+    }
+
+    /// <summary>
+    /// An abstraction of the call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost TemplateFile
+    /// that returns null.
+    /// </summary>
+    public string TemplateFile
+    {
+        get { return null; }
+    }
+
+    /// <summary>
+    /// Returns null.
+    /// </summary>
+    public IServiceProvider AsIServiceProvider()
+    {
+        return null;
+    }
+}
+
+/// <summary>
+/// Responsible creating an instance that can be passed
+/// to helper classes that need to access the TextTransformation
+/// members.  It accesses member by name and signature rather than
+/// by type.  This is necessary when the
+/// template is being used in Preprocessed mode
+/// and there is no common known type that can be
+/// passed instead
+/// </summary>
+public class DynamicTextTransformation
+{
+    private object _instance;
+    private IDynamicHost _dynamicHost;
+
+    private readonly MethodInfo _write;
+    private readonly MethodInfo _writeLine;
+    private readonly PropertyInfo _generationEnvironment;
+    private readonly PropertyInfo _errors;
+    private readonly PropertyInfo _host;
+
+    /// <summary>
+    /// Creates an instance of the DynamicTextTransformation class around the passed in
+    /// TextTransformation shapped instance passed in, or if the passed in instance
+    /// already is a DynamicTextTransformation, it casts it and sends it back.
+    /// </summary>
+    public static DynamicTextTransformation Create(object instance)
+    {
+        if (instance == null)
+        {
+            throw new ArgumentNullException("instance");
+        }
+
+        DynamicTextTransformation textTransformation = instance as DynamicTextTransformation;
+        if (textTransformation != null)
+        {
+            return textTransformation;
+        }
+
+        return new DynamicTextTransformation(instance);
+    }
+
+    private DynamicTextTransformation(object instance)
+    {
+        _instance = instance;
+        Type type = _instance.GetType();
+        _write = type.GetMethod("Write", new Type[]
+                                         {
+                                             typeof (string)
+                                         });
+        _writeLine = type.GetMethod("WriteLine", new Type[]
+                                                 {
+                                                     typeof (string)
+                                                 });
+        _generationEnvironment = type.GetProperty("GenerationEnvironment",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+        _host = type.GetProperty("Host");
+        _errors = type.GetProperty("Errors");
+    }
+
+    /// <summary>
+    /// Gets the value of the wrapped TextTranformation instance's GenerationEnvironment property
+    /// </summary>
+    public StringBuilder GenerationEnvironment
+    {
+        get { return (StringBuilder) _generationEnvironment.GetValue(_instance, null); }
+    }
+
+    /// <summary>
+    /// Gets the value of the wrapped TextTranformation instance's Errors property
+    /// </summary>
+    public System.CodeDom.Compiler.CompilerErrorCollection Errors
+    {
+        get { return (System.CodeDom.Compiler.CompilerErrorCollection) _errors.GetValue(_instance, null); }
+    }
+
+    /// <summary>
+    /// Calls the wrapped TextTranformation instance's Write method.
+    /// </summary>
+    public void Write(string text)
+    {
+        _write.Invoke(_instance, new object[]
+                                 {
+                                     text
+                                 });
+    }
+
+    /// <summary>
+    /// Calls the wrapped TextTranformation instance's WriteLine method.
+    /// </summary>
+    public void WriteLine(string text)
+    {
+        _writeLine.Invoke(_instance, new object[]
+                                     {
+                                         text
+                                     });
+    }
+
+    /// <summary>
+    /// Gets the value of the wrapped TextTranformation instance's Host property
+    /// if available (shows up when hostspecific is set to true in the template directive) and returns
+    /// the appropriate implementation of IDynamicHost
+    /// </summary>
+    public IDynamicHost Host
+    {
+        get
+        {
+            if (_dynamicHost == null)
+            {
+                if (_host == null)
+                {
+                    _dynamicHost = new NullHost();
+                }
+                else
+                {
+                    _dynamicHost = new DynamicHost(_host.GetValue(_instance, null));
+                }
+            }
+            return _dynamicHost;
+        }
+    }
+}
+
+public class CodeGenerationTools
+{
+    private const string SYSTEM_NULLABLE_FORMAT = "System.Nullable<{0}>";
+    private const string MODIFIER_VIRTUAL = "virtual";
+    private const string TYPE_KIND_INTERFACE = "interface";
+    private const string TYPE_KIND_CLASS = "class";
+    private const string TYPE_KIND_STRUCT = "struct";
+    private const string TYPE_FORMAT_GUID = "new System.Guid(\"{0}\")";
+    private const string TYPE_FORMAT_DATETIME = "new System.DateTime({0}, System.DateTimeKind.Unspecified)";
+    private const string TYPE_FORMAT_BYTE_ARRAY = "new System.Byte[] {{{0}}}";
+    private const string TYPE_FORMAT_TIMESPAN = "new System.TimeSpan({0}, {1}, {2})";
+    private const string TYPE_FORMAT_DATETIMEOFFSET = "new System.DateTimeOffset({0}, new System.TimeSpan({1}))";
+    private const string TYPE_HASHSET = "System.Collections.Generic.HashSet<{0}>";
+    private const string ATTRIBUTE_DATACONTRACT = "[System.Runtime.Serialization.DataContract]";
+    private const string ATTRIBUTE_DATAMEMBER = "[System.Runtime.Serialization.DataMember]";
+    private const string ATTRIBUTE_SERIALIZABLE = "System.SerializableAttribute";
+    
+    private readonly DynamicTextTransformation _textTransformation;
+    private readonly CSharpCodeProvider _code;
+
+    public bool ActiveDTOStage { get; set; }
+
+    #region Accessibility
+
+    private const string VISIBILITY_PRIVATE = "private";
+    private const string VISIBILITY_INTERNAL = "internal";
+    private const string VISIBILITY_PROTECTED = "protected";
+    private const string VISIBILITY_PROTECTED_INTERNAL = "protected internal";
+
+    public string AccessibilityToString(PropertyAccessModifier propertyAccessModifier)
+    {
+        return propertyAccessModifier == PropertyAccessModifier.ProtectedInternal
+                   ? VISIBILITY_PROTECTED_INTERNAL
+                   : propertyAccessModifier.ToString().ToLower();
+    }
+
+    public string AccessibilityForType(IPropertyBase property)
+    {
+        PropertyAccessModifier accessModifier = PropertyAccessModifier.Public;
+        if (!this.ActiveDTOStage)
+        {
+            accessModifier = property.PropertyAccess.GetHigherModifier();
+        }
+        
+        string accessibility = accessModifier == PropertyAccessModifier.ProtectedInternal 
+            ? VISIBILITY_PROTECTED_INTERNAL 
+            : accessModifier.ToString().ToLowerInvariant();
+
+        if ((property as IPropertyBase).Owner.TypeKind == PersistentTypeKind.Interface)
+        {
+            accessibility = string.Empty;
+        }
+
+        return accessibility;
+    }
+
+    public string AccessibilityForType(IAccessibleElement element)
+    {
+        AccessModifier accessModifier = this.ActiveDTOStage ? AccessModifier.Public : element.Access;
+        string accessibility = accessModifier.ToString().ToLowerInvariant();
+//        if (element is IPropertyBase)
+//        {
+//            if ((element as IPropertyBase).Owner.TypeKind == PersistentTypeKind.Interface)
+//            {
+//                accessibility = string.Empty;
+//            }
+//        }
+
+        return accessibility;
+    }
+
+    public bool VisibleSetter(IPropertyBase property, IPropertiesBuilder propertiesBuilder)
+    {
+        if (this.ActiveDTOStage)
+        {
+            return true;
+        }
+
+        string setter = ForSetter(property, propertiesBuilder);
+        if (setter == VISIBILITY_PRIVATE && property.Owner.TypeKind == PersistentTypeKind.Interface)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public string ForGetter(IPropertyBase property)
+    {
+        string result = string.Empty;
+        if (this.ActiveDTOStage)
+        {
+            return result;
+        }
+
+        PropertyAccessModifier higherModifier = property.PropertyAccess.GetHigherModifier();
+        if (property.PropertyAccess.Getter != PropertyAccessModifier.Public && property.PropertyAccess.Getter != higherModifier)
+        {
+            result = GetPropertyAccessModifierString(property.PropertyAccess.Getter);
+        }
+
+        return result;
+    }
+    
+    public string ForSetter(IPropertyBase property, IPropertiesBuilder propertiesBuilder)
+    {
+        string result = string.Empty;
+        if (this.ActiveDTOStage)
+        {
+            return result;
+        }
+
+        switch (property.PropertyKind)
+        {
+            case PropertyKind.Scalar:
+            {
+                IOrmAttribute[] typeAttributes = propertiesBuilder.GetPropertyTypeAttributes(property);
+                OrmKeyAttribute keyAttribute = (OrmKeyAttribute)typeAttributes.Single(item => item is OrmKeyAttribute);
+
+                result = keyAttribute.Enabled ? VISIBILITY_PRIVATE : string.Empty;
+                break;
+            }
+            case PropertyKind.Navigation:
+            {
+                IOrmAttribute[] typeAttributes = propertiesBuilder.GetPropertyTypeAttributes(property);
+                OrmKeyAttribute keyAttribute = (OrmKeyAttribute)typeAttributes.Single(item => item is OrmKeyAttribute);
+
+                INavigationProperty navigationProperty = (INavigationProperty)property;
+                if (navigationProperty.Multiplicity == MultiplicityKind.Many || keyAttribute.Enabled)
+                {
+                    result = VISIBILITY_PRIVATE;
+                }
+
+                break;
+            }
+        }
+
+        // only when result is not directly 'private' because of business rules we can adjust it from settings
+        if (string.IsNullOrEmpty(result))
+        {
+            PropertyAccessModifier higherModifier = property.PropertyAccess.GetHigherModifier();
+
+            if (property.PropertyAccess.Setter != PropertyAccessModifier.Public && property.PropertyAccess.Setter != higherModifier)
+            {
+                result = GetPropertyAccessModifierString(property.PropertyAccess.Setter);
+            }
+        }
+
+        return result;
+    }
+
+    private string GetPropertyAccessModifierString(PropertyAccessModifier modifier)
+    {
+        switch (modifier)
+        {
+            case PropertyAccessModifier.Internal:
+                return VISIBILITY_INTERNAL;
+
+            case PropertyAccessModifier.Private:
+                return VISIBILITY_PRIVATE;
+
+            case PropertyAccessModifier.Protected:
+                return VISIBILITY_PROTECTED;
+
+            case PropertyAccessModifier.ProtectedInternal:
+                return string.Format("{0} {1}", VISIBILITY_PROTECTED, VISIBILITY_INTERNAL);
+        }
+
+        return string.Empty;
+    }
+    
+    #endregion Accessibility
+
+    /// <summary>
+    /// Initializes a new CodeGenerationTools object with the TextTransformation (T4 generated class)
+    /// that is currently running
+    /// </summary>
+    public CodeGenerationTools(object textTransformation)
+    {
+        if (textTransformation == null)
+        {
+            throw new ArgumentNullException("textTransformation");
+        }
+
+        _textTransformation = DynamicTextTransformation.Create(textTransformation);
+        _code = new CSharpCodeProvider();
+        FullyQualifySystemTypes = false;
+        CamelCaseFields = true;
+        ActiveDTOStage = false;
+    }
+
+    public string TemplateFile
+    {
+        get { return _textTransformation.Host.TemplateFile; }
+    }
+
+    public string GlobalNamespace { get; set; }
+
+    /// <summary>
+    /// When true, all types that are not being generated
+    /// are fully qualified to keep them from conflicting with
+    /// types that are being generated. Useful when you have
+    /// something like a type being generated named System.
+    ///
+    /// Default is false.
+    /// </summary>
+    public bool FullyQualifySystemTypes { get; set; }
+
+    /// <summary>
+    /// When true, the field names are Camel Cased,
+    /// otherwise they will preserve the case they
+    /// start with.
+    ///
+    /// Default is true.
+    /// </summary>
+    public bool CamelCaseFields { get; set; }
+
+    /// <summary>
+    /// Returns the NamespaceName suggested by VS if running inside VS.  Otherwise, returns
+    /// null.
+    /// </summary>
+    public string VsNamespaceSuggestion()
+    {
+        string suggestion = _textTransformation.Host.ResolveParameterValue("directiveId", "namespaceDirectiveProcessor", "namespaceHint");
+        if (String.IsNullOrEmpty(suggestion))
+        {
+            return null;
+        }
+
+        return suggestion;
+    }
+
+    public IPropertiesBuilder PropertiesBuilderForType(IPersistentType persistentType)
+    {
+        return PropertiesBuilderContext.Current.Get(persistentType);
+    }
+
+    public IPropertiesBuilder PropertiesBuilderForTypeByOwner(IPropertyBase property)
+    {
+        IPersistentType realOwner = property.GetRealOwner();
+        return PropertiesBuilderForType(realOwner);
+    }
+
+    /// <summary>
+    /// Returns a string that is safe for use as an identifier in C#.
+    /// Keywords are escaped.
+    /// </summary>
+    public string Escape(string name)
+    {
+        if (name == null)
+        {
+            return null;
+        }
+
+        return _code.CreateEscapedIdentifier(name);
+    }
+
+    public string EscapeNamespace(IPersistentType persistentType)
+    {
+        return string.IsNullOrEmpty(persistentType.Namespace) ? EscapeNamespace(GlobalNamespace) : EscapeNamespace(persistentType.Namespace);
+    }
+
+    public string BuildXtensiveType(OrmType type, params string[] args)
+    {
+        if (ActiveDTOStage)
+        {
+            return BuildPocoType(type, args);
+        }
+            
+        return OrmUtils.BuildXtensiveType(type, args);
+    }
+
+    private string BuildPocoType(OrmType type, params string[] args)
+    {
+        string result = string.Empty;
+
+        switch (type)
+        {
+            case OrmType.EntitySet:
+            {
+                result = string.Format(TYPE_HASHSET, args[0]);
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Returns the name of the Type object formatted for
+    /// use in source code.
+    ///
+    /// This method changes behavior based on the FullyQualifySystemTypes
+    /// setting.
+    /// </summary>
+    public string Escape(Type clrType)
+    {
+        if (clrType == null)
+        {
+            return null;
+        }
+
+        string typeName;
+        if (FullyQualifySystemTypes)
+        {
+            typeName = "global::" + clrType.FullName;
+        }
+        else
+        {
+            typeName = _code.GetTypeOutput(new CodeTypeReference(clrType));
+        }
+        return typeName;
+    }
+
+    public string EscapeNameWithNamespace(IPersistentType persistentType, IPersistentType dependTypeNamespace)
+    {
+        string namespaceName = EscapeNamespace(persistentType);
+
+        bool useFullForm = dependTypeNamespace == null || !Util.StringEqual(namespaceName, EscapeNamespace(dependTypeNamespace), true);
+
+        if (useFullForm)
+        {
+            return string.Format("{0}.{1}", namespaceName, persistentType.Name);
+        }
+
+        return persistentType.Name;
+    }
+
+    public string EscapeType(ITypedEntitySet typedEntitySet)
+    {
+        return BuildXtensiveType(OrmType.EntitySet, EscapeNameWithNamespace(typedEntitySet.ItemType, typedEntitySet));
+    }
+
+    public string EscapeType(IPropertyBase property)
+    {
+        string result = null;
+
+        if (property is IScalarProperty)
+        {
+            IScalarProperty scalarProperty = (IScalarProperty) property;
+            Type clrType = scalarProperty.Type.TryGetClrType(null);
+            string typeName;
+
+            if (clrType != null)
+            {
+                typeName = Escape(clrType);
+                Defaultable<bool> nullable = scalarProperty.FieldAttribute.Nullable;
+                bool isNullable = !nullable.IsDefault() && nullable.Value;
+                if (clrType.IsValueType && isNullable)
+                {
+                    typeName = String.Format(CultureInfo.InvariantCulture, SYSTEM_NULLABLE_FORMAT, typeName);
+                }
+            }
+            else
+            {
+                typeName = scalarProperty.Type.FullName;
+            }
+
+            result = typeName;
+        }
+        else if (property is INavigationProperty)
+        {
+            INavigationProperty navigationProperty = (INavigationProperty) property;
+            result = navigationProperty.GetPropertyType(_code, EscapeNameWithNamespace,
+                delegate(OrmType type, string s)
+                {
+                    return BuildXtensiveType(type, s);
+                });
+        }
+        else if (property is IStructureProperty)
+        {
+            IStructureProperty structureProperty = (IStructureProperty) property;
+            result = EscapeNameWithNamespace(structureProperty.TypeOf, property.Owner);
+        }
+
+        return result;
+    }
+
+    public string Escape(IElement element)
+    {
+        if (element == null)
+        {
+            return null;
+        }
+
+        return element.Name;
+    }
+
+    /// <summary>
+    /// Returns the NamespaceName with each segment safe to
+    /// use as an identifier.
+    /// </summary>
+    public string EscapeNamespace(string namespaceName)
+    {
+        if (String.IsNullOrEmpty(namespaceName))
+        {
+            return namespaceName;
+        }
+
+        string[] parts = namespaceName.Split('.');
+        namespaceName = String.Empty;
+        foreach (string part in parts)
+        {
+            if (namespaceName != String.Empty)
+            {
+                namespaceName += ".";
+            }
+
+            namespaceName += Escape(part);
+        }
+
+        return namespaceName;
+    }
+
+    public bool CanDecorateWithContract(bool templateFlag, IPersistentType persistentType, out string decoratorAttribute)
+    {
+        decoratorAttribute = null;
+        bool result = CanDecorateWithContract(templateFlag, persistentType.DataContract);
+        if (result && persistentType.TypeKind != PersistentTypeKind.Interface)
+        {
+            string[] typeAttributes = CreateTypeAttributesCommon(persistentType.DataContract);
+
+            decoratorAttribute = typeAttributes == null || typeAttributes.Length == 0
+                                     ? ATTRIBUTE_DATACONTRACT
+                                     : string.Format("[{0}]", typeAttributes[0]);
+
+            //decoratorAttribute = ATTRIBUTE_DATACONTRACT;
+        }
+        else
+        {
+            result = false;
+        }
+
+        return result;
+    }
+
+    public bool CanDecorateWithContract(bool templateFlag, IPropertyBase property, out string decoratorAttribute)
+    {
+        decoratorAttribute = null;
+        bool result = CanDecorateWithContract(templateFlag, property.DataMember);
+        if (result && property.GetRealOwner().TypeKind != PersistentTypeKind.Interface)
+        {
+            string[] typeAttributes = CreateTypeAttributesCommon(property.DataMember);
+
+            decoratorAttribute = typeAttributes == null || typeAttributes.Length == 0
+                                     ? ATTRIBUTE_DATAMEMBER
+                                     : string.Format("[{0}]", typeAttributes[0]);
+            //decoratorAttribute = ATTRIBUTE_DATAMEMBER;
+        }
+        return result;
+    }
+
+    private bool CanDecorateWithContract(bool templateFlag, ContractDescriptorBase contractDescriptor)
+    {
+        return contractDescriptor.Mode == ContractDescriptorApplyMode.Enabled ||
+               (templateFlag && contractDescriptor.Mode == ContractDescriptorApplyMode.Default);
+    }
+
+    public string FieldName(IPropertyBase property)
+    {
+        if (property == null)
+        {
+            return null;
+        }
+
+        return FieldName(property.Name);
+    }
+
+    private string FieldName(string name)
+    {
+        return CamelCaseFields ? CamelCase(name) : name;
+    }
+
+    public string InheritanceModifier(IPropertyBase propertyBase)
+    {
+        bool isSealed = false;
+        if (propertyBase.Owner is IEntityBase)
+        {
+            isSealed = (propertyBase.Owner as IEntityBase).InheritanceModifier == InheritanceModifiers.Sealed;
+        }
+
+        if (ActiveDTOStage && propertyBase.Owner.TypeKind == PersistentTypeKind.Structure)
+        {
+            isSealed = true; // simulate 'sealed' to return empty string as modifier
+        }
+
+        return propertyBase.Owner.TypeKind == PersistentTypeKind.Interface || isSealed ? string.Empty : MODIFIER_VIRTUAL;
+    }
+
+    public string InheritanceModifier(IPersistentType entity)
+    {
+        IEntityBase entityBase = entity as IEntityBase;
+
+        if (entityBase == null || entityBase.InheritanceModifier == InheritanceModifiers.None)
+        {
+            return string.Empty;
+        }
+        return entityBase.InheritanceModifier.ToString().ToLowerInvariant();
+    }
+
+    public bool HasInheritance(IPersistentType persistentType)
+    {
+        int inheritanceCount = 0;
+
+        IInterface @interface = persistentType as IInterface;
+        IEntityBase entityBase = persistentType as IEntityBase;
+
+        if (@interface != null)
+        {
+            if (entityBase == null)
+            {
+                inheritanceCount = @interface.InheritedInterfaces.Count;
+            }
+        }
+
+        if (entityBase != null)
+        {
+            inheritanceCount = entityBase.InheritedInterfaces.Count;
+            if (entityBase.BaseType != null)
+            {
+                inheritanceCount++;
+            }
+        }
+
+        return inheritanceCount > 0;
+    }
+
+    public string TypeIdent(IPersistentType persistentType)
+    {
+        return persistentType.TypeKind == PersistentTypeKind.Interface 
+            ? TYPE_KIND_INTERFACE :
+            this.ActiveDTOStage && persistentType.TypeKind == PersistentTypeKind.Structure ? TYPE_KIND_STRUCT : TYPE_KIND_CLASS;
+    }
+
+    public string[] InheritanceList(IPersistentType persistentType)
+    {
+        List<string> result = null;
+
+        if (persistentType is ITypedEntitySet)
+        {
+            ITypedEntitySet typedEntitySet = (ITypedEntitySet) persistentType;
+            result = new List<string> { BuildXtensiveType(OrmType.EntitySet, EscapeNameWithNamespace(typedEntitySet.ItemType, persistentType)) };
+            return result.ToArray();
+        }
+
+        IInterface @interface = persistentType as IInterface;
+        string entityBaseBaseTypeStr = null;
+        InheritanceTree inheritanceTree = null;
+
+        if (@interface != null)
+        {
+            inheritanceTree = InheritanceTreeCache.Get(@interface);
+            if (!inheritanceTree.TreeRebuilded)
+            {
+                inheritanceTree.RebuildTree(false);
+            }
+
+            IInterface entityBaseBaseType = null;
+            if (@interface is IEntityBase)
+            {
+                IEntityBase entityBase = (IEntityBase)@interface;
+                entityBaseBaseType = entityBase.BaseType;
+                entityBaseBaseTypeStr = entityBase.BaseType == null
+                                            ? null
+                                            : EscapeNameWithNamespace(entityBase.BaseType, persistentType);
+            }
+
+            ReadOnlyCollection<InheritanceNode> flatList = inheritanceTree.GetFlatList(InheritanceListMode.CurrentLevel);
+            IEnumerable<IInterface> allInheritanceList = flatList.Select(node => node.Interface).Where(item => item != entityBaseBaseType);
+
+            result = allInheritanceList.Select(item => EscapeNameWithNamespace(item, persistentType)).ToList();
+
+        }
+
+        string commonBaseType = persistentType.TypeKind == PersistentTypeKind.Structure
+                                    ? BuildXtensiveType(OrmType.Structure)
+                                    : BuildXtensiveType(OrmType.Entity);
+
+        bool noInheritance = (result == null || result.Count == 0 && persistentType.TypeKind != PersistentTypeKind.Interface) && string.IsNullOrEmpty(entityBaseBaseTypeStr);
+
+        if (noInheritance)
+        {
+            result = new List<string>();
+            if (!this.ActiveDTOStage)
+            {
+                result.Add(commonBaseType);
+            }
+        }
+        else
+        {
+            if (persistentType.TypeKind.In(PersistentTypeKind.Entity, PersistentTypeKind.Structure))
+            {
+                if (@interface.InheritingByInterfaces.Count == 0 && string.IsNullOrEmpty(entityBaseBaseTypeStr) && !this.ActiveDTOStage)
+                {
+                    result.Insert(0, commonBaseType);
+                }
+            }
+            else if (persistentType.TypeKind == PersistentTypeKind.Interface)
+            {
+                bool inheritesCommonIEntity = @interface.InheritsIEntity == InheritsIEntityMode.AlwaysInherit;
+                if (!inheritesCommonIEntity)
+                {
+                    inheritesCommonIEntity = @interface.InheritedInterfaces.Count == 0;
+                }
+
+                if (inheritesCommonIEntity && !this.ActiveDTOStage)
+                {
+                    string commonIEntityType = BuildXtensiveType(OrmType.IEntity);
+                    result.Insert(0, commonIEntityType);
+                }
+            }
+        }
+
+        if (!string.IsNullOrEmpty(entityBaseBaseTypeStr))
+        {
+            result.Insert(0, entityBaseBaseTypeStr);
+        }
+
+        return result.ToArray();
+    }
+
+    public string CamelCase(string identifier)
+    {
+        if (String.IsNullOrEmpty(identifier))
+        {
+            return identifier;
+        }
+
+        if (identifier.Length == 1)
+        {
+            return identifier[0].ToString(CultureInfo.InvariantCulture).ToLowerInvariant();
+        }
+
+        return identifier[0].ToString(CultureInfo.InvariantCulture).ToLowerInvariant() + identifier.Substring(1);
+    }
+
+    /// <summary>
+    /// If the value parameter is null or empty an empty string is returned,
+    /// otherwise it retuns value with a single space concatenated on the end.
+    /// </summary>
+    public string SpaceAfter(string value)
+    {
+        return StringAfter(value, " ");
+    }
+
+    /// <summary>
+    /// If the value parameter is null or empty an empty string is returned,
+    /// otherwise it retuns value with a single space concatenated on the end.
+    /// </summary>
+    public string SpaceBefore(string value)
+    {
+        return StringBefore(" ", value);
+    }
+
+    /// <summary>
+    /// If the value parameter is null or empty an empty string is returned,
+    /// otherwise it retuns value with append concatenated on the end.
+    /// </summary>
+    public string StringAfter(string value, string append)
+    {
+        if (String.IsNullOrEmpty(value))
+        {
+            return String.Empty;
+        }
+
+        return value + append;
+    }
+
+    public string StringOptional(Func<String> optionalString, bool expression)
+    {
+        return expression ? optionalString() : string.Empty;
+    }
+
+    public string StringOptional(string optionalString, bool expression)
+    {
+        return expression ? optionalString : string.Empty;
+    }
+
+    /// <summary>
+    /// If the value parameter is null or empty an empty string is returned,
+    /// otherwise it retuns value with prepend concatenated on the front.
+    /// </summary>
+    public string StringBefore(string prepend, string value)
+    {
+        if (String.IsNullOrEmpty(value))
+        {
+            return String.Empty;
+        }
+
+        return prepend + value;
+    }
+
+    /// <summary>
+    /// Retuns as full of a name as possible, if a namespace is provided
+    /// the namespace and name are combined with a period, otherwise just
+    /// the name is returned.
+    /// </summary>
+    public string CreateFullName(string namespaceName, string name)
+    {
+        if (String.IsNullOrEmpty(namespaceName))
+        {
+            return name;
+        }
+
+        return namespaceName + "." + name;
+    }
+
+    public string CreateLiteral(object value)
+    {
+        if (value == null)
+        {
+            return "null";
+            //return string.Empty;
+        }
+
+        Type type = value.GetType();
+        if (type.IsEnum)
+        {
+            return OrmEnumUtils.BuildXtensiveType(value);
+        }
+        if (type == typeof(Guid))
+        {
+            return string.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_GUID,
+                ((Guid)value).ToString("D", CultureInfo.InvariantCulture));
+        }
+        
+        if (type == typeof(DateTime))
+        {
+            return string.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_DATETIME,
+                ((DateTime)value).Ticks);
+        }
+        
+        if (type == typeof(byte[]))
+        {
+            var arrayInit = string.Join(", ", ((byte[])value).Select(b => b.ToString(CultureInfo.InvariantCulture)).ToArray());
+            return string.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_BYTE_ARRAY, arrayInit);
+        }
+        
+        if (type == typeof(TimeSpan))
+        {
+            var ts = (TimeSpan) value;
+            return string.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_TIMESPAN,
+                ts.Hours, ts.Minutes, ts.Seconds);
+        }
+
+        if (type == typeof(DateTimeOffset))
+        {
+            var dto = (DateTimeOffset)value;
+            return string.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_DATETIMEOFFSET,
+                dto.Ticks, dto.Offset.Ticks);
+        }
+
+        if (type == typeof(string[]))
+        {
+            var ss = (string[]) value;
+            return "new[] {" + Util.JoinCollection(ss, ",", "\"") + "}";
+        }
+        
+        if (type == typeof(ObjectValue))
+        {
+            ObjectValue objectValue = (ObjectValue) value;
+            if (objectValue.UseCustomExpression)
+            {
+                return objectValue.CustomExpression;
+            }
+            
+            return CreateLiteral(objectValue.Value);
+        }
+
+        var expression = new CodePrimitiveExpression(value);
+        var writer = new StringWriter();
+        CSharpCodeProvider code = new CSharpCodeProvider();
+        code.GenerateCodeFromExpression(expression, writer, new CodeGeneratorOptions());
+        return writer.ToString();
+    }
+
+    public string[] CreateTypeAttributes(IPersistentType persistentType, IPropertiesBuilder propertiesBuilder)
+    {
+        if (this.ActiveDTOStage)
+        {
+            return new string[0];
+        }
+
+        IEnumerable<IOrmAttribute> typeAttributes = null;
+        if (propertiesBuilder != null)
+        {
+            typeAttributes = propertiesBuilder.MergedTypeAttributes;
+        }
+
+        if (typeAttributes == null)
+        {
+            typeAttributes = persistentType.TypeAttributes;
+        }
+
+        ITypeAttributesBuilder attributesBuilder = TypeAttributesBuilder.Create(persistentType, typeAttributes);
+        string[] extraAttributes = persistentType.TypeKind == PersistentTypeKind.Interface ? new string[0] : new string[] { ATTRIBUTE_SERIALIZABLE };
+
+        return CreateTypeAttributes(attributesBuilder, typeAttributes.ToArray()).Concat(extraAttributes).ToArray();
+    }
+
+    public string[] CreateTypeAttributes(IPropertyBase property, IPropertiesBuilder propertiesBuilder)
+    {
+        if (this.ActiveDTOStage)
+        {
+            return new string[0];
+        }
+
+        IEnumerable<IOrmAttribute> typeAttributes = null;
+        if (propertiesBuilder != null)
+        {
+            typeAttributes = propertiesBuilder.GetPropertyTypeAttributes(property);
+
+            property = propertiesBuilder.GetProperty(property, InheritanceMember.Inherited);
+        }
+
+        if (typeAttributes == null)
+        {
+            typeAttributes = property.TypeAttributes;
+        }
+
+        ITypeAttributesBuilder attributesBuilder = TypeAttributesBuilder.Create(property, typeAttributes);
+
+        return CreateTypeAttributes(attributesBuilder, typeAttributes);
+    }
+
+    public string[] CreateTypeAttributesCommon(IOrmAttribute attribute)
+    {
+        return CreateTypeAttributesCommon(new[] {attribute});
+    }
+
+    public string[] CreateTypeAttributesCommon(IEnumerable<IOrmAttribute> attributes)
+    {
+        ITypeAttributesBuilder attributesBuilder = TypeAttributesBuilder.CreateCommon(attributes);
+
+        return CreateTypeAttributes(attributesBuilder, attributes, true);
+    }
+
+    private string[] CreateTypeAttributes(ITypeAttributesBuilder attributesBuilder, IEnumerable<IOrmAttribute> attributes,
+        bool allowInPoco = false)
+    {
+        if (this.ActiveDTOStage && !allowInPoco)
+        {
+            return new string[0];
+        }
+
+        List<string> result = new List<string>();
+
+        if (attributes != null)
+        {
+            foreach (var attribute in attributes)
+            {
+                foreach (var attributeGroup in attributesBuilder.GetAttributeGroups(attribute))
+                {
+                    var attributeGroupItems = attributesBuilder.GetAttributeGroupItems(attribute, attributeGroup);
+                    StringBuilder attr = new StringBuilder(attributeGroup.FormatFullName());
+                    if (attributeGroupItems.Count > 0)
+                    {
+                        int beforeItemsLen = attr.Length;
+
+                        bool handledByCustom = attributesBuilder.BuildCustomFormatComplete(attributeGroup,
+                            attributeGroupItems, ref attr);
+
+                        if (!handledByCustom)
+                        {
+                            foreach (KeyValuePair<string, Defaultable> attributeGroupItem in attributesBuilder.SortAttributeGroupItems(
+                                attributeGroup, attributeGroupItems))
+                            {
+                                string attrItemName = attributeGroupItem.Key;
+                                Defaultable attrItemValue = attributeGroupItem.Value;
+                                if (!attrItemValue.IsDefault())
+                                {
+                                    object value = attrItemValue.GetValue();
+                                    string valueLiteral = CreateLiteral(value);
+
+                                    bool buildedCustomFormat = attributesBuilder.BuildCustomFormat(attributeGroup,
+                                        attrItemName, valueLiteral, value, ref attr);
+
+                                    if (!buildedCustomFormat)
+                                    {
+                                        attr.AppendFormat("{0}={1},", attrItemName, valueLiteral);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (attr[attr.Length - 1] == ',')
+                        {
+                            attr = attr.Remove(attr.Length - 1, 1);
+                        }
+
+                        if (attr.Length > beforeItemsLen)
+                        {
+                            attr.Insert(beforeItemsLen, "(");
+                            attr.Append(")");
+                        }
+                    }
+
+                    result.Add(attr.ToString());
+                }
+            }
+        }
+        
+        return result.ToArray();
+    }
+}
+#>

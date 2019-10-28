@@ -1,0 +1,96 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsl", "Dsl\Dsl.csproj", "{A4ADB393-E711-46A6-9620-97F8F7C6B340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DslPackage", "DslPackage\DslPackage.csproj", "{E0CC932C-6852-4A26-B3A3-E75A18266C4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debugging", "Debugging\Debugging.csproj", "{8D1E5CF0-B8DD-4DDC-89AE-FEACE7A284A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{6A3C7E20-B4F2-49A8-B937-7A0114437309}"
+	ProjectSection(SolutionItems) = preProject
+		Misc\Alex - Visual model designer.docx = Misc\Alex - Visual model designer.docx
+		Misc\TODO.txt = Misc\TODO.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5ECE86BB-C325-4021-A952-57EFEC9241A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{994AC35B-F1F3-4D5A-AD64-75227BA12963}"
+	ProjectSection(SolutionItems) = preProject
+		DONet.Model.Designer.vsmdi = DONet.Model.Designer.vsmdi
+		Key.snk = Key.snk
+		Local.testsettings = Local.testsettings
+		DslPackage\MakeGeneratorZip.targets = DslPackage\MakeGeneratorZip.targets
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VBNet.Tests", "VBNet.Tests\VBNet.Tests.vbproj", "{4E5FC8FB-1B5C-45D9-9BA7-AF63AC8CC026}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Debugging.VB", "Debugging.VB\Debugging.VB.vbproj", "{ABC89938-DBC4-4006-BB18-688BCB4F24C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Debug", "Debug", "{6F7D892E-A4A2-4402-80D1-1DF037916049}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{72600F63-2D4E-4936-A8D4-EDF3B48B724B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debugging.Dto", "Debugging\Debugging.Dto.csproj", "{2529DDA4-8E6C-4F29-A1F0-891FC358C5B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDD30301-7F9E-4597-9F73-5BDB590B1DDC}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\System.Drawing.Html.dll = Lib\System.Drawing.Html.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = DONet.Model.Designer.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A4ADB393-E711-46A6-9620-97F8F7C6B340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4ADB393-E711-46A6-9620-97F8F7C6B340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4ADB393-E711-46A6-9620-97F8F7C6B340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4ADB393-E711-46A6-9620-97F8F7C6B340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0CC932C-6852-4A26-B3A3-E75A18266C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0CC932C-6852-4A26-B3A3-E75A18266C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0CC932C-6852-4A26-B3A3-E75A18266C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0CC932C-6852-4A26-B3A3-E75A18266C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D1E5CF0-B8DD-4DDC-89AE-FEACE7A284A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1E5CF0-B8DD-4DDC-89AE-FEACE7A284A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1E5CF0-B8DD-4DDC-89AE-FEACE7A284A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ECE86BB-C325-4021-A952-57EFEC9241A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ECE86BB-C325-4021-A952-57EFEC9241A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ECE86BB-C325-4021-A952-57EFEC9241A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ECE86BB-C325-4021-A952-57EFEC9241A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5FC8FB-1B5C-45D9-9BA7-AF63AC8CC026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5FC8FB-1B5C-45D9-9BA7-AF63AC8CC026}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5FC8FB-1B5C-45D9-9BA7-AF63AC8CC026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABC89938-DBC4-4006-BB18-688BCB4F24C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC89938-DBC4-4006-BB18-688BCB4F24C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC89938-DBC4-4006-BB18-688BCB4F24C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2529DDA4-8E6C-4F29-A1F0-891FC358C5B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2529DDA4-8E6C-4F29-A1F0-891FC358C5B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2529DDA4-8E6C-4F29-A1F0-891FC358C5B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ABC89938-DBC4-4006-BB18-688BCB4F24C6} = {6F7D892E-A4A2-4402-80D1-1DF037916049}
+		{8D1E5CF0-B8DD-4DDC-89AE-FEACE7A284A2} = {6F7D892E-A4A2-4402-80D1-1DF037916049}
+		{2529DDA4-8E6C-4F29-A1F0-891FC358C5B1} = {6F7D892E-A4A2-4402-80D1-1DF037916049}
+		{4E5FC8FB-1B5C-45D9-9BA7-AF63AC8CC026} = {72600F63-2D4E-4936-A8D4-EDF3B48B724B}
+		{5ECE86BB-C325-4021-A952-57EFEC9241A9} = {72600F63-2D4E-4936-A8D4-EDF3B48B724B}
+	EndGlobalSection
+EndGlobal

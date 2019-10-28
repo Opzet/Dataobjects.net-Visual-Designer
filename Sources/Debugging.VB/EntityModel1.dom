@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="276ccf73-8ae5-4e84-9baa-7b3e2ae0acee" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner">
+  <persistentTypes>
+    <entity name="Entity1" inheritanceModifier="Abstract">
+      <properties>
+        <scalarProperty name="Id" type="System.Int32">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="Name" type="System.String">
+          <field><mappingName valueType="Default" /><indexed valueType="Custom" value="True" /><lazyLoad valueType="Default" /><length valueType="Custom" value="123" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <entity name="Entity2" inheritanceModifier="Sealed">
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <baseType>
+        <entityBaseHasBaseType>
+          <entityMoniker name="/276ccf73-8ae5-4e84-9baa-7b3e2ae0acee/Entity1" />
+        </entityBaseHasBaseType>
+      </baseType>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+  </persistentTypes>
+</entityModel>

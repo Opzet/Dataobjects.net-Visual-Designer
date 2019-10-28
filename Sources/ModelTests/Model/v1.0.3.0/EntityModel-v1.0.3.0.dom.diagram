@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityDiagram dslVersion="1.0.0.0" Id="a871d251-b539-419d-9035-b04100783d2a" absoluteBounds="0, 0, 11, 9.5" name="EntityModel-v1.0.3.0">
+  <entityModelMoniker Id="f5405fa4-5be3-45c3-8206-835a7dd29fbf" />
+  <nestedChildShapes>
+    <interfaceShape Id="e29cedfa-1108-4a75-9eec-5e0703b7653c" absoluteBounds="5, 6.25, 1.5, 1.955073242187499" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <interfaceMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/IEntity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5b069b70-68c4-470f-92f8-f8933a5f306d" absoluteBounds="5.0150000000000006, 6.76, 1.4700000000000002, 0.63399251302083326" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3eb633cb-c269-4e78-88d1-0a3f67870157" absoluteBounds="5.0150000000000006, 7.4039925130208335, 1.4700000000000002, 0.2493896484375" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a598c6f3-05ce-4cd1-b94d-44bd50681508" absoluteBounds="5.0150000000000006, 7.6633821614583333, 1.4700000000000002, 0.44169108072916652" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <entityShape Id="97bfd9f7-c1ce-429a-a27b-3ee6243942f8" absoluteBounds="5, 3.375, 1.5, 2.1473746744791664" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <entityMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/EntityBase" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8863989f-6d74-4da1-ac5f-ff111f2c8bd3" absoluteBounds="5.0150000000000006, 3.885, 1.4700000000000002, 0.8262939453125" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="40650fd8-c9d3-4a02-a9f8-21aa1b19368b" absoluteBounds="5.0150000000000006, 4.7212939453125, 1.4700000000000002, 0.2493896484375" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="440156cb-1723-40ba-b1a6-9d4473b4dca1" absoluteBounds="5.0150000000000006, 4.98068359375, 1.4700000000000002, 0.44169108072916674" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <interfaceShape Id="eaf086b6-4e7f-454a-bd95-9e07ab1f1d15" absoluteBounds="0.5, 7.625, 1.5, 1.5704703776041669" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <interfaceMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/IEntityWithHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f02104a7-5f8d-45eb-86de-5d1ff3c561ed" absoluteBounds="0.51500000000000057, 8.135, 1.4700000000000002, 0.2493896484375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0c5bf2eb-901c-443a-8139-c40cda7b177f" absoluteBounds="0.51500000000000057, 8.3943896484375, 1.4700000000000002, 0.44169108072916652" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ee19c889-d352-4cde-bf7c-213845920db1" absoluteBounds="0.51500000000000057, 8.8460807291666654, 1.4700000000000002, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <interfaceShape Id="51a22df4-9bd8-43f7-8f9d-4d37b34e94ed" absoluteBounds="2.75, 6.375, 1.5, 1.5704703776041669" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <interfaceMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/IHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7f2309d3-a37e-408b-8e38-db01791d2213" absoluteBounds="2.7650000000000006, 6.885, 1.4700000000000002, 0.2493896484375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e041f1f0-1a90-491b-acc8-892dba60af14" absoluteBounds="2.7650000000000006, 7.1443896484375, 1.4700000000000002, 0.44169108072916652" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="dc18ce85-59bf-49d4-91e9-2f96e7c73fe4" absoluteBounds="2.7650000000000006, 7.5960807291666663, 1.4700000000000002, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <typedEntitySetShape Id="dcb14ab7-1544-4533-b27a-0b29afe90985" absoluteBounds="0.5, 5.875, 1.5, 0.5" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="Tan">
+      <typedEntitySetMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/HistoryEntitySet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="03c69b39-d271-4156-a3ae-89cb25d8b90f" absoluteBounds="0.5, 5.875, 0.125, 0.2493896484375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="5883a917-2433-41c6-a679-ea9c48e58984" absoluteBounds="0.5, 5.875, 0.125, 0.2493896484375" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </typedEntitySetShape>
+    <entityShape Id="7b174a6e-618f-452f-9a48-52e2ab8c99c4" absoluteBounds="2.75, 0.625, 1.5, 1.9550732421875" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <entityMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/EntityBaseWithHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5b9fff7e-d433-4e8f-95d0-5fcd3807e3ba" absoluteBounds="2.7650000000000006, 1.1349999999999998, 1.4700000000000002, 0.63399251302083326" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="49041dcb-0695-43d6-8a38-65c2238d377c" absoluteBounds="2.7650000000000006, 1.7789925130208335, 1.4700000000000002, 0.44169108072916674" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="cc31a69a-7fa8-4b60-94e8-aaf85fc24e88" absoluteBounds="2.7650000000000006, 2.2306835937500002, 1.4700000000000002, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityBaseShape Id="4b0206b0-43a1-4fd8-944a-9dedd82dd5b7" absoluteBounds="0.5, 0.5, 1.5, 3.6857861328124986" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <structureMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/Address" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4bd7acbc-27eb-4f19-b6b2-4d6bf3ae4ef6" absoluteBounds="0.515, 1.0099999999999998, 1.4700000000000002, 2.5570068359375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="714f4842-bedb-4013-b2d3-a792e078c4b7" absoluteBounds="0.515, 3.5770068359374996, 1.4700000000000002, 0.2493896484375" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="5906f738-25e1-4bc4-bfd5-874e26ad777d" absoluteBounds="0.515, 3.8363964843749994, 1.4700000000000002, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityBaseShape>
+    <interfaceInheritanceConnector edgePoints="[(5.75 : 5.52237467447917); (5.75 : 6.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <interfaceInheritInterfacesMoniker Id="bdbe8a2b-8453-442c-95e4-50d0296f929e" />
+      <nodes>
+        <entityShapeMoniker Id="97bfd9f7-c1ce-429a-a27b-3ee6243942f8" />
+        <interfaceShapeMoniker Id="e29cedfa-1108-4a75-9eec-5e0703b7653c" />
+      </nodes>
+    </interfaceInheritanceConnector>
+    <associationConnector edgePoints="[(2 : 7.78523518880208); (2.29166666666667 : 7.78523518880208 : JumpStart); (2.45833333333333 : 7.78523518880208 : JumpEnd); (2.75 : 7.78523518880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <persistentTypeHasAssociationsMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/IEntityWithHistory/IEntityHistoryItems" />
+      <relativeChildShapes />
+      <nodes>
+        <interfaceShapeMoniker Id="eaf086b6-4e7f-454a-bd95-9e07ab1f1d15" />
+        <interfaceShapeMoniker Id="51a22df4-9bd8-43f7-8f9d-4d37b34e94ed" />
+      </nodes>
+    </associationConnector>
+    <interfaceInheritanceConnector edgePoints="[(2 : 8.10652180989583); (2.29166666666667 : 8.10652180989583 : JumpStart); (2.45833333333333 : 8.10652180989583 : JumpEnd); (5 : 8.10652180989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <interfaceInheritInterfacesMoniker Id="3728edc4-8089-47f5-956c-2ab4beb3d0a5" />
+      <nodes>
+        <interfaceShapeMoniker Id="eaf086b6-4e7f-454a-bd95-9e07ab1f1d15" />
+        <interfaceShapeMoniker Id="e29cedfa-1108-4a75-9eec-5e0703b7653c" />
+      </nodes>
+    </interfaceInheritanceConnector>
+    <interfaceInheritanceConnector edgePoints="[(4.25 : 7.16023518880208); (5 : 7.16023518880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <interfaceInheritInterfacesMoniker Id="84054cee-85a8-43fd-a863-145697b32657" />
+      <nodes>
+        <interfaceShapeMoniker Id="51a22df4-9bd8-43f7-8f9d-4d37b34e94ed" />
+        <interfaceShapeMoniker Id="e29cedfa-1108-4a75-9eec-5e0703b7653c" />
+      </nodes>
+    </interfaceInheritanceConnector>
+    <typedEntitySetHasItemTypeConnector edgePoints="[(2 : 6.09375); (2.29166666666667 : 6.09375 : JumpStart); (2.45833333333333 : 6.09375 : JumpEnd); (3.5 : 6.09375); (3.5 : 6.375)]" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="7e98b08f-b820-44ca-8199-4cb9784fa116">
+      <nodes>
+        <typedEntitySetShapeMoniker Id="dcb14ab7-1544-4533-b27a-0b29afe90985" />
+        <interfaceShapeMoniker Id="51a22df4-9bd8-43f7-8f9d-4d37b34e94ed" />
+      </nodes>
+    </typedEntitySetHasItemTypeConnector>
+    <associationConnector edgePoints="[(3.9375 : 2.5800732421875); (3.9375 : 6.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <persistentTypeHasAssociationsMoniker name="/f5405fa4-5be3-45c3-8206-835a7dd29fbf/EntityBaseWithHistory/IEntityWithHistoryIHistory" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="7b174a6e-618f-452f-9a48-52e2ab8c99c4" />
+        <interfaceShapeMoniker Id="51a22df4-9bd8-43f7-8f9d-4d37b34e94ed" />
+      </nodes>
+    </associationConnector>
+    <interfaceInheritanceConnector edgePoints="[(2.75 : 1.60253662109375); (2.375 : 1.60253662109375); (2.375 : 8.68224809375); (2 : 8.68224809375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <interfaceInheritInterfacesMoniker Id="3124013b-71f2-4a77-8d7a-2b8cf913854c" />
+      <nodes>
+        <entityShapeMoniker Id="7b174a6e-618f-452f-9a48-52e2ab8c99c4" />
+        <interfaceShapeMoniker Id="eaf086b6-4e7f-454a-bd95-9e07ab1f1d15" />
+      </nodes>
+    </interfaceInheritanceConnector>
+    <entityBaseInheritanceConnector edgePoints="[(3.3124975 : 2.5800732421875); (3.3124975 : 4.44868733723958); (3.85416666666667 : 4.44868733723958 : JumpStart); (4.02083333333333 : 4.44868733723958 : JumpEnd); (5 : 4.44868733723958)]" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="21818c26-e5f9-4413-b823-c29652ff6168">
+      <nodes>
+        <entityShapeMoniker Id="7b174a6e-618f-452f-9a48-52e2ab8c99c4" />
+        <entityShapeMoniker Id="97bfd9f7-c1ce-429a-a27b-3ee6243942f8" />
+      </nodes>
+    </entityBaseInheritanceConnector>
+  </nestedChildShapes>
+</entityDiagram>

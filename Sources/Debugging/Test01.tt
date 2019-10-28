@@ -1,0 +1,47 @@
+﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true" #>
+<#@ output extension=".txt" #>
+<#@ DONetEntityModelDesigner processor="DONetEntityModelDesignerDirectiveProcessor" requires="fileName='EntityModel1.dom'" #>
+<#@ include file="DONetEntityModelDesigner.Utility.ttinclude"#>
+<#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Dsl" #>
+<#@ import namespace="System.Collections.ObjectModel" #>
+
+<# System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+    var model = this.EntityModel;
+	//var pt = this.EntityModel.PersistentTypes;
+	var modelType = model.GetType();
+	WriteLine( "TypeName: " + modelType.FullName );
+	WriteLine(string.Join(@"\n", this.GetType().GetProperties().Select(prop => prop.Name).ToArray()));
+
+	IModelRoot mr = this.EntityModel.ModelRoot;
+	var persistentTypes = mr.PersistentTypes;
+	WriteLine("");
+	WriteLine("Persistent Types:");
+	foreach(IElement pt in persistentTypes)
+	{
+		WriteLine(pt.Name);
+	}
+
+	var items = mr.GetType().GetProperties();
+	WriteLine("");
+	WriteLine("Properties:");
+	foreach(var prop in items)
+	{
+		WriteLine(prop.Name + ": "); // + prop.PropertyType.ToString());
+	}
+	
+
+	// prepare file manager which is responsible for saving generated code into multiple files in defined output folder
+	//FileManager manager = PrepareFileManager();
+	
+	// builds header for generated files
+	//BuildFilesHeader(manager);
+	
+	// builds common namespace for generated files
+	//BuildFilesNamespace(manager);
+	
+	
+	
+	// flush all generated files
+	//manager.Flush();
+  //foreach (var persistentType in this.EntityModel.PersistentTypes)
+#>

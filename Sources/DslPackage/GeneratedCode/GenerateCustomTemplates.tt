@@ -1,0 +1,124 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".text" #>
+<#@ assembly name="System.Core"
+#><#@ assembly name="System.Data.Linq"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="System.Xml"
+#><#@ assembly name="System.Xml.Linq"
+#><#@ import namespace="System"
+#><#@ import namespace="System.CodeDom"
+#><#@ import namespace="System.CodeDom.Compiler"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Data.Linq"
+#><#@ import namespace="System.Data.Linq.Mapping"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="System.Xml.Linq"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#><#@ import namespace="Microsoft.CSharp"
+#><#
+	/* GenerateTemplateFile(@"..\CustomCode\CodeGeneration\CodeGenerationTemplate.cs", 
+		@"..\TextTemplates\DONetEntityModelDesigner.Utility.ttinclude"); */
+	
+	GenerateTemplateFile(@"..\TextTemplates\DOM.Utility.CS.ttinclude", false,
+	@"..\CustomCode\Templating\Template.Utility.Common.CS.cs",
+	@"..\CustomCode\Templating\Template.Utility.CS.cs");
+
+	GenerateTemplateFile(@"..\TextTemplates\DOM.Utility.VB.ttinclude", true,
+	@"..\CustomCode\Templating\Template.Utility.Common.VB.vb",
+	@"..\CustomCode\Templating\Template.Utility.VB.vb");
+	
+	UpdateTemplatesVersion();
+	
+#><#+
+void GenerateTemplateFile(string targetTemplateFile, bool vbNet, string sourceCodeFile)
+{
+	GenerateTemplateFile(targetTemplateFile, vbNet, new[] {sourceCodeFile});
+}
+
+const string TEMPLATE_HEADER_BEGIN = @"~T4_TEMPLATE_HEADER_BEGIN~";
+const string TEMPLATE_HEADER_END = @"~T4_TEMPLATE_HEADER_END~";
+
+void GenerateTemplateFile(string targetTemplateFile, bool vbNet, params string[] sourceCodeFiles)
+{
+	StringBuilder resultFile = new StringBuilder();
+	StringBuilder t4header = new StringBuilder();
+	var currentDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	
+	foreach(var sourceCodeFile in sourceCodeFiles)
+	{
+		var file = Path.Combine(currentDirectory, sourceCodeFile);
+		var lines = File.ReadAllLines(file);
+		bool processingEnabled = false;
+		bool headerBeginProcessed = false;
+		bool headerProcessingCompleted = false;
+
+		foreach(string line in lines)
+		{
+			bool canCopyLine = processingEnabled;
+			if (!headerProcessingCompleted)
+			{
+				if (!headerBeginProcessed && line.Contains(TEMPLATE_HEADER_BEGIN))
+				{
+					headerBeginProcessed = true;
+					processingEnabled = true;
+					continue;
+				}
+				else if (headerBeginProcessed && line.Contains(TEMPLATE_HEADER_END))
+				{
+					headerProcessingCompleted = true;
+					processingEnabled = true;
+					continue;
+				}
+			}
+			
+			if (canCopyLine)
+			{
+				if (headerBeginProcessed && !headerProcessingCompleted)
+				{
+					t4header.AppendLine(vbNet ? line.Substring(1, line.Length-1) :line);
+				}
+				else 
+				{
+					resultFile.AppendLine(line);
+				}
+			}
+		}
+	}
+	resultFile.Insert(0, t4header.ToString());
+	
+	resultFile.Append('#');
+	resultFile.Append('>');
+
+	var templateIncludeFile = Path.Combine(currentDirectory, targetTemplateFile);
+	File.WriteAllText(templateIncludeFile, resultFile.ToString());
+
+	WriteLine("Result file was generated to: \n\r{0}", templateIncludeFile);
+}
+
+void UpdateTemplatesVersion()
+{
+	string currentDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	string assemblyInfoFile = Path.Combine(currentDirectory, @"..\Properties\AssemblyInfo.cs");
+	string content = File.ReadAllText(assemblyInfoFile);
+	string key = "AssemblyVersion(\"";
+	int idx = content.IndexOf(key) + key.Length;
+	int endIdx = content.IndexOf("\"", idx);
+	string currentVersion = content.Substring(idx, endIdx - idx);
+	
+	UpdateTemplateVersion(currentVersion, false, Path.Combine(currentDirectory, @"..\TextTemplates\EntityModel.tt"));
+	UpdateTemplateVersion(currentVersion, true, Path.Combine(currentDirectory, @"..\TextTemplates\EntityModel.VB.tt"));
+}
+
+void UpdateTemplateVersion(string currentVersion, bool vbNet, string file)
+{
+	List<string> lines = new List<string>(File.ReadAllLines(file));
+	string versionLine = vbNet ? string.Format("Dim TemplateVersion As String = \"{0}\"", currentVersion) : string.Format("string TemplateVersion = \"{0}\";", currentVersion);
+	lines[lines.Count-2] = versionLine;
+	
+	File.WriteAllLines(file, lines);
+}
+#>

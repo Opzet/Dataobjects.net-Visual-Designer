@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="ab98ebe7-5f20-4e91-bc89-84b170f4a38d" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner">
+  <persistentTypes>
+    <interface name="I01">
+      <properties>
+        <scalarProperty name="Id" type="System.Int32">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+      </properties>
+    </interface>
+    <interface name="I02">
+      <inheritedInterfaces Id="4324236a-e182-43af-a91e-96d7fd8e9db7">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I01" />
+      </inheritedInterfaces>
+    </interface>
+    <interface name="I03">
+      <inheritedInterfaces Id="b28fb506-2687-4050-9598-2ba8f0c00d42">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I02" />
+      </inheritedInterfaces>
+      <inheritedInterfaces Id="a7266061-bb13-4041-982d-e6da70bda56a">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I04" />
+      </inheritedInterfaces>
+    </interface>
+    <interface name="I04">
+      <inheritedInterfaces Id="c4b36e73-a754-4094-8937-44c3c92115fb">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I01" />
+      </inheritedInterfaces>
+    </interface>
+    <interface name="I05">
+      <inheritedInterfaces Id="b93a3304-b56c-4372-9bf1-b3a627e26805">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I04" />
+      </inheritedInterfaces>
+      <inheritedInterfaces Id="6856644c-bd2d-4da1-bb9f-02dc36b9fc86">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I02" />
+      </inheritedInterfaces>
+    </interface>
+    <entity name="C01">
+      <inheritedInterfaces Id="3553c039-137a-4c56-a3a3-6ba5d1e6fd12">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I03" />
+      </inheritedInterfaces>
+      <inheritedInterfaces Id="737c8952-8936-43d0-a9f8-27d71fa3ac8e">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I05" />
+      </inheritedInterfaces>
+      <inheritedInterfaces Id="4caa1fe5-0e18-4ea0-99cb-e13027fab6b8">
+        <interfaceMoniker name="/ab98ebe7-5f20-4e91-bc89-84b170f4a38d/I00" />
+      </inheritedInterfaces>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <interface name="I00">
+      <properties>
+        <scalarProperty name="Name" type="System.String">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Custom" value="128" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="Used"><content mode="-1"><error message="Name cannot be null or empty string!" /></content></constraint><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+    </interface>
+  </persistentTypes>
+</entityModel>

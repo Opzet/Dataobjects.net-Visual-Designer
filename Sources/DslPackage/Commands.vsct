@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!-- -->
+    <!-- This file contains custom command definitions. -->
+    <!-- -->
+    <!-- NOTE: Each time commands are added or changed, the "version" parameter to the -->
+    <!-- ProvideMenuResource attribute in Shell\Package.tt should be incremented. -->
+    <!-- This causes Visual Studio to re-merge the menu definitions for the package. -->
+    <!-- Otherwise, changes won't take effect until the next time devenv /setup is run. -->
+    <!-- -->
+    <Extern href="stdidcmd.h"/>
+    <Extern href="vsshlids.h"/>
+    <Extern href="msobtnid.h"/>
+    <Extern href="virtkeys.h"/>
+    <Extern href="DSLToolsCmdID.h"/>
+    <Include href="GeneratedCode\GeneratedVsct.vsct"/>
+    <Commands package="guidPkg">
+        <Menus>
+            <Menu guid="guidCmdSet" id="mnuAddOperations" priority="0x100" type="Menu">
+                <Parent guid="guidCmdSet" id="grpAddOperations" />
+                <CommandFlag>AlwaysCreate</CommandFlag>
+                <Strings>
+                    <ButtonText>Add</ButtonText>
+                    <CommandName>Add</CommandName>
+                </Strings>
+            </Menu>
+            <Menu guid="guidCmdSet" id="mnuZoom" priority="0x100" type="Menu">
+                <Parent guid="guidCmdSet" id="grpDiagram" />
+                <Strings>
+                    <ButtonText>Zoom</ButtonText>
+                    <CommandName>Zoom</CommandName>
+                </Strings>
+            </Menu>
+            <Menu guid="guidCmdSet" id="mnuDiagram" priority="0x100" type="Menu">
+                <Parent guid="guidCmdSet" id="grpDiagram" />
+                <Strings>
+                    <ButtonText>Diagram</ButtonText>
+                    <CommandName>Diagram</CommandName>
+                </Strings>
+            </Menu>
+            <Menu guid="guidCmdSet" id="mnuAbout" priority="0x100" type="Menu">
+                <Parent guid="guidCmdSet" id="grpAbout" />
+                <CommandFlag>AlwaysCreate</CommandFlag>
+                <Strings>
+                    <ButtonText>About</ButtonText>
+                    <CommandName>About</CommandName>
+                </Strings>
+            </Menu>
+        </Menus>
+        <!-- Define a group - a section in the menu -->
+        <Groups>
+            <Group guid="guidCmdSet" id="grpAddOperationsMenu" priority="0x0010">
+                <Parent guid="guidCmdSet" id="mnuAddOperations"/>
+            </Group>
+            <Group guid="guidCmdSet" id="grpEntityOperations" priority="0x0100">
+                <Parent guid="guidCmdSet" id="menuidContext" />
+            </Group>
+            <Group guid="guidCmdSet" id="grpDiagram" priority="0x0010">
+                <Parent guid="guidCmdSet" id="menuidContext"/>
+            </Group>
+            <Group guid="guidCmdSet" id="grpAddOperations" priority="0x0010">
+                <Parent guid="guidCmdSet" id="menuidContext"/>
+            </Group>
+            <Group guid="guidCmdSet" id="grpZoom" priority="0x0010">
+                <Parent guid="guidCmdSet" id="mnuZoom"/>
+            </Group>
+            <Group guid="guidCmdSet" id="grpDiagramMenu" priority="0x0010">
+                <Parent guid="guidCmdSet" id="mnuDiagram"/>
+            </Group>
+            <Group guid="guidCmdSet" id="grpDatabase" priority="0x0010">
+                <Parent guid="guidCmdSet" id="menuidContext"/>
+            </Group>
+
+            <Group guid="guidCmdSet" id="grpAboutMenu" priority="0x0010">
+                <Parent guid="guidCmdSet" id="mnuAbout"/>
+            </Group>
+            <Group guid="guidCmdSet" id="grpAbout" priority="0x0010">
+                <Parent guid="guidCmdSet" id="menuidContext"/>
+            </Group>
+        </Groups>
+        <!-- Define a button - a menu item - inside the Group -->
+        <Buttons>
+            <!-- Entity operations -->
+            <Button guid="guidCmdSet" id="cmdAddScalarProperty" priority="0x0100" type="Button">
+                <Parent guid="guidCmdSet" id="grpEntityOperations"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>AddScalarProperty</CanonicalName>
+                    <ButtonText>Add Scalar Property</ButtonText>
+                    <ToolTipText>Use this option to add scalar property</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdAddStructureProperty" priority="0x0100" type="Button">
+                <Parent guid="guidCmdSet" id="grpEntityOperations"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>AddStructureProperty</CanonicalName>
+                    <ButtonText>Add Structure Property</ButtonText>
+                    <ToolTipText>Use this option to add structure property</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdAddNavigationProperty" priority="0x0100" type="Button">
+                <Parent guid="guidCmdSet" id="grpEntityOperations"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>AddNavigationProperty</CanonicalName>
+                    <ButtonText>Add Navigation Property</ButtonText>
+                    <ToolTipText>Use this option to add navigation property</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdAddEntityIndexCommand" priority="0x0100" type="Button">
+                <Parent guid="guidCmdSet" id="grpEntityOperations"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>AddEntityIndex</CanonicalName>
+                    <ButtonText>Add Index</ButtonText>
+                    <ToolTipText>Use this option to add entity index</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- Zoom -->
+            <Button guid="guidCmdSet" id="cmdZoom25" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpZoom"/>
+                <Strings>
+                    <CanonicalName>cmdZoom25</CanonicalName>
+                    <ButtonText>25%</ButtonText>
+                    <ToolTipText>25%</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdZoom50" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpZoom"/>
+                <Strings>
+                    <CanonicalName>cmdZoom50</CanonicalName>
+                    <ButtonText>50%</ButtonText>
+                    <ToolTipText>50%</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdZoom100" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpZoom"/>
+                <Strings>
+                    <CanonicalName>cmdZoom100</CanonicalName>
+                    <ButtonText>100%</ButtonText>
+                    <ToolTipText>100%</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdZoom150" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpZoom"/>
+                <Strings>
+                    <CanonicalName>cmdZoom150</CanonicalName>
+                    <ButtonText>150%</ButtonText>
+                    <ToolTipText>150%</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdZoom200" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpZoom"/>
+                <Strings>
+                    <CanonicalName>cmdZoom200</CanonicalName>
+                    <ButtonText>200%</ButtonText>
+                    <ToolTipText>200%</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdZoomToFit" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpZoom"/>
+                <Strings>
+                    <CanonicalName>cmdZoomToFit</CanonicalName>
+                    <ButtonText>Zoom to fit</ButtonText>
+                    <ToolTipText>Zoom to fit</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- Export Diagram -->
+            <Button guid="guidCmdSet" id="cmdExportDiagram" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpDiagramMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdExportDiagram</CanonicalName>
+                    <ButtonText>Export as Image..</ButtonText>
+                    <ToolTipText>Export diagram as an image</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- Layout Diagram -->
+            <Button guid="guidCmdSet" id="cmdLayoutDiagram" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpDiagramMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdLayoutDiagram</CanonicalName>
+                    <ButtonText>Layout Diagram</ButtonText>
+                    <ToolTipText>Auto Layout Diagram</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdAddPersistentType" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpAddOperationsMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdAddPersistentType</CanonicalName>
+                    <ButtonText>Persistent Type..</ButtonText>
+                    <ToolTipText>Invokes Add Persistent Type dialog</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdImplementInterface" priority="0x0100" type="Button">
+                <Parent guid="guidCmdSet" id="grpAddOperationsMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>ImplementInterface</CanonicalName>
+                    <ButtonText>Implement Interface...</ButtonText>
+                    <ToolTipText>Use this option to implement interface to new type</ToolTipText>
+                </Strings>
+            </Button>
+            <Button guid="guidCmdSet" id="cmdAddAssociation" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpAddOperationsMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdAddAssociation</CanonicalName>
+                    <ButtonText>Association..</ButtonText>
+                    <ToolTipText>Invokes Add Association dialog</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- Import Db Schema -->
+            <Button guid="guidCmdSet" id="cmdUpdateDbSchemaID" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpDatabase"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdUpdateDbSchema</CanonicalName>
+                    <ButtonText>Update from Database Schema</ButtonText>
+                    <ToolTipText>Use this option to create the domain from an existing Database Schema</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- Add external type to Model Explorer -->
+            <Button guid="guidMenuExplorerCommand" id="cmdAddExternalType" priority="0x0902" type="Button">
+                <Parent guid="guidCommonModelingMenu" id="grpidExplorerMenuGroup"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdAddExternalType</CanonicalName>
+                    <ButtonText>Add External Type</ButtonText>
+                    <ToolTipText>Use this option to external type to model</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- About -->
+            <!-- Check for updates-->
+            <Button guid="guidCmdSet" id="cmdCheckNewVersion" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpAboutMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdCheckNewVersion</CanonicalName>
+                    <ButtonText>Check for Updates</ButtonText>
+                    <ToolTipText>Checks for new version of designer.</ToolTipText>
+                </Strings>
+            </Button>
+            <!-- Visit web site-->
+            <Button guid="guidCmdSet" id="cmdVisitWebSite" priority="0x0902"  type="Button">
+                <Parent guid="guidCmdSet" id="grpAboutMenu"/>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CanonicalName>cmdVisitWebSite</CanonicalName>
+                    <ButtonText>Visit Web Site</ButtonText>
+                    <ToolTipText>Opens browser with product web site.</ToolTipText>
+                </Strings>
+            </Button>
+        </Buttons>
+    </Commands>
+    <Symbols>
+        <!-- Substitute a unique GUID for the placeholder: -->
+        <GuidSymbol name="guidCmdSet" value="{7c5c596f-9b3b-4a66-9d52-e78df9e993c6}" >
+            <!-- Groups -->
+            <IDSymbol name="grpEntityOperations" value="0x01001"/>
+            <IDSymbol name="grpDiagram" value="0x01003"></IDSymbol>
+            <IDSymbol name="grpZoom" value="0x01005"></IDSymbol>
+            <IDSymbol name="grpDiagramMenu" value="0x01007"></IDSymbol>
+            <IDSymbol name="grpAddOperations" value="0x01009"></IDSymbol>
+            <IDSymbol name="grpAddOperationsMenu" value="0x01011"></IDSymbol>
+            <IDSymbol name="grpDatabase" value="0x01013"></IDSymbol>
+            <IDSymbol name="grpAbout" value="0x01015"></IDSymbol>
+            <IDSymbol name="grpAboutMenu" value="0x01016"></IDSymbol>
+            <!-- Expanding Menus -->
+            <IDSymbol name="mnuZoom" value="0x01020"></IDSymbol>
+            <IDSymbol name="mnuDiagram" value="0x01021"></IDSymbol>
+            <IDSymbol name="mnuAdvanced" value="0x01022"></IDSymbol>
+            <IDSymbol name="mnuAddOperations" value="0x01023"></IDSymbol>
+            <IDSymbol name="mnuAbout" value="0x01024"></IDSymbol>
+            <!-- Buttons -->
+            <IDSymbol name="cmdAddScalarProperty" value="0x801"/>
+            <IDSymbol name="cmdAddStructureProperty" value="0x802"/>
+            <IDSymbol name="cmdAddNavigationProperty" value="0x803"/>
+            <IDSymbol name="cmdAddEntityIndexCommand" value="0x804"/>
+            <!-- Zoom -->
+            <IDSymbol name="cmdZoom25" value="0x820"></IDSymbol>
+            <IDSymbol name="cmdZoom50" value="0x821"></IDSymbol>
+            <IDSymbol name="cmdZoom100" value="0x822"></IDSymbol>
+            <IDSymbol name="cmdZoom150" value="0x823"></IDSymbol>
+            <IDSymbol name="cmdZoom200" value="0x824"></IDSymbol>
+            <IDSymbol name="cmdZoomToFit" value="0x825"></IDSymbol>
+            <!-- Export diagram -->
+            <IDSymbol name="cmdExportDiagram" value="0x840"></IDSymbol>
+            <!-- Layout diagram -->
+            <IDSymbol name="cmdLayoutDiagram" value="0x841"></IDSymbol>
+            <!-- Add Operations -->
+            <IDSymbol name="cmdAddPersistentType" value="0x860"></IDSymbol>
+            <IDSymbol name="cmdImplementInterface" value="0x861"/>
+            <IDSymbol name="cmdAddAssociation" value="0x862"/>
+            <!-- Import DB Schema -->
+            <IDSymbol name="cmdUpdateDbSchemaID" value="0x880"></IDSymbol>
+            <!-- Check for Updates-->
+            <IDSymbol name="cmdCheckNewVersion" value="0x920"></IDSymbol>
+            <!-- Visit Web Site -->
+            <IDSymbol name="cmdVisitWebSite" value="0x921"></IDSymbol>
+        </GuidSymbol>
+        <GuidSymbol name="guidMenuExplorerCommand" value="{29539a3c-5741-4377-b17c-5be1002853e2}" >
+            <IDSymbol name="cmdAddExternalType" value="0x900"/>
+        </GuidSymbol>
+    </Symbols>
+</CommandTable>

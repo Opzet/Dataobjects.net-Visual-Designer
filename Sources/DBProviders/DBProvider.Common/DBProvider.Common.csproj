@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FBFDFB1D-BE0E-4289-ACE6-56BBFED11D0D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TXSoftware.DataObjectsNetEntityModel.DBProvider</RootNamespace>
+    <AssemblyName>TXSoftware.DataObjectsNetEntityModel.DBProvider</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssociationItem.cs" />
+    <Compile Include="AssociationsBuilder.cs" />
+    <Compile Include="Column.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="DataSourceInfo.cs" />
+    <Compile Include="DBEngineUtils.cs" />
+    <Compile Include="DBObject.cs" />
+    <Compile Include="DBProviderModuleRegisterAttribute.cs" />
+    <Compile Include="DBProviderRegisterAttribute.cs" />
+    <Compile Include="ErrorCollection.cs" />
+    <Compile Include="ForeignKey.cs" />
+    <Compile Include="ForeignKeyColumn.cs" />
+    <Compile Include="IConnectionInfoProvider.cs" />
+    <Compile Include="IDBProvider.cs" />
+    <Compile Include="IDBProviderModule.cs" />
+    <Compile Include="INamedObject.cs" />
+    <Compile Include="Index.cs" />
+    <Compile Include="IndexedColumn.cs" />
+    <Compile Include="Key.cs" />
+    <Compile Include="ObjectCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="DBProviderManager.cs" />
+    <Compile Include="Schema.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Table.cs" />
+    <Compile Include="TableBase.cs" />
+    <Compile Include="UIEditors\ControlDBSchemaAuxiliaryTables.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\ControlDBSchemaAuxiliaryTables.Designer.cs">
+      <DependentUpon>ControlDBSchemaAuxiliaryTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\ControlDBSchemaPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\ControlDBSchemaPage.Designer.cs">
+      <DependentUpon>ControlDBSchemaPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\ControlDBSchemaPageTables.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\ControlDBSchemaPageTables.Designer.cs">
+      <DependentUpon>ControlDBSchemaPageTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\FormImportDBSchema.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\FormImportDBSchema.Designer.cs">
+      <DependentUpon>FormImportDBSchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\IDBSchemaPageControl.cs" />
+    <Compile Include="UIEditors\ControlDBSchemaPageDB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\ControlDBSchemaPageDB.Designer.cs">
+      <DependentUpon>ControlDBSchemaPageDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\LoadingAction.cs" />
+    <Compile Include="UIEditors\NavigationButton.cs" />
+    <Compile Include="View.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\ControlDBSchemaAuxiliaryTables.resx">
+      <DependentUpon>ControlDBSchemaAuxiliaryTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\ControlDBSchemaPage.resx">
+      <DependentUpon>ControlDBSchemaPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\ControlDBSchemaPageTables.resx">
+      <DependentUpon>ControlDBSchemaPageTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\FormImportDBSchema.resx">
+      <DependentUpon>FormImportDBSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\ControlDBSchemaPageDB.resx">
+      <DependentUpon>ControlDBSchemaPageDB.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataObjectsNet16x16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_engine_x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_server_x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_table_x16.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_schema_x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_table_column_x16.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetPath)" "$(SolutionDir)_Drop" /F /R /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="dbb347f1-a866-4b16-9675-a74fcc4fdab1" modelVersion="1.0.5.0" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner">
+  <domainTypes />
+  <persistentTypes>
+    <entity name="Entity2">
+      <dataContract valueType="Default"><content name="" isReference="0" namespace="" /></dataContract>
+      <properties>
+        <scalarProperty name="Id" typeId="00000000-0000-0000-0000-000000000004">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name="" emitDefaultValue="1" isRequired="0" order="0" /></dataMember>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+      </properties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+  </persistentTypes>
+</entityModel>

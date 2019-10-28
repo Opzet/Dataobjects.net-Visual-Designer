@@ -1,0 +1,7 @@
+Vase domena:
+http://doemd.aspone.cz
+
+FTP prihlasovaci udaje:
+Server: doemd.aspone.cz nebo (77.93.206.195)
+Login:  doemd.aspone.cz
+Heslo:  Delphine22

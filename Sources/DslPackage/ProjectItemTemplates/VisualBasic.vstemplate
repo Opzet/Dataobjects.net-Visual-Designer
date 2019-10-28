@@ -1,0 +1,21 @@
+﻿<!--DSL Tools Language Template-->
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TemplateData>
+		<Name Package="{429f3394-2cd0-4913-8ca0-0177f2b76897}" ID="103"/>
+		<Description Package="{429f3394-2cd0-4913-8ca0-0177f2b76897}" ID="102"/>
+		<Icon Package="{429f3394-2cd0-4913-8ca0-0177f2b76897}" ID="201" />
+		<ProjectType>VisualBasic</ProjectType>
+		<SortOrder>360</SortOrder>
+		<DefaultName>EntityModel.dom</DefaultName>
+	</TemplateData>
+	<TemplateContent>
+		<ProjectItem TargetFileName="$fileinputname$.dom" ReplaceParameters="true">dom.dom</ProjectItem>
+		<CustomParameters>
+			<CustomParameter Name="$itemproperties$" Value="CustomTool" />
+			<CustomParameter Name="$CustomTool$" Value="DONetFileGenerator"/>
+		</CustomParameters>
+
+		<ProjectItem TargetFileName="$fileinputname$.dom.diagram">dom.diagram</ProjectItem>
+	</TemplateContent>
+</VSTemplate>
+

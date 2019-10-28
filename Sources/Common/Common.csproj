@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3DEA64D4-296F-44EB-B1BE-5BE2CE5E2C06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TXSoftware.DataObjectsNetEntityModel.Common</RootNamespace>
+    <AssemblyName>TXSoftware.DataObjectsNetEntityModel.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte100, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte90a, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Designer.Interfaces, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Html">
+      <HintPath>..\Lib\System.Drawing.Html.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Web\Web.Shared\PocoModel\Custom\ProductVersionChangeType.cs">
+      <Link>ProductVersions\Custom\ProductVersionChangeType.cs</Link>
+    </Compile>
+    <Compile Include="..\Web\Web.Shared\PocoModel\Custom\ProductVersionDto.cs">
+      <Link>ProductVersions\Custom\ProductVersionDto.cs</Link>
+    </Compile>
+    <Compile Include="..\Web\Web.Shared\PocoModel\Custom\ProductVersionsDto.cs">
+      <Link>ProductVersions\Custom\ProductVersionsDto.cs</Link>
+    </Compile>
+    <Compile Include="..\Web\Web.Shared\PocoModel\Generated\IObjectDto.cs">
+      <Link>ProductVersions\Generated\IObjectDto.cs</Link>
+    </Compile>
+    <Compile Include="..\Web\Web.Shared\PocoModel\Generated\ProductVersionChangeDto.cs">
+      <Link>ProductVersions\Generated\ProductVersionChangeDto.cs</Link>
+    </Compile>
+    <Compile Include="..\Web\Web.Shared\PocoModel\Generated\ProductVersionDto.cs">
+      <Link>ProductVersions\Generated\ProductVersionDto.cs</Link>
+    </Compile>
+    <Compile Include="..\Web\Web.Shared\PocoModel\SerializeUtils.cs">
+      <Link>ProductVersions\SerializeUtils.cs</Link>
+    </Compile>
+    <Compile Include="DataContractDescriptor.cs" />
+    <Compile Include="ControlSync.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="GenericTreeIterator.cs" />
+    <Compile Include="IdentityProjectionEqualityComparer.cs" />
+    <Compile Include="Modeling\DynamicTypeDescriptor.cs" />
+    <Compile Include="Modeling\ElementEventArgs.cs" />
+    <Compile Include="Modeling\ElementEventType.cs" />
+    <Compile Include="Modeling\ExtensionMethods.cs" />
+    <Compile Include="Modeling\IElementEventsHandler.cs" />
+    <Compile Include="Modeling\ValidationResult.cs" />
+    <Compile Include="ObjectValue.cs" />
+    <Compile Include="Orm\AssociationInfo.cs" />
+    <Compile Include="Orm\Constraints\OrmPropertyConstraints.cs" />
+    <Compile Include="Orm\Constraints\PropertyConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyEmailConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyFutureConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyLengthConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyNotEmptyConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyNotNullConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyNotNullOrEmptyConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyPastConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyRangeConstraint.cs" />
+    <Compile Include="Orm\Constraints\PropertyRegexConstraint.cs" />
+    <Compile Include="Orm\IOrmAttribute.cs" />
+    <Compile Include="ISerializableObject.cs" />
+    <Compile Include="ObjectValueInfo.cs" />
+    <Compile Include="Orm\OrmAssociationEnd.cs" />
+    <Compile Include="Orm\OrmEnumUtils.cs" />
+    <Compile Include="Orm\OrmHierarchyRootAttribute.cs" />
+    <Compile Include="Orm\OrmFieldAttribute.cs" />
+    <Compile Include="Orm\OrmIndexFields.cs" />
+    <Compile Include="Orm\OrmKeyAttribute.cs" />
+    <Compile Include="Orm\OrmKeyGeneratorAttribute.cs" />
+    <Compile Include="Orm\OrmTypeDiscriminatorValueAttribute.cs" />
+    <Compile Include="Orm\OrmUtils.cs" />
+    <Compile Include="Orm\PropertyAccessModifiers.cs" />
+    <Compile Include="ProjectItem\AddModelWizard.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StandardValues.cs" />
+    <Compile Include="SynchronizationCallback.cs" />
+    <Compile Include="UIEditors\ChainedPropertyDescriptor.cs" />
+    <Compile Include="UIEditors\Components\BevelControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Components\IconComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Components\IconItemPaintHelper.cs" />
+    <Compile Include="UIEditors\Components\IconListEntry.cs" />
+    <Compile Include="UIEditors\Components\LabelEditEnhancedTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Components\LineControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Components\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Components\TransparentRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Components\TreeViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIEditors\DefaultableMulti.cs" />
+    <Compile Include="Defaultable.cs" />
+    <Compile Include="UIEditors\FlagsEditor.cs" />
+    <Compile Include="UIEditors\Forms\AddAssociation\ControlAddAssociationAdv.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\AddAssociation\ControlAddAssociationAdv.Designer.cs">
+      <DependentUpon>ControlAddAssociationAdv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\AddAssociation\ControlAddAssociationSimple.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\AddAssociation\ControlAddAssociationSimple.Designer.cs">
+      <DependentUpon>ControlAddAssociationSimple.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FlagsEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FlagsEditorControl.Designer.cs">
+      <DependentUpon>FlagsEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormAddAssociationOld.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormAddAssociationOld.Designer.cs">
+      <DependentUpon>FormAddAssociationOld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\AddAssociation\FormAddAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\AddAssociation\FormAddAssociation.Designer.cs">
+      <DependentUpon>FormAddAssociation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormAddPersistentType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormAddPersistentType.Designer.cs">
+      <DependentUpon>FormAddPersistentType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormEntityModelPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormEntityModelPicker.Designer.cs">
+      <DependentUpon>FormEntityModelPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormImplementInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormImplementInterface.Designer.cs">
+      <DependentUpon>FormImplementInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormInputBox.Designer.cs">
+      <DependentUpon>FormInputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormItemsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormItemsEditor.Designer.cs">
+      <DependentUpon>FormItemsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormProductUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormProductUpdate.Designer.cs">
+      <DependentUpon>FormProductUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\SystemType.cs" />
+    <Compile Include="UIEditors\TreeNodeProxy.cs" />
+    <Compile Include="UIEditors\TypeConverters.cs" />
+    <Compile Include="UIEditors\TypeConverters\EnabledDisabled.cs" />
+    <Compile Include="UIEditors\TypeConverters\UsedNotUsed.cs" />
+    <Compile Include="UIEditors\UniDropdownEditor.cs" />
+    <Compile Include="UIEditors\WinAPI.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIEditors\EnumTypeConverter.cs" />
+    <Compile Include="UIEditors\FieldDisplayNameAttribute.cs" />
+    <Compile Include="UIEditors\Forms\FormObjectValueEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\FormObjectValueEditor.Designer.cs">
+      <DependentUpon>FormObjectValueEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\IListItemCollectionProvider.cs" />
+    <Compile Include="UIEditors\IModalDialogForm.cs" />
+    <Compile Include="UIEditors\ListItem.cs" />
+    <Compile Include="UIEditors\ModalDialogEditor.cs" />
+    <Compile Include="VersionNumber.cs" />
+    <Compile Include="XmlProxy\XmlProxySerializer.cs" />
+    <Compile Include="XmlProxy\XmlProxy.cs" />
+    <Compile Include="XmlProxy\XmlProxyAttribute.cs" />
+    <Compile Include="XmlProxy\XmlProxyAttributeCollection.cs" />
+    <Compile Include="XmlProxy\XmlProxyCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\AddAssociation\ControlAddAssociationAdv.resx">
+      <DependentUpon>ControlAddAssociationAdv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\AddAssociation\ControlAddAssociationSimple.resx">
+      <DependentUpon>ControlAddAssociationSimple.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FlagsEditorControl.resx">
+      <DependentUpon>FlagsEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormAddAssociationOld.resx">
+      <DependentUpon>FormAddAssociationOld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\AddAssociation\FormAddAssociation.resx">
+      <DependentUpon>FormAddAssociation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormAddPersistentType.resx">
+      <DependentUpon>FormAddPersistentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormEntityModelPicker.resx">
+      <DependentUpon>FormEntityModelPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormObjectValueEditor.resx">
+      <DependentUpon>FormObjectValueEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormImplementInterface.resx">
+      <DependentUpon>FormImplementInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormInputBox.resx">
+      <DependentUpon>FormInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormItemsEditor.resx">
+      <DependentUpon>FormItemsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\FormProductUpdate.resx">
+      <DependentUpon>FormProductUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\app.png" />
+    <Content Include="Resources\ascend.png" />
+    <Content Include="Resources\bullet.png" />
+    <Content Include="Resources\delete_all.gif" />
+    <Content Include="Resources\delete_all.png" />
+    <None Include="Resources\Structure.bmp" />
+    <None Include="Resources\Entity.bmp" />
+    <None Include="Resources\Interface.bmp" />
+    <Content Include="Resources\descend.png" />
+    <Content Include="Resources\folder.bmp" />
+    <Content Include="Resources\folder_open.bmp" />
+    <Content Include="Resources\info.png" />
+    <Content Include="Resources\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UIEditors\Forms\ImportDBSchema\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetPath)" "$(SolutionDir)_Drop" /F /R /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,325 @@
+﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ DONetEntityModelDesigner processor="DONetEntityModelDesignerDirectiveProcessor" requires="fileName='EntityModel-v1.0.1.0.dom'" #>
+<#@ include file="DOM.Utility.CS.ttinclude" #>
+<#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Dsl" #>
+<#@ import namespace="System.Collections.ObjectModel" #>
+
+<# //System.Diagnostics.Debugger.Launch(); System.Diagnostics.Debugger.Break();
+	// REMARKS:
+	// To setup generator, update value of "fileName='EntityModel-v1.0.1.0.dom'" in DONetEntityModelDesigner tag to point to existing entity model file *.dom
+	// path is relative to current template (*.tt) file
+	//
+
+	// Initialize enviroment variables required to generate entities
+	InitializeEnviroment();
+
+	// Method where you can customize some settings of generate process (e.g. enable/disable of generating partial types, etc...)
+	CustomizeSettings();
+
+	// Generate process - generates entity model classes extracted from model file defined in attribute 'requires'/'fileName' above (relative path to file)
+	GenerateEntities();
+	//'EntityModel-v1.0.1.0.dom'
+#>
+<#+
+void CustomizeSettings()
+{
+	// Variables.OutputFolder - string 
+	//   output folder where will be generated classes
+	//   allowed value: 
+	// 	  - relative path from current directory where current *.tt file is located
+	//	  - value "" represents current directory (default value)
+	// Default value is:
+	// Variables.OutputFolder = "";
+
+	// Variables.VirtualProperties - bool
+	//   true - adds modifier 'virtual' to generated properties
+	//   false - do not add 'virtual' modifier to generated properties
+	//  Default value is true.
+	// Variables.VirtualProperties = true;
+	
+	// Variables.PartialTypes - bool
+	//   true - adds modifier 'partial' to generated classes
+	//   false - do not add 'partial' to generated classes
+	//  Default value is true.
+	// Variables.PartialTypes = true;
+	
+	// Variables.ExtraUsings - string[]
+	//   array of extra usings to add to each generated file
+	//  Default is empty list - new string[0]
+	// Variables.ExtraUsings = new string[0];
+}
+	
+void InitializeEnviroment()
+{
+	// builds global variables
+	BuildVariables(this);
+
+	// prepare file manager which is responsible for saving generated code into multiple files in defined output folder
+	PrepareFileManager();
+
+	// validate entity model
+    ValidateModel();
+
+	// builds header for generated files
+	BuildFilesHeader();
+
+	// build global namespace value
+	ResolveNamespace();
+}
+
+void GenerateEntities()
+{
+	//IModelRoot modelRoot = Variables.ModelRoot;
+	foreach(IPersistentType persistentType in Variables.ModelRoot.PersistentTypes)
+	{
+		WriteEntity(persistentType);
+	}
+	
+	// flush all generated files
+	Variables.Manager.Flush();
+}
+#>
+<#+
+// class 'Variables'
+static class Variables
+{
+	// properties setable by users
+	public static string OutputFolder;
+	public static string[] ExtraUsings = new string[0];
+	public static bool PartialTypes = true;
+	public static bool VirtualProperties = true;
+
+	public static string TemplateFile;
+	public static string CurrentDirectory;
+	public static FileManager Manager;
+	public static IModelRoot ModelRoot;
+	public static CodeGenerationTools Code;
+	public static IPropertiesBuilder PropertiesBuilder;
+	public static string GlobalNamespace;
+	
+	public static string OutputPath
+	{
+		get
+		{
+			return Manager.OutputPath;
+		}
+	}
+}
+
+// method 'BuildVariables'
+void BuildVariables(object textTransformation)
+{
+	Variables.Code = new CodeGenerationTools(textTransformation);
+	Variables.TemplateFile = Variables.Code.TemplateFile;
+	Variables.CurrentDirectory = Path.GetDirectoryName(Variables.TemplateFile);
+	PropertyOwnerContext.Initialize();
+}
+
+void ResolveNamespace()
+{
+	Variables.GlobalNamespace = Variables.Code.EscapeNamespace(Variables.ModelRoot.Namespace);
+	if (string.IsNullOrEmpty(Variables.GlobalNamespace))
+	{
+		Variables.GlobalNamespace = Variables.Code.EscapeNamespace(Variables.Manager.ResolveNamespace());
+	}
+	
+	Variables.Code.GlobalNamespace = Variables.GlobalNamespace;
+}
+#>
+<#+ // method 'ValidateModel()'
+void ValidateModel()
+{
+	Variables.ModelRoot = this.EntityModel.ModelRoot;
+	if (Variables.ModelRoot.PersistentTypes.Count == 0)
+	{
+		throw new InvalidOperationException("Assigned entity model does not have any persistent types defined!");
+	}
+}
+#>
+<#+ // method 'PrepareFileManager()'
+void PrepareFileManager()
+{
+	FileManager manager = FileManager.Create(this);
+	var currentDirectory = Variables.CurrentDirectory;
+	manager.OutputPath = string.IsNullOrEmpty(Variables.OutputFolder) ? currentDirectory : Path.Combine(currentDirectory, Variables.OutputFolder);
+	if (!Directory.Exists(manager.OutputPath))
+	{
+		throw new DirectoryNotFoundException(manager.OutputPath);
+	}
+
+	Variables.Manager = manager;
+}
+#>
+<#+ // method BuildFilesHeader()
+void BuildFilesHeader()
+{
+    Variables.Manager.StartHeader();
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated from a template.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+
+using Xtensive.Core;
+using Xtensive.Orm;
+<#=string.Join(Environment.NewLine, Variables.ExtraUsings.Select(usingItem => "using " + usingItem + ";").ToArray())#><#=Variables.Code.StringOptional(Environment.NewLine, Variables.ExtraUsings.Length > 0)#>
+<#+
+    Variables.Manager.EndHeader();
+}
+#>
+<#+
+void PushIndent()
+{
+	this.PushIndent(new String(' ', 4));
+}
+
+string GetEntityNamespace(IPersistentType entity)
+{
+	var namespaceName = Variables.Code.EscapeNamespace(entity);
+	return namespaceName;
+	//return string.IsNullOrEmpty(namespaceName) ? Variables.GlobalNamespace : namespaceName;
+}
+#>
+<#+ // method 'WriteEntity()'
+void WriteEntity(IPersistentType entity)
+{
+	Variables.Manager.StartNewFile(entity.Name + ".cs");
+
+	Variables.PropertiesBuilder = entity.GetPropertiesBuilder();
+
+	string typeAttributes = string.Join(Environment.NewLine, Variables.Code.CreateTypeAttributes(entity, Variables.PropertiesBuilder)
+									.Select(attr => "[" + attr + "]").ToArray());
+	bool hasTypeAttributes = !string.IsNullOrEmpty(typeAttributes);
+	string entityInheritance = string.Join(",", Variables.Code.InheritanceList(entity));
+	string entityNamespace = GetEntityNamespace(entity);
+#>
+namespace <#= entityNamespace #>
+{
+<#+
+	this.PushIndent();
+#>
+<#=Variables.Code.StringAfter(typeAttributes, Environment.NewLine)#><#=Accessibility.ForType(entity)#> <#=Variables.Code.SpaceAfter(Variables.Code.InheritanceModifier(entity))#><#=Variables.Code.StringOptional("partial ", Variables.PartialTypes)#><#=Variables.Code.SpaceAfter(Variables.Code.TypeIdent(entity))#><#=Variables.Code.Escape(entity)#><#=Variables.Code.StringBefore(": ", entityInheritance)#>
+{
+<#+
+	this.PushIndent();
+	WriteProperties(entity.Properties, "Scalar Properties");
+#>
+<#+
+	WriteProperties(entity.NavigationProperties, "Navigation Properties");
+#>
+<#+
+	WriteInheritedProperties(entity);
+	if (entity.TypeKind == PersistentTypeKind.Entity)
+	{
+		WriteConstructors(entity);
+	}
+	this.PopIndent();
+#>
+}
+<#+
+	this.PopIndent();
+#>
+}
+<#+
+}
+#>
+<#+
+void WriteInheritedProperties(IPersistentType entity)
+{
+	if (entity is IInterface)
+	{
+		IInterface @interface = (IInterface)entity;
+		if (@interface is IEntityBase)
+		{
+			IEntityBase entityBase = (IEntityBase)@interface;
+
+			var propertiesToImplement = Variables.PropertiesBuilder.GetInheritedProperties();
+			
+			IEnumerable<IPropertyBase> scalarPropertiesToImplement = propertiesToImplement.Where(item => item.PropertyKind != PropertyKind.Navigation);
+			IEnumerable<IPropertyBase> navigationPropertiesToImplement = propertiesToImplement.Where(item => item.PropertyKind == PropertyKind.Navigation);
+			
+			if (scalarPropertiesToImplement.Count() > 0)
+			{
+				using(PropertyOwnerContext.Current.ImpersonateAsOwner(entity, scalarPropertiesToImplement))
+				{
+					WriteProperties(scalarPropertiesToImplement, "Inherited Scalar Properties");
+				}
+			}
+			
+			if (navigationPropertiesToImplement.Count() > 0)
+			{
+				using(PropertyOwnerContext.Current.ImpersonateAsOwner(entity, navigationPropertiesToImplement))
+				{
+					WriteProperties(navigationPropertiesToImplement, "Inherited Navigation Properties");
+				}
+			}
+		}
+	}
+}
+
+void WriteProperties(IEnumerable<IPropertyBase> properties, string regionName)
+{
+	bool lastProperty = false;
+	int propertiesCount = properties.Count();
+	
+	if (propertiesCount > 0)
+	{#>
+
+#region <#= regionName #>
+
+<#+}
+	
+	int propertyIdx = 0;
+	foreach(IPropertyBase sourceProperty in properties)
+	{
+		var currentProperty = Variables.PropertiesBuilder.GetProperty(sourceProperty, InheritanceMember.Current);
+		var inheritedProperty = Variables.PropertiesBuilder.GetProperty(sourceProperty, InheritanceMember.Inherited);
+		
+		string propertyTypeAttributes = string.Join(Environment.NewLine, Variables.Code.CreateTypeAttributes(currentProperty, Variables.PropertiesBuilder)
+												.Select(attr => "[" + attr + "]").ToArray());
+		bool propertyHasTypeAttributes = !string.IsNullOrEmpty(propertyTypeAttributes);
+		bool setterVisible = Accessibility.VisibleSetter(currentProperty, Variables.PropertiesBuilder);
+		lastProperty = propertyIdx == (propertiesCount-1);
+#>
+<#=Variables.Code.StringAfter(propertyTypeAttributes, Environment.NewLine)#><#=Variables.Code.SpaceAfter(Accessibility.ForType(currentProperty))#><#=Variables.Code.SpaceAfter(Variables.Code.StringOptional(Variables.Code.InheritanceModifier(currentProperty), Variables.VirtualProperties))#><#=Variables.Code.EscapeType(inheritedProperty)#> <#= Variables.Code.Escape(currentProperty.Name)#>
+{
+<#+ this.PushIndent(); #>
+get;<#=Variables.Code.StringOptional(Environment.NewLine, setterVisible)#><#=Variables.Code.StringOptional(Variables.Code.SpaceAfter(Accessibility.ForSetter(currentProperty, Variables.PropertiesBuilder)), setterVisible)#><#=Variables.Code.StringOptional("set;", setterVisible)#>
+<#+ this.PopIndent(); #>
+}<#=Variables.Code.StringOptional(Environment.NewLine, !lastProperty)#>
+<#+
+		propertyIdx++;
+	}
+	if (propertiesCount > 0)
+	{#>
+
+#endregion <#= regionName #>
+<#+}
+}
+
+void WriteConstructors(IPersistentType entity)
+{#>
+	
+#region Constructors
+
+<#=Variables.Code.SpaceAfter(Accessibility.ForType(entity))#><#=Variables.Code.StringAfter(entity.Name, "(")#><#=Variables.Code.StringAfter(Variables.Code.BuildXtensiveType(OrmType.Session), " session)")#><#= Variables.Code.SpaceBefore(": base(session)")#>
+{}
+
+<#=Variables.Code.SpaceAfter(Accessibility.ForType(entity))#><#=Variables.Code.StringAfter(entity.Name, "()")#>
+{}
+
+#endregion Constructors
+<#+
+}
+#>

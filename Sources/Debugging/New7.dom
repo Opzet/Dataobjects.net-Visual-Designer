@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="64569957-bee5-441a-8319-a8d1bb2e6b71" modelVersion="1.0.5.0" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner">
+  <domainTypes />
+  <persistentTypes>
+    <entity name="User">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Id" typeId="00000000-0000-0000-0000-000000000004">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="ScalarProperty3" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+        <scalarProperty name="ScalarProperty5" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+        <scalarProperty name="ScalarProperty4" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+      <navigationProperties>
+        <navigationProperty name="Address1">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>One</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/64569957-bee5-441a-8319-a8d1bb2e6b71/User/UserAddress1" />
+          </persistentTypeHasAssociations>
+        </navigationProperty>
+        <navigationProperty name="NavigationProperty3">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>ZeroOrOne</multiplicity>
+          <key valueType="Disabled"></key>
+        </navigationProperty>
+      </navigationProperties>
+      <persistentTypeAssociations>
+        <persistentTypeHasAssociations name="UserAddress1">
+          <structureMoniker name="/64569957-bee5-441a-8319-a8d1bb2e6b71/Address" />
+          <end1 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="0"><pairTo valueType="Custom"><value>Address1</value></pairTo></end1>
+          <end2 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="0"><pairTo valueType="Custom"><value>Address1</value></pairTo></end2>
+        </persistentTypeHasAssociations>
+      </persistentTypeAssociations>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <indexes>
+        <entityIndex name="Index1">
+          <unique valueType="Default"></unique>
+          <fillFactor valueType="Default"></fillFactor>
+          <indexName valueType="Default"></indexName>
+          <fields><keyFields /><includedFields /></fields>
+        </entityIndex>
+        <entityIndex name="Index2">
+          <unique valueType="Default"></unique>
+          <fillFactor valueType="Default"></fillFactor>
+          <indexName valueType="Default"></indexName>
+          <fields><keyFields /><includedFields /></fields>
+        </entityIndex>
+      </indexes>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Custom"><value>tUser</value></mappingName></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <structure name="Address">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <inheritsIEntity>Auto</inheritsIEntity>
+    </structure>
+  </persistentTypes>
+</entityModel>

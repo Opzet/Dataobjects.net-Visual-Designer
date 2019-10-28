@@ -1,0 +1,54 @@
+<Project DefaultTargets="MakeGeneratorZip" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Required Import to use MSBuild Community Tasks -->
+    <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+
+    <Target Name="MakeGeneratorZip">
+        <Message Importance="high" Text="MakeGeneratorZip: Started"/>
+
+        <PropertyGroup>
+            <FolderCSharp>CustomProjectItemTemplates\Generator\CSharp\1033\</FolderCSharp>
+            <FolderVisualBasic>CustomProjectItemTemplates\Generator\VisualBasic\1033\</FolderVisualBasic>
+        </PropertyGroup>
+
+        <!--<CallTarget Targets="UpdateTemplateVersions"/>-->
+        
+        <ItemGroup>
+            <ZipFilesCSharp Include="$(ProjectDir)$(FolderCSharp)CSharp.vstemplate"/>
+            <ZipFilesCSharp Include="$(TargetDir)TextTemplates\EntityModel.tt"/>
+            <ZipFilesVisualBasic Include="$(ProjectDir)$(FolderVisualBasic)VisualBasic.vstemplate"/>
+            <ZipFilesVisualBasic Include="$(TargetDir)TextTemplates\EntityModel.VB.tt"/>
+        </ItemGroup>
+
+        <PropertyGroup>
+            <FinalZipFileCSharp>$(TargetDir)DONetEntityModelGenerator.zip</FinalZipFileCSharp>
+            <FinalZipFileVisualBasic>$(TargetDir)DONetEntityModelGenerator.VB.zip</FinalZipFileVisualBasic>
+        </PropertyGroup>
+        
+        <Message Importance="high" Text="MakeGeneratorZip: Creating zip file (CSharp) '$(FinalZipFileCSharp)'"/>
+        <Zip Files="@(ZipFilesCSharp)" ZipFileName="$(FinalZipFileCSharp)" Flatten="True" WorkingDirectory="$(TargetDir)" />
+
+        <Message Importance="high" Text="MakeGeneratorZip: Creating zip file (VisualBasic) '$(FinalZipFileVisualBasic)'"/>
+        <Zip Files="@(ZipFilesVisualBasic)" ZipFileName="$(FinalZipFileVisualBasic)" Flatten="True" WorkingDirectory="$(TargetDir)" />
+
+        <Message Importance="high" Text="MakeGeneratorZip: Ended"/>
+    </Target>
+
+    <Target Name="UpdateTemplateVersions">
+        <PropertyGroup>
+            <UpdateCode>
+                <![CDATA[
+                    public static string ScriptMain()
+                    {
+                        return Environment.CurrentDirectory;
+                    }
+                ]]>
+            </UpdateCode>
+        </PropertyGroup>
+
+        <!--<Script Language="C#" Code="$(UpdateCode)">
+            <Output TaskParameter="ReturnValue" PropertyName="CurrentTemplateVersion" />
+        </Script>-->
+
+        <Message Importance="high" Text="CurrentTemplateVersion: $(CurrentTemplateVersion)"/>
+    </Target>
+</Project>

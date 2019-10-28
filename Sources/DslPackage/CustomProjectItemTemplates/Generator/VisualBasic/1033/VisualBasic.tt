@@ -1,0 +1,36 @@
+﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" #>
+<#@ output extension=".vstemplate" #>
+<#@ Dsl processor="DslDirectiveProcessor" requires="fileName='..\..\..\..\..\Dsl\DslDefinition.dsl'" #>
+<!--DSL Tools Language Template-->
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TemplateData>
+		<Name ID="103">DataObjects.Net Entity Model Generator</Name>
+		<Description Package="{<#= this.Dsl.PackageGuid #>}" ID="102"/>
+		<Icon Package="{<#= this.Dsl.PackageGuid #>}" ID="201" />
+		<ProjectType>VisualBasic</ProjectType>
+		<SortOrder>360</SortOrder>
+		<DefaultName>EntityModel.tt</DefaultName>
+	</TemplateData>
+	<TemplateContent>
+	    <References>
+	      <Reference>
+	        <Assembly>System</Assembly>
+	      </Reference>
+	      <Reference>
+	        <Assembly>System.Core</Assembly>
+	      </Reference>
+	      <Reference>
+	        <Assembly>System.XML</Assembly>
+	      </Reference>
+	      <Reference>
+	        <Assembly>mscorlib</Assembly>
+	      </Reference>
+	    </References>
+		<ProjectItem TargetFileName="$fileinputname$.tt" ReplaceParameters="true">EntityModel.VB.tt</ProjectItem>
+	</TemplateContent>
+  <WizardExtension>
+    <Assembly>TXSoftware.DataObjectsNetEntityModel.Common</Assembly>
+    <FullClassName>TXSoftware.DataObjectsNetEntityModel.Common.ProjectItem.AddModelWizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>
+

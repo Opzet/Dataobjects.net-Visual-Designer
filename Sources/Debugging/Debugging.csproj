@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.10318</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8D1E5CF0-B8DD-4DDC-89AE-FEACE7A284A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TXSoftware.DataObjectsNetEntityModel.Debugging</RootNamespace>
+    <AssemblyName>TXSoftware.DataObjectsNetEntityModel.Debugging</AssemblyName>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PostSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DataObjects.Net\Lib\PostSharp\Debug\PostSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Xtensive.Aspects, Version=4.4.0.0, Culture=neutral, PublicKeyToken=93a6c53d77a5296c, processorArchitecture=MSIL" />
+    <Reference Include="Xtensive.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=93a6c53d77a5296c, processorArchitecture=MSIL" />
+    <Reference Include="Xtensive.Orm, Version=4.4.0.0, Culture=neutral, PublicKeyToken=93a6c53d77a5296c, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Address.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Dsl\GeneratedCode\DONetEntityModelDesignerSchema.xsd">
+      <Link>DONetEntityModelDesignerSchema.xsd</Link>
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="EntityBaseModel.dom">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityBaseModel.dom.diagram">
+      <DependentUpon>EntityBaseModel.dom</DependentUpon>
+    </None>
+    <None Include="EntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityModel.txt</LastGenOutput>
+    </None>
+    <None Include="EntityModel1.dom">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityModel1.dom.diagram">
+      <DependentUpon>EntityModel1.dom</DependentUpon>
+    </None>
+    <None Include="InheritanceModel1.dom">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="InheritanceModel1.dom.diagram">
+      <DependentUpon>InheritanceModel1.dom</DependentUpon>
+    </None>
+    <None Include="New5.dom">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="New5.dom.diagram">
+      <DependentUpon>New5.dom</DependentUpon>
+    </None>
+    <None Include="New7.dom" />
+    <None Include="New7.dom.diagram">
+      <DependentUpon>New7.dom</DependentUpon>
+    </None>
+    <None Include="SmallInheritModel.dom">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SmallInheritModel.dom.diagram">
+      <DependentUpon>SmallInheritModel.dom</DependentUpon>
+    </None>
+    <None Include="Test01.tt">
+      <CustomToolNamespace>TextTemplatingFileGenerator</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4df5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Debugging.Dto.csproj">
+      <Project>{2529DDA4-8E6C-4F29-A1F0-891FC358C5B1}</Project>
+      <Name>Debugging.Dto</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EntityModel.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

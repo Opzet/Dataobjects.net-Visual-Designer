@@ -1,0 +1,1218 @@
+<#@ assembly name="System.Core"
+#><#@ assembly name="System.Data.Linq"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="System.Xml"
+#><#@ assembly name="System.Xml.Linq"
+#><#@ import namespace="System"
+#><#@ import namespace="System.CodeDom"
+#><#@ import namespace="System.CodeDom.Compiler"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Data.Linq"
+#><#@ import namespace="System.Data.Linq.Mapping"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="EnvDTE"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="System.Xml.Linq"
+#><#@ import namespace="System.Globalization"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#><#@ import namespace="Microsoft.VisualBasic"
+#><#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Common"
+#><#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Common.UIEditors"
+#><#+
+
+Public Class FileManager
+    Private ReadOnly files As New List(Of Block)()
+    Private ReadOnly footer As New Block()
+    Private ReadOnly header As New Block()
+    Protected _textTransformation As DynamicTextTransformation
+    Private m_currentBlock As Block
+    Protected generatedFileNames As New List(Of [String])()
+    Protected m_outputPath As String
+    Private templateDirectory As String
+    Protected m_templateFile As String
+
+    Private Sub New(textTransformation As DynamicTextTransformation)
+        ', string templateDirectory)
+        Me._textTransformation = textTransformation
+        Me.m_templateFile = textTransformation.Host.TemplateFile
+        ' Path.GetDirectoryName(templatingHost.EngineHost.TemplateFile);
+        Me.templateDirectory = Path.GetDirectoryName(m_templateFile)
+    End Sub
+
+    Public ReadOnly Property TemplateFile() As String
+        Get
+            Return m_templateFile
+        End Get
+    End Property
+
+    Public Property OutputPath() As [String]
+        Get
+            Return m_outputPath
+        End Get
+        Set(value As [String])
+            If value <> m_outputPath Then
+                m_outputPath = value
+                If m_outputPath(m_outputPath.Length - 1) <> Path.DirectorySeparatorChar Then
+                    m_outputPath += Path.DirectorySeparatorChar
+                    'OutputPathChanged();
+                End If
+            End If
+        End Set
+    End Property
+
+    Protected Overridable Function ResolveOutputPath() As String
+        Dim result As String = Me.OutputPath
+
+        If Not String.IsNullOrEmpty(Me.OutputPath) Then
+            If Not Path.IsPathRooted(Me.OutputPath) Then
+                result = Path.Combine(templateDirectory, Me.OutputPath)
+            End If
+        Else
+            result = templateDirectory
+        End If
+
+        Return result
+    End Function
+
+    Public Overridable ReadOnly Property DefaultProjectNamespace() As [String]
+        Get
+            Return Nothing
+        End Get
+    End Property
+
+    Private Property CurrentBlock() As Block
+        Get
+            Return m_currentBlock
+        End Get
+        Set(value As Block)
+            If CurrentBlock IsNot Nothing Then
+                EndBlock()
+            End If
+            If value IsNot Nothing Then
+                value.Start = Me._textTransformation.GenerationEnvironment.Length
+            End If
+            m_currentBlock = value
+        End Set
+    End Property
+
+    Public Shared Function Create(textTransformation As Object) As FileManager
+        Dim result As FileManager = Nothing
+        Dim inVSNET As Boolean = False
+
+        Dim transformation As DynamicTextTransformation = DynamicTextTransformation.Create(textTransformation)
+        Dim host As IDynamicHost = transformation.Host
+
+        Try
+
+#If Not PREPROCESSED_TEMPLATE Then
+            If host.AsIServiceProvider() IsNot Nothing Then
+                inVSNET = True
+            End If
+#End If
+
+            result = If(inVSNET, New VSManager(transformation), New FileManager(transformation))
+            'host.LogError(e);
+        Catch e As Exception
+        End Try
+        Return result
+    End Function
+
+    'protected virtual void OutputPathChanged()
+    '    {
+    '    }
+
+
+    Public Sub StartNewFile(name As [String])
+        If name Is Nothing Then
+            Throw New ArgumentNullException("name")
+        End If
+        CurrentBlock = New Block() With {.Name = name}
+    End Sub
+
+    Public Sub EndNewFile()
+        EndBlock()
+    End Sub
+
+    Public Sub StartFooter()
+        CurrentBlock = footer
+    End Sub
+
+    Public Sub EndFooter()
+        EndBlock()
+    End Sub
+
+    Public Sub StartHeader()
+        CurrentBlock = header
+    End Sub
+
+    Public Sub EndHeader()
+        EndBlock()
+    End Sub
+
+    Public Sub Flush()
+        Me.Process()
+    End Sub
+
+    Private Sub EndBlock()
+        If CurrentBlock Is Nothing Then
+            Return
+        End If
+
+        CurrentBlock.Length = Me.Template.Length - CurrentBlock.Start
+        If CurrentBlock IsNot header AndAlso CurrentBlock IsNot footer Then
+            files.Add(CurrentBlock)
+        End If
+        m_currentBlock = Nothing
+    End Sub
+
+    Protected ReadOnly Property Template() As StringBuilder
+        Get
+            Return Me._textTransformation.GenerationEnvironment
+        End Get
+    End Property
+
+    Protected Friend Overridable Sub Process()
+        'bool split)
+        'Debugger.Break();
+        'if (split)
+        If True Then
+            EndBlock()
+            Dim headerText As [String] = Me.Template.ToString(header.Start, header.Length)
+            Dim footerText As [String] = Me.Template.ToString(footer.Start, footer.Length)
+            Dim outputPath As [String] = ResolveOutputPath()
+            'string.IsNullOrEmpty(OutputPath) ? Path.GetDirectoryName(host.TemplateFile) : OutputPath;
+            files.Reverse()
+            For Each block As Block In files
+                Dim fileName As [String] = Path.Combine(outputPath, block.Name)
+                Dim content As [String] = headerText + Me.Template.ToString(block.Start, block.Length) + footerText
+                generatedFileNames.Add(fileName)
+                CreateFile(fileName, content)
+                Me.Template.Remove(block.Start, block.Length)
+            Next
+        End If
+    End Sub
+
+    Protected Overridable Sub CreateFile(fileName As [String], content As [String])
+        If IsFileContentDifferent(fileName, content) Then
+            File.WriteAllText(fileName, content)
+        End If
+    End Sub
+
+    Public Overridable Function GetCustomToolNamespace(fileName As [String]) As [String]
+        Return Nothing
+    End Function
+
+    Public Overridable Function GetTemplateItemCustomToolNamespace() As String
+        Return String.Empty
+    End Function
+
+    Public Function ResolveNamespace() As String
+        If Not String.IsNullOrEmpty(Me.DefaultProjectNamespace) Then
+            Return Me.DefaultProjectNamespace
+        End If
+
+        Return GetTemplateItemCustomToolNamespace()
+    End Function
+
+    Protected Function IsFileContentDifferent(fileName As [String], newContent As [String]) As Boolean
+        Return Not (File.Exists(fileName) AndAlso File.ReadAllText(fileName) = newContent)
+    End Function
+
+#Region "Nested type: Block"
+
+    Private Class Block
+        Public Length As Integer
+        Public Name As [String]
+        Public Start As Integer
+    End Class
+
+#End Region
+
+#Region "Nested type: VSManager"
+
+    Private Class VSManager
+        Inherits FileManager
+        Private ReadOnly checkOutAction As Action(Of [String])
+        Private ReadOnly dte As DTE
+        Private ReadOnly projectSyncAction As Action(Of IEnumerable(Of [String]))
+        Private ReadOnly templateProjectItem As ProjectItem
+        Private outputPathProjectItem As ProjectItem
+        Private oldProjectItemsToDelete As List(Of ProjectItem)
+
+        Friend Sub New(templatingHost As DynamicTextTransformation)
+            MyBase.New(templatingHost)
+            Dim hostServiceProvider = _textTransformation.Host.AsIServiceProvider()
+            If hostServiceProvider Is Nothing Then
+                Throw New ArgumentNullException("Could not obtain hostServiceProvider")
+            End If
+
+            dte = DirectCast(hostServiceProvider.GetService(GetType(EnvDTE.DTE)), EnvDTE.DTE)
+            If dte Is Nothing Then
+                Throw New ArgumentNullException("Could not obtain DTE from host")
+            End If
+            templateProjectItem = dte.Solution.FindProjectItem(m_templateFile)
+
+            BuildOldTemplateProjectFilesToDelete()
+
+            checkOutAction = Function(fileName As [String]) dte.SourceControl.CheckOutItem(fileName)
+            projectSyncAction = Function(keepFileNames)
+                                    ProjectSync(outputPathProjectItem, oldProjectItemsToDelete, keepFileNames)
+                                End Function
+
+            'Function(keepFileNames As IEnumerable(Of [String])) ProjectSync(outputPathProjectItem, oldProjectItemsToDelete, keepFileNames)
+        End Sub
+
+        Private Sub BuildOldTemplateProjectFilesToDelete()
+            oldProjectItemsToDelete = templateProjectItem.ProjectItems.OfType(Of ProjectItem)().ToList()
+        End Sub
+
+        Public Overrides ReadOnly Property DefaultProjectNamespace() As [String]
+            Get
+                Return templateProjectItem.ContainingProject.Properties.Item("DefaultNamespace").Value.ToString()
+            End Get
+        End Property
+
+        Public Overrides Function GetCustomToolNamespace(fileName As String) As [String]
+            Return dte.Solution.FindProjectItem(fileName).Properties.Item("CustomToolNamespace").Value.ToString()
+        End Function
+
+        Public Overridable Overloads Function GetTemplateItemCustomToolNamespace() As String
+            Return If(templateProjectItem IsNot Nothing, templateProjectItem.Properties.Item("CustomToolNamespace").Value.ToString(), String.Empty)
+        End Function
+
+        Protected Friend Overrides Sub Process()
+            'bool split)
+            If templateProjectItem.ProjectItems Is Nothing Then
+                Return
+            End If
+            MyBase.Process()
+            projectSyncAction.EndInvoke(projectSyncAction.BeginInvoke(generatedFileNames, Nothing, Nothing))
+        End Sub
+
+        Protected Overrides Sub CreateFile(fileName As [String], content As [String])
+            If IsFileContentDifferent(fileName, content) Then
+                CheckoutFileIfRequired(fileName)
+                File.WriteAllText(fileName, content)
+            End If
+        End Sub
+
+        'protected override void OutputPathChanged()
+        '        {
+        '            outputPathProjectItem = FindProjectItem(dte,
+        '                templateProjectItem.ContainingProject.ProjectItems, ResolveOutputPath());
+        '                //templateProjectItem.ContainingProject.ProjectItems, OutputPath);
+        '            Debug.WriteLine("outputPathProjectItem: " + (outputPathProjectItem == null ? "null" : "not null"));
+        '        }
+
+
+        Protected Overrides Function ResolveOutputPath() As String
+            Dim result As String = MyBase.ResolveOutputPath()
+            outputPathProjectItem = FindProjectItem(dte, templateProjectItem.ContainingProject.ProjectItems, result)
+
+            If Not String.IsNullOrEmpty(result) Then
+                Dim dir As String = Path.GetDirectoryName(result)
+                If Directory.Exists(dir) Then
+                    Dim templateFileName As String = templateProjectItem.FileNames(0)
+                    Dim templateDir As String = Path.GetDirectoryName(templateFileName)
+
+                    If String.Compare(dir, templateDir, True) = 0 Then
+                        outputPathProjectItem = templateProjectItem
+                    End If
+                End If
+            End If
+
+            If outputPathProjectItem Is Nothing Then
+                outputPathProjectItem = templateProjectItem
+            End If
+
+            Return result
+        End Function
+
+        Private Shared Function FindProjectItem(vsObj As DTE, inProjectItems As ProjectItems, ProjectItemName As String) As ProjectItem
+            For Each projItem As ProjectItem In inProjectItems
+                For i As Short = 0 To projItem.FileCount - 1
+                    If projItem.FileNames(i) = ProjectItemName Then
+                        Return projItem
+                    ElseIf projItem.ProjectItems.Count > 0 Then
+                        Dim found As ProjectItem = FindProjectItem(vsObj, projItem.ProjectItems, ProjectItemName)
+                        If found IsNot Nothing Then
+                            Return found
+                        End If
+                    End If
+                Next
+            Next
+
+            Return Nothing
+        End Function
+
+        Private Shared Sub ProjectSync(templateProjectItem As ProjectItem, projectItemsToDelete As List(Of ProjectItem), keepFileNames As IEnumerable(Of [String]))
+            Dim keepFileNameSet = New HashSet(Of [String])(keepFileNames)
+            Dim projectFiles = New Dictionary(Of [String], ProjectItem)()
+            Dim templateFileName As String = templateProjectItem.FileNames(0)
+            For Each projectItem As ProjectItem In templateProjectItem.ProjectItems
+                projectFiles.Add(projectItem.FileNames(0), projectItem)
+            Next
+
+            If projectItemsToDelete IsNot Nothing Then
+                For Each oldProjectItem As ProjectItem In projectItemsToDelete
+                    Dim oldFileName As String = oldProjectItem.FileNames(0)
+                    If oldFileName <> templateFileName AndAlso Not keepFileNames.Contains(oldFileName) Then
+                        oldProjectItem.Delete()
+                    End If
+                Next
+            End If
+
+
+            ' Add missing files to the project
+
+            For Each fileName As [String] In keepFileNameSet
+                If Not projectFiles.ContainsKey(fileName) Then
+                    templateProjectItem.ProjectItems.AddFromFile(fileName)
+                End If
+            Next
+        End Sub
+
+        Private Sub CheckoutFileIfRequired(fileName As [String])
+            Dim sc As SourceControl = dte.SourceControl
+            If sc IsNot Nothing AndAlso sc.IsItemUnderSCC(fileName) AndAlso Not sc.IsItemCheckedOut(fileName) Then
+                checkOutAction.EndInvoke(checkOutAction.BeginInvoke(fileName, Nothing, Nothing))
+            End If
+        End Sub
+    End Class
+
+#End Region
+End Class
+
+''' <summary>
+''' Reponsible for abstracting the use of Host between times
+''' when it is available and not
+''' </summary>
+Public Interface IDynamicHost
+    ''' <summary>
+    ''' An abstracted call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolveParameterValue
+    ''' </summary>
+    Function ResolveParameterValue(id As String, name As String, otherName As String) As String
+
+    ''' <summary>
+    ''' An abstracted call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolvePath
+    ''' </summary>
+    Function ResolvePath(path As String) As String
+
+    ''' <summary>
+    ''' An abstracted call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost TemplateFile
+    ''' </summary>
+    ReadOnly Property TemplateFile() As String
+
+    ''' <summary>
+    ''' Returns the Host instance cast as an IServiceProvider
+    ''' </summary>
+    Function AsIServiceProvider() As IServiceProvider
+End Interface
+
+''' <summary>
+''' Reponsible for implementing the IDynamicHost as a dynamic
+''' shape wrapper over the Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost interface
+''' rather than type dependent wrapper.  We don't use the
+''' interface type so that the code can be run in preprocessed mode
+''' on a .net framework only installed machine.
+''' </summary>
+Public Class DynamicHost
+    Implements IDynamicHost
+    Private ReadOnly _instance As Object
+    Private ReadOnly _resolveParameterValue As MethodInfo
+    Private ReadOnly _resolvePath As MethodInfo
+    Private ReadOnly _templateFile As PropertyInfo
+
+    ''' <summary>
+    ''' Creates an instance of the DynamicHost class around the passed in
+    ''' Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost shapped instance passed in.
+    ''' </summary>
+    Public Sub New(ByVal instance As Object)
+        _instance = instance
+        Dim type As Type = _instance.[GetType]()
+        _resolveParameterValue = type.GetMethod("ResolveParameterValue", New Type() {GetType(String), GetType(String), GetType(String)})
+        _resolvePath = type.GetMethod("ResolvePath", New Type() {GetType(String)})
+
+        _templateFile = type.GetProperty("TemplateFile")
+    End Sub
+
+    ''' <summary>
+    ''' A call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolveParameterValue
+    ''' </summary>
+    Public Function ResolveParameterValue(ByVal id As String, ByVal name As String, ByVal otherName As String) As String Implements IDynamicHost.ResolveParameterValue
+        Return DirectCast(_resolveParameterValue.Invoke(_instance, New Object() {id, name, otherName}), String)
+    End Function
+
+    ''' <summary>
+    ''' A call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolvePath
+    ''' </summary>
+    Public Function ResolvePath(ByVal path As String) As String Implements IDynamicHost.ResolvePath
+        Return DirectCast(_resolvePath.Invoke(_instance, New Object() {path}), String)
+    End Function
+
+    ''' <summary>
+    ''' A call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost TemplateFile
+    ''' </summary>
+    Public ReadOnly Property TemplateFile() As String Implements IDynamicHost.TemplateFile
+        Get
+            Return DirectCast(_templateFile.GetValue(_instance, Nothing), String)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns the Host instance cast as an IServiceProvider
+    ''' </summary>
+    Public Function AsIServiceProvider() As IServiceProvider Implements IDynamicHost.AsIServiceProvider
+        Return TryCast(_instance, IServiceProvider)
+    End Function
+End Class
+
+''' <summary>
+''' Reponsible for implementing the IDynamicHost when the
+''' Host property is not available on the TextTemplating type. The Host
+''' property only exists when the hostspecific attribute of the template
+''' directive is set to true.
+''' </summary>
+Public Class NullHost
+    Implements IDynamicHost
+    ''' <summary>
+    ''' An abstraction of the call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolveParameterValue
+    ''' that simply retuns null.
+    ''' </summary>
+    Public Function ResolveParameterValue(id As String, name As String, otherName As String) As String Implements IDynamicHost.ResolveParameterValue
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' An abstraction of the call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost ResolvePath
+    ''' that simply retuns the path passed in.
+    ''' </summary>
+    Public Function ResolvePath(path As String) As String Implements IDynamicHost.ResolvePath
+        Return path
+    End Function
+
+    ''' <summary>
+    ''' An abstraction of the call to Microsoft.VisualStudio.TextTemplating.ITextTemplatingEngineHost TemplateFile
+    ''' that returns null.
+    ''' </summary>
+    Public ReadOnly Property TemplateFile() As String Implements IDynamicHost.TemplateFile
+        Get
+            Return Nothing
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns null.
+    ''' </summary>
+    Public Function AsIServiceProvider() As IServiceProvider Implements IDynamicHost.AsIServiceProvider
+        Return Nothing
+    End Function
+End Class
+
+''' <summary>
+''' Responsible creating an instance that can be passed
+''' to helper classes that need to access the TextTransformation
+''' members.  It accesses member by name and signature rather than
+''' by type.  This is necessary when the
+''' template is being used in Preprocessed mode
+''' and there is no common known type that can be
+''' passed instead
+''' </summary>
+Public Class DynamicTextTransformation
+    Private _instance As Object
+    Private _dynamicHost As IDynamicHost
+
+    Private ReadOnly _write As MethodInfo
+    Private ReadOnly _writeLine As MethodInfo
+    Private ReadOnly _generationEnvironment As PropertyInfo
+    Private ReadOnly _errors As PropertyInfo
+    Private ReadOnly _host As PropertyInfo
+
+    ''' <summary>
+    ''' Creates an instance of the DynamicTextTransformation class around the passed in
+    ''' TextTransformation shapped instance passed in, or if the passed in instance
+    ''' already is a DynamicTextTransformation, it casts it and sends it back.
+    ''' </summary>
+    Public Shared Function Create(instance As Object) As DynamicTextTransformation
+        If instance Is Nothing Then
+            Throw New ArgumentNullException("instance")
+        End If
+
+        Dim textTransformation As DynamicTextTransformation = TryCast(instance, DynamicTextTransformation)
+        If textTransformation IsNot Nothing Then
+            Return textTransformation
+        End If
+
+        Return New DynamicTextTransformation(instance)
+    End Function
+
+    Private Sub New(instance As Object)
+        _instance = instance
+        Dim type As Type = _instance.[GetType]()
+        _write = type.GetMethod("Write", New Type() {GetType(String)})
+        _writeLine = type.GetMethod("WriteLine", New Type() {GetType(String)})
+        _generationEnvironment = type.GetProperty("GenerationEnvironment", BindingFlags.Instance Or BindingFlags.NonPublic)
+        _host = type.GetProperty("Host")
+        _errors = type.GetProperty("Errors")
+    End Sub
+
+    ''' <summary>
+    ''' Gets the value of the wrapped TextTranformation instance's GenerationEnvironment property
+    ''' </summary>
+    Public ReadOnly Property GenerationEnvironment() As StringBuilder
+        Get
+            Return DirectCast(_generationEnvironment.GetValue(_instance, Nothing), StringBuilder)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets the value of the wrapped TextTranformation instance's Errors property
+    ''' </summary>
+    Public ReadOnly Property Errors() As System.CodeDom.Compiler.CompilerErrorCollection
+        Get
+            Return DirectCast(_errors.GetValue(_instance, Nothing), System.CodeDom.Compiler.CompilerErrorCollection)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Calls the wrapped TextTranformation instance's Write method.
+    ''' </summary>
+    Public Sub Write(text As String)
+        _write.Invoke(_instance, New Object() {text})
+    End Sub
+
+    ''' <summary>
+    ''' Calls the wrapped TextTranformation instance's WriteLine method.
+    ''' </summary>
+    Public Sub WriteLine(text As String)
+        _writeLine.Invoke(_instance, New Object() {text})
+    End Sub
+
+    ''' <summary>
+    ''' Gets the value of the wrapped TextTranformation instance's Host property
+    ''' if available (shows up when hostspecific is set to true in the template directive) and returns
+    ''' the appropriate implementation of IDynamicHost
+    ''' </summary>
+    Public ReadOnly Property Host() As IDynamicHost
+        Get
+            If _dynamicHost Is Nothing Then
+                If _host Is Nothing Then
+                    _dynamicHost = New NullHost()
+                Else
+                    _dynamicHost = New DynamicHost(_host.GetValue(_instance, Nothing))
+                End If
+            End If
+            Return _dynamicHost
+        End Get
+    End Property
+End Class
+
+Public NotInheritable Class Accessibility
+    Private Const VISIBILITY_PRIVATE As String = "Private"
+
+    Private Sub New()
+    End Sub
+    Public Shared Function ForType(element As IAccessibleElement) As String
+        Dim accessibility As String = element.Access.ToString() '.ToLowerInvariant()
+        If TypeOf element Is IPropertyBase Then
+            If TryCast(element, IPropertyBase).Owner.TypeKind = PersistentTypeKind.[Interface] Then
+                accessibility = String.Empty
+            End If
+        End If
+
+        Return accessibility
+    End Function
+
+    Public Shared Function VisibleSetter([property] As IPropertyBase, propertiesBuilder As IPropertiesBuilder) As Boolean
+        Dim setter As String = ForSetter([property], propertiesBuilder)
+        If setter = VISIBILITY_PRIVATE AndAlso [property].Owner.TypeKind = PersistentTypeKind.[Interface] Then
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Public Shared Function ForSetter([property] As IPropertyBase, propertiesBuilder As IPropertiesBuilder) As String
+        Dim result As String = String.Empty
+
+        Select Case [property].PropertyKind
+            Case PropertyKind.Scalar
+                If True Then
+                    Dim typeAttributes As IOrmAttribute() = propertiesBuilder.GetPropertyTypeAttributes([property])
+                    Dim keyAttribute As OrmKeyAttribute = DirectCast(typeAttributes.[Single](Function(item) TypeOf item Is OrmKeyAttribute), OrmKeyAttribute)
+
+                    result = If(keyAttribute.Enabled, VISIBILITY_PRIVATE, String.Empty)
+                    Exit Select
+                End If
+            Case PropertyKind.Navigation
+                If True Then
+                    Dim navigationProperty As INavigationProperty = DirectCast([property], INavigationProperty)
+                    If navigationProperty.Multiplicity = MultiplicityKind.Many Then
+                        result = VISIBILITY_PRIVATE
+                    End If
+
+                    Exit Select
+                End If
+        End Select
+
+        Return result
+    End Function
+End Class
+
+Public Class CodeGenerationTools
+    Private Const SYSTEM_NULLABLE_FORMAT As String = "System.Nullable(Of {0})"
+    Private Const MODIFIER_VIRTUAL As String = "Overridable"
+    Private Const TYPE_KIND_INTERFACE As String = "Interface"
+    Private Const TYPE_KIND_CLASS As String = "Class"
+    Private Const TYPE_FORMAT_GUID As String = "New System.Guid(""{0}"")"
+    Private Const TYPE_FORMAT_DATETIME As String = "New System.DateTime({0}, System.DateTimeKind.Unspecified)"
+    Private Const TYPE_FORMAT_BYTE_ARRAY As String = "New System.Byte[] {{{0}}}"
+    Private Const TYPE_FORMAT_TIMESPAN As String = "New System.TimeSpan({0}, {1}, {2})"
+    Private Const TYPE_FORMAT_DATETIMEOFFSET As String = "New System.DateTimeOffset({0}, new System.TimeSpan({1}))"
+
+    Private ReadOnly _textTransformation As DynamicTextTransformation
+    Private ReadOnly _code As VBCodeProvider
+
+    ''' <summary>
+    ''' Initializes a new CodeGenerationTools object with the TextTransformation (T4 generated class)
+    ''' that is currently running
+    ''' </summary>
+    Public Sub New(textTransformation As Object)
+        If textTransformation Is Nothing Then
+            Throw New ArgumentNullException("textTransformation")
+        End If
+
+        _textTransformation = DynamicTextTransformation.Create(textTransformation)
+        _code = New VBCodeProvider()
+        FullyQualifySystemTypes = False
+        CamelCaseFields = True
+    End Sub
+
+    Public ReadOnly Property TemplateFile() As String
+        Get
+            Return _textTransformation.Host.TemplateFile
+        End Get
+    End Property
+
+    Public Property GlobalNamespace() As String
+        Get
+            Return m_GlobalNamespace
+        End Get
+        Set(value As String)
+            m_GlobalNamespace = Value
+        End Set
+    End Property
+    Private m_GlobalNamespace As String
+
+    ''' <summary>
+    ''' When true, all types that are not being generated
+    ''' are fully qualified to keep them from conflicting with
+    ''' types that are being generated. Useful when you have
+    ''' something like a type being generated named System.
+    '''
+    ''' Default is false.
+    ''' </summary>
+    Public Property FullyQualifySystemTypes() As Boolean
+        Get
+            Return m_FullyQualifySystemTypes
+        End Get
+        Set(value As Boolean)
+            m_FullyQualifySystemTypes = Value
+        End Set
+    End Property
+    Private m_FullyQualifySystemTypes As Boolean
+
+    ''' <summary>
+    ''' When true, the field names are Camel Cased,
+    ''' otherwise they will preserve the case they
+    ''' start with.
+    '''
+    ''' Default is true.
+    ''' </summary>
+    Public Property CamelCaseFields() As Boolean
+        Get
+            Return m_CamelCaseFields
+        End Get
+        Set(value As Boolean)
+            m_CamelCaseFields = Value
+        End Set
+    End Property
+    Private m_CamelCaseFields As Boolean
+
+    ''' <summary>
+    ''' Returns the NamespaceName suggested by VS if running inside VS.  Otherwise, returns
+    ''' null.
+    ''' </summary>
+    Public Function VsNamespaceSuggestion() As String
+        Dim suggestion As String = _textTransformation.Host.ResolveParameterValue("directiveId", "namespaceDirectiveProcessor", "namespaceHint")
+        If [String].IsNullOrEmpty(suggestion) Then
+            Return Nothing
+        End If
+
+        Return suggestion
+    End Function
+
+    ''' <summary>
+    ''' Returns a string that is safe for use as an identifier in C#.
+    ''' Keywords are escaped.
+    ''' </summary>
+    Public Function Escape(name As String) As String
+        If name Is Nothing Then
+            Return Nothing
+        End If
+
+        Return _code.CreateEscapedIdentifier(name)
+    End Function
+
+    Public Function EscapeNamespace(persistentType As IPersistentType) As String
+        Return If(String.IsNullOrEmpty(persistentType.[Namespace]), EscapeNamespace(GlobalNamespace), EscapeNamespace(persistentType.[Namespace]))
+    End Function
+
+    Public Function BuildXtensiveType(type As OrmType, ParamArray args As String()) As String
+        If type = OrmType.EntitySet Then
+            Dim entitySet As String = OrmUtils.BuildXtensiveType(OrmType.EntitySet)
+            Return String.Format("{0}(Of {1})", entitySet, args(0))
+        End If
+
+        Return OrmUtils.BuildXtensiveType(type, args)
+    End Function
+
+    ''' <summary>
+    ''' Returns the name of the Type object formatted for
+    ''' use in source code.
+    '''
+    ''' This method changes behavior based on the FullyQualifySystemTypes
+    ''' setting.
+    ''' </summary>
+    Public Function Escape(clrType As Type) As String
+        If clrType Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim typeName As String
+        If FullyQualifySystemTypes Then
+            typeName = "global::" & Convert.ToString(clrType.FullName)
+        Else
+            typeName = _code.GetTypeOutput(New CodeTypeReference(clrType))
+        End If
+        Return typeName
+    End Function
+
+    Public Function EscapeNameWithNamespace(persistentType As IPersistentType, dependTypeNamespace As IPersistentType) As String
+        Dim namespaceName As String = EscapeNamespace(persistentType)
+
+        Dim useFullForm As Boolean = dependTypeNamespace Is Nothing OrElse Not Util.StringEqual(namespaceName, EscapeNamespace(dependTypeNamespace), True)
+
+        If useFullForm Then
+            Return String.Format("{0}.{1}", namespaceName, persistentType.Name)
+        End If
+
+        Return persistentType.Name
+    End Function
+
+    Public Function EscapeType([property] As IPropertyBase) As String
+        Dim result As String = Nothing
+
+        If TypeOf [property] Is IScalarProperty Then
+            Dim scalarProperty As IScalarProperty = DirectCast([property], IScalarProperty)
+            Dim clrType As Type = scalarProperty.ClrType
+            Dim typeName As String = Escape(clrType)
+            Dim nullable As Defaultable(Of Boolean) = scalarProperty.FieldAttribute.Nullable
+            Dim isNullable As Boolean = Not nullable.IsDefault() AndAlso nullable.Value
+            If clrType.IsValueType AndAlso isNullable Then
+                Return [String].Format(CultureInfo.InvariantCulture, SYSTEM_NULLABLE_FORMAT, typeName)
+            End If
+
+            result = typeName
+        ElseIf TypeOf [property] Is INavigationProperty Then
+            Dim navigationProperty As INavigationProperty = DirectCast([property], INavigationProperty)
+            result = navigationProperty.GetPropertyType(_code, AddressOf EscapeNameWithNamespace)
+        ElseIf TypeOf [property] Is IStructureProperty Then
+            Dim structureProperty As IStructureProperty = DirectCast([property], IStructureProperty)
+            result = EscapeNameWithNamespace(structureProperty.[TypeOf], [property].Owner)
+        End If
+
+        Return result
+    End Function
+
+    Public Function Escape(element As IElement) As String
+        If element Is Nothing Then
+            Return Nothing
+        End If
+
+        Return element.Name
+    End Function
+
+    ''' <summary>
+    ''' Returns the NamespaceName with each segment safe to
+    ''' use as an identifier.
+    ''' </summary>
+    Public Function EscapeNamespace(namespaceName As String) As String
+        If [String].IsNullOrEmpty(namespaceName) Then
+            Return namespaceName
+        End If
+
+        Dim parts As String() = namespaceName.Split("."c)
+        namespaceName = [String].Empty
+        For Each part As String In parts
+            If namespaceName <> [String].Empty Then
+                namespaceName += "."
+            End If
+
+            namespaceName += Escape(part)
+        Next
+
+        Return namespaceName
+    End Function
+
+    Public Function FieldName([property] As IPropertyBase) As String
+        If [property] Is Nothing Then
+            Return Nothing
+        End If
+
+        Return FieldName([property].Name)
+    End Function
+
+    Private Function FieldName(name As String) As String
+        Return If(CamelCaseFields, CamelCase(name), name)
+    End Function
+
+    Public Function InheritanceModifier(propertyBase As IPropertyBase) As String
+        Dim isSealed As Boolean = False
+        If TypeOf propertyBase.Owner Is IEntityBase Then
+            isSealed = TryCast(propertyBase.Owner, IEntityBase).InheritanceModifier = InheritanceModifiers.Sealed
+        End If
+
+        Return If(propertyBase.Owner.TypeKind = PersistentTypeKind.[Interface] OrElse isSealed, String.Empty, MODIFIER_VIRTUAL)
+    End Function
+
+    Public Function InheritanceModifier(entity As IPersistentType) As String
+        Dim entityBase As IEntityBase = TryCast(entity, IEntityBase)
+
+        If entityBase Is Nothing OrElse entityBase.InheritanceModifier = InheritanceModifiers.None Then
+            Return String.Empty
+        End If
+        Return If(entityBase.InheritanceModifier = InheritanceModifiers.Abstract, "MustInherit", "NotInheritable")
+    End Function
+
+    Public Function HasInheritance(persistentType As IPersistentType) As Boolean
+        Dim inheritanceCount As Integer = 0
+
+        Dim [interface] As IInterface = TryCast(persistentType, IInterface)
+        Dim entityBase As IEntityBase = TryCast(persistentType, IEntityBase)
+
+        If [interface] IsNot Nothing Then
+            If entityBase Is Nothing Then
+                inheritanceCount = [interface].InheritedInterfaces.Count
+            End If
+        End If
+
+        If entityBase IsNot Nothing Then
+            inheritanceCount = entityBase.InheritedInterfaces.Count
+            If entityBase.BaseType IsNot Nothing Then
+                inheritanceCount += 1
+            End If
+        End If
+
+        Return inheritanceCount > 0
+    End Function
+
+    Public Function TypeIdent(persistentType As IPersistentType) As String
+        Return If(persistentType.TypeKind = PersistentTypeKind.[Interface], TYPE_KIND_INTERFACE, TYPE_KIND_CLASS)
+    End Function
+
+    Public Function InheritanceList(persistentType As IPersistentType) As Tuple(Of String(), String()) 'As String()
+        'Dim result As List(Of String) = Nothing
+        'Dim result As Tuple(Of String(), String()) = Nothing
+        ' in result - first array of strings is inheritance list of entities, seconds is of interfaces
+
+        If TypeOf persistentType Is ITypedEntitySet Then
+            Dim typedEntitySet As ITypedEntitySet = DirectCast(persistentType, ITypedEntitySet)
+            Dim _result = New List(Of String)() From { _
+             BuildXtensiveType(OrmType.EntitySet, EscapeNameWithNamespace(typedEntitySet.ItemType, persistentType)) _
+            }
+            'Return result.ToArray()
+            Return New Tuple(Of String(), String())(_result.ToArray(), Nothing)
+        End If
+
+        Dim [interface] As IInterface = TryCast(persistentType, IInterface)
+        Dim entityBaseBaseTypeStr As String = Nothing
+        Dim entitiesList As List(Of String) = New List(Of String)()
+        Dim interfacesList As List(Of String) = New List(Of String)()
+
+        Dim entityBaseBaseType As IInterface = Nothing
+
+        If [interface] IsNot Nothing Then
+            Dim inheritanceTree = InheritanceTreeCache.[Get]([interface])
+            If Not inheritanceTree.TreeRebuilded Then
+                inheritanceTree.RebuildTree(False)
+            End If
+
+            If TypeOf [interface] Is IEntityBase Then
+                Dim entityBase As IEntityBase = DirectCast([interface], IEntityBase)
+                entityBaseBaseType = entityBase.BaseType
+                entityBaseBaseTypeStr = If(entityBase.BaseType Is Nothing, Nothing, EscapeNameWithNamespace(entityBase.BaseType, persistentType))
+            End If
+
+            Dim flatList As ReadOnlyCollection(Of InheritanceNode) = inheritanceTree.GetFlatList(InheritanceListMode.CurrentLevel)
+            Dim allInheritanceList As IEnumerable(Of IInterface) = flatList.[Select](Function(node) node.[Interface]).[Where](Function(item) item IsNot entityBaseBaseType)
+
+            If (allInheritanceList.Count() = 0) Then
+                'result = New List(Of String)()
+                entitiesList = New List(Of String)()
+                interfacesList = New List(Of String)()
+            Else
+                'result = allInheritanceList.[Select](Function(item) EscapeNameWithNamespace(item, persistentType)).ToList()
+                entitiesList = allInheritanceList.Where(Function(item) item.TypeKind <> PersistentTypeKind.[Interface]).[Select](Function(item) EscapeNameWithNamespace(item, persistentType)).ToList()
+                interfacesList = allInheritanceList.Where(Function(item) item.TypeKind = PersistentTypeKind.[Interface]).[Select](Function(item) EscapeNameWithNamespace(item, persistentType)).ToList()
+            End If
+
+        End If
+
+        Dim commonBaseType As String = If(persistentType.TypeKind = PersistentTypeKind.[Structure], BuildXtensiveType(OrmType.[Structure]), OrmUtils.BuildXtensiveType(OrmType.Entity))
+
+        Dim noInheritance As Boolean = (entitiesList Is Nothing OrElse entitiesList.Count = 0 AndAlso persistentType.TypeKind <> PersistentTypeKind.[Interface]) _
+                                       AndAlso entityBaseBaseType Is Nothing
+
+        If noInheritance Then
+            entitiesList = New List(Of String)() From { _
+             commonBaseType _
+            }
+        Else
+            If persistentType.TypeKind.[In](PersistentTypeKind.Entity, PersistentTypeKind.[Structure]) Then
+                If [interface].InheritingByInterfaces.Count = 0 AndAlso String.IsNullOrEmpty(entityBaseBaseTypeStr) Then
+                    entitiesList.Insert(0, commonBaseType)
+                End If
+            ElseIf persistentType.TypeKind = PersistentTypeKind.[Interface] Then
+                Dim inheritesCommonIEntity As Boolean = [interface].InheritsIEntity = InheritsIEntityMode.AlwaysInherit
+                If Not inheritesCommonIEntity Then
+                    inheritesCommonIEntity = [interface].InheritedInterfaces.Count = 0
+                End If
+
+                If inheritesCommonIEntity Then
+                    Dim commonIEntityType As String = BuildXtensiveType(OrmType.IEntity)
+
+                    If interfacesList Is Nothing Then
+                        interfacesList = New List(Of String)()
+                    End If
+
+                    interfacesList.Insert(0, commonIEntityType)
+                End If
+            End If
+        End If
+
+        If Not String.IsNullOrEmpty(entityBaseBaseTypeStr) Then
+            entitiesList.Insert(0, entityBaseBaseTypeStr)
+        End If
+
+        'Return result.ToArray()
+        Return New Tuple(Of String(), String())(entitiesList.ToArray(), interfacesList.ToArray())
+    End Function
+
+    Public Function CamelCase(identifier As String) As String
+        If [String].IsNullOrEmpty(identifier) Then
+            Return identifier
+        End If
+
+        If identifier.Length = 1 Then
+            Return identifier(0).ToString(CultureInfo.InvariantCulture).ToLowerInvariant()
+        End If
+
+        Return identifier(0).ToString(CultureInfo.InvariantCulture).ToLowerInvariant() & identifier.Substring(1)
+    End Function
+
+    ''' <summary>
+    ''' If the value parameter is null or empty an empty string is returned,
+    ''' otherwise it retuns value with a single space concatenated on the end.
+    ''' </summary>
+    Public Function SpaceAfter(value As String) As String
+        Return StringAfter(value, " ")
+    End Function
+
+    ''' <summary>
+    ''' If the value parameter is null or empty an empty string is returned,
+    ''' otherwise it retuns value with a single space concatenated on the end.
+    ''' </summary>
+    Public Function SpaceBefore(value As String) As String
+        Return StringBefore(" ", value)
+    End Function
+
+    ''' <summary>
+    ''' If the value parameter is null or empty an empty string is returned,
+    ''' otherwise it retuns value with append concatenated on the end.
+    ''' </summary>
+    Public Function StringAfter(value As String, append As String) As String
+        If [String].IsNullOrEmpty(value) Then
+            Return [String].Empty
+        End If
+
+        Return value & append
+    End Function
+
+    Public Function StringOptional([optional] As String, expression As Boolean) As String
+        Return If(expression, [optional], String.Empty)
+    End Function
+
+    ''' <summary>
+    ''' If the value parameter is null or empty an empty string is returned,
+    ''' otherwise it retuns value with prepend concatenated on the front.
+    ''' </summary>
+    Public Function StringBefore(prepend As String, value As String) As String
+        If [String].IsNullOrEmpty(value) Then
+            Return [String].Empty
+        End If
+
+        Return prepend & value
+    End Function
+
+    ''' <summary>
+    ''' Retuns as full of a name as possible, if a namespace is provided
+    ''' the namespace and name are combined with a period, otherwise just
+    ''' the name is returned.
+    ''' </summary>
+    Public Function CreateFullName(namespaceName As String, name As String) As String
+        If [String].IsNullOrEmpty(namespaceName) Then
+            Return name
+        End If
+
+        Return namespaceName & "." & name
+    End Function
+
+    Public Function CreateLiteral(value As Object) As String
+        If value Is Nothing Then
+            'Return String.Empty
+            Return "Nothing"
+        End If
+
+        Dim type As Type = value.[GetType]()
+        If type.IsEnum Then
+            Return OrmEnumUtils.BuildXtensiveType(value)
+        End If
+        If type = GetType(Guid) Then
+            Return String.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_GUID, DirectCast(value, Guid).ToString("D", CultureInfo.InvariantCulture))
+        End If
+
+        If type = GetType(DateTime) Then
+            Return String.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_DATETIME, DirectCast(value, DateTime).Ticks)
+        End If
+
+        If type = GetType(Byte()) Then
+            Dim arrayInit = String.Join(", ", DirectCast(value, Byte()).[Select](Function(b) b.ToString(CultureInfo.InvariantCulture)).ToArray())
+            Return String.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_BYTE_ARRAY, arrayInit)
+        End If
+
+        If type = GetType(TimeSpan) Then
+            Dim ts = DirectCast(value, TimeSpan)
+            Return String.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_TIMESPAN, ts.Hours, ts.Minutes, ts.Seconds)
+        End If
+
+        If type = GetType(DateTimeOffset) Then
+            Dim dto = DirectCast(value, DateTimeOffset)
+            Return String.Format(CultureInfo.InvariantCulture, TYPE_FORMAT_DATETIMEOFFSET, dto.Ticks, dto.Offset.Ticks)
+        End If
+
+        If type = GetType(String()) Then
+            Dim ss = DirectCast(value, String())
+            Return "New String() {" & Util.JoinCollection(ss, ",", """") & "}"
+        End If
+
+        If type = GetType(ObjectValue) Then
+            Dim objectValue As ObjectValue = DirectCast(value, ObjectValue)
+            If objectValue.UseCustomExpression Then
+                Return objectValue.CustomExpression
+            End If
+
+            Return CreateLiteral(objectValue.Value)
+        End If
+
+        Dim expression = New CodePrimitiveExpression(value)
+        Dim writer = New StringWriter()
+        Dim code As New VBCodeProvider()
+        code.GenerateCodeFromExpression(expression, writer, New CodeGeneratorOptions())
+        Return writer.ToString()
+    End Function
+
+    Public Function CreateTypeAttributes(persistentType As IPersistentType, propertiesBuilder As IPropertiesBuilder) As String()
+        Dim typeAttributes As IEnumerable(Of IOrmAttribute) = Nothing
+        If propertiesBuilder IsNot Nothing Then
+            typeAttributes = propertiesBuilder.MergedTypeAttributes
+        End If
+
+        If typeAttributes Is Nothing Then
+            typeAttributes = persistentType.TypeAttributes
+        End If
+
+        Dim attributesBuilder As ITypeAttributesBuilder = TypeAttributesBuilder.Create(persistentType, typeAttributes)
+
+        Return CreateTypeAttributes(attributesBuilder, typeAttributes.ToArray())
+    End Function
+
+    Public Function CreateTypeAttributes([property] As IPropertyBase, propertiesBuilder As IPropertiesBuilder) As String()
+        Dim typeAttributes As IEnumerable(Of IOrmAttribute) = Nothing
+        If propertiesBuilder IsNot Nothing Then
+            typeAttributes = propertiesBuilder.GetPropertyTypeAttributes([property])
+
+            [property] = propertiesBuilder.GetProperty([property], InheritanceMember.Inherited)
+        End If
+
+        If typeAttributes Is Nothing Then
+            typeAttributes = [property].TypeAttributes
+        End If
+
+        Dim attributesBuilder As ITypeAttributesBuilder = TypeAttributesBuilder.Create([property], typeAttributes)
+
+        Return CreateTypeAttributes(attributesBuilder, typeAttributes)
+    End Function
+
+    Private Function CreateTypeAttributes(attributesBuilder As ITypeAttributesBuilder, attributes As IEnumerable(Of IOrmAttribute)) As String()
+        Dim result As New List(Of String)()
+
+        If attributes IsNot Nothing Then
+            For Each attribute As IOrmAttribute In attributes
+                For Each attributeGroup As OrmAttributeGroup In attributesBuilder.GetAttributeGroups(attribute)
+                    Dim attributeGroupItems = attributesBuilder.GetAttributeGroupItems(attribute, attributeGroup)
+                    Dim attr As New StringBuilder(attributeGroup.FormatFullName())
+                    If attributeGroupItems.Count > 0 Then
+                        Dim beforeItemsLen As Integer = attr.Length
+
+                        Dim handledByCustom As Boolean = attributesBuilder.BuildCustomFormatComplete(attributeGroup, attributeGroupItems, attr)
+
+                        If Not handledByCustom Then
+                            For Each attributeGroupItem As KeyValuePair(Of String, Defaultable) In attributesBuilder.SortAttributeGroupItems(attributeGroup, attributeGroupItems)
+                                Dim attrItemName As String = attributeGroupItem.Key
+                                Dim attrItemValue As Defaultable = attributeGroupItem.Value
+                                If Not attrItemValue.IsDefault() Then
+                                    Dim value As Object = attrItemValue.GetValue()
+                                    Dim valueLiteral As String = CreateLiteral(value)
+
+                                    Dim buildedCustomFormat As Boolean = attributesBuilder.BuildCustomFormat(attributeGroup, attrItemName, valueLiteral, value, attr)
+
+                                    If Not buildedCustomFormat Then
+                                        attr.AppendFormat("{0}:={1},", attrItemName, valueLiteral)
+                                    End If
+                                End If
+                            Next
+                        End If
+
+                        If attr(attr.Length - 1) = ","c Then
+                            attr = attr.Remove(attr.Length - 1, 1)
+                        End If
+
+                        If attr.Length > beforeItemsLen Then
+                            attr.Insert(beforeItemsLen, "(")
+                            attr.Append(")")
+                        End If
+                    End If
+
+                    result.Add(attr.ToString())
+                Next
+            Next
+        End If
+
+        Return result.ToArray()
+    End Function
+End Class
+#>

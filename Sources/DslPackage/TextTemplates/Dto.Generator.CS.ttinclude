@@ -1,0 +1,405 @@
+﻿<#@ assembly name="System.Core"
+#><#@ assembly name="System.Data.Linq"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="System.Xml"
+#><#@ assembly name="System.Xml.Linq"
+#><#@ import namespace="System"
+#><#@ import namespace="System.CodeDom"
+#><#@ import namespace="System.CodeDom.Compiler"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Data.Linq"
+#><#@ import namespace="System.Data.Linq.Mapping"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="EnvDTE"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="System.Xml.Linq"
+#><#@ import namespace="System.Globalization"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#><#@ import namespace="Microsoft.CSharp"
+#><#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Common"
+#><#@ import namespace="TXSoftware.DataObjectsNetEntityModel.Common.UIEditors"
+#><#+
+
+// Generates Dto base interface (e.g. 'IObjectDto')
+void GenerateDtoBaseInterface()
+{
+	string baseDtoInterfaceName = Variables.Code.Escape(Variables.DTO.DtoRootInterface.InterfaceName);
+	StartNewFile(baseDtoInterfaceName + ".cs", Variables.DTO.DtoRootInterface);
+	
+    Variables.Manager.StartHeader();
+	WriteFileHeader();
+    Variables.Manager.EndHeader();
+#>
+namespace <#= ResolveNamespaceForDto(Variables.DTO.DtoRootInterface) #>
+{
+	public interface <#=baseDtoInterfaceName#>
+	{
+	    [System.Xml.Serialization.XmlIgnore]
+	    <#=baseDtoInterfaceName#> OriginalObject { get; set; }
+		
+		[System.Runtime.Serialization.DataMember]
+		string <#=Variables.Code.Escape(Variables.DTO.DtoRootInterface.MappingKeyPropertyName)#> { get;set; }
+		
+		void UpdateKeyFields(<#=baseDtoInterfaceName#> sourceDto);
+	}
+}
+<#+
+	Variables.Manager.EndNewFile();
+}
+
+// Generates Dto mapping builder proxy class
+void GenerateDtoMappingBuilderProxy(IEnumerable<IPersistentType> entities)
+{
+	string baseDtoInterfaceName = Variables.Code.Escape(Variables.DTO.DtoRootInterface.InterfaceName);
+	string mappingBuilderProxyClassName = Variables.Code.Escape(Variables.DTO.DtoMappingProxyClass.ClassName);
+	string mappingKeyPropertyName = Variables.Code.Escape(Variables.DTO.DtoRootInterface.MappingKeyPropertyName);
+	var filteredEntities = entities
+							.Where(item => item.TypeKind.In(PersistentTypeKind.Entity, PersistentTypeKind.Structure))
+							.OrderBy(item => item.TypeKind)
+							.ToList();
+	IPersistentType firstEntity = filteredEntities.First();
+	IPersistentType lastEntity = filteredEntities.Last();
+	
+	Dictionary<string, string> real2DtoMappings = new Dictionary<string, string>();
+	
+	StartNewFile(mappingBuilderProxyClassName + ".cs", Variables.DTO.DtoMappingProxyClass);
+	
+	Variables.Manager.StartHeader();
+	WriteFileHeader();
+    Variables.Manager.EndHeader();
+#>
+namespace <#= ResolveNamespaceForDto(Variables.DTO.DtoMappingProxyClass) #>
+{
+<#+
+	this.PushIndent();
+#>
+
+public sealed partial class <#=mappingBuilderProxyClassName#>: <#=mappingBuilderProxyClassName#>Base
+{
+}
+
+public abstract class <#=mappingBuilderProxyClassName#>Base
+{
+	private Xtensive.ObjectMapping.Model.MappingDescription descriptor;
+	
+	public Xtensive.ObjectMapping.Model.MappingDescription Descriptor
+	{
+		get
+		{
+			if (descriptor == null)
+			{
+				descriptor = CreateMappingDescriptor();
+			}
+			return descriptor;
+		}
+	}
+	
+	public virtual Xtensive.ObjectMapping.Model.MappingDescription CreateMappingDescriptor()
+	{
+		var mapping1 = new Xtensive.ObjectMapping.MappingBuilder()
+<#+
+	int mappingCount = 0;
+	string mappingFieldName = "mapping1";
+	foreach(IPersistentType entity in filteredEntities)
+	{
+		KeyPair entityNames = Variables.Internal.GeneratedEntityNames[entity];
+		string entityRealName = entityNames.Key1;
+		string entityDTOName = entityNames.Key2;
+		bool isFirstEntity = (entity == firstEntity);
+		bool isLastEntity = (entity == lastEntity);
+		mappingCount++;
+		real2DtoMappings.Add(entityRealName, entityDTOName);
+
+		if (!isFirstEntity)
+		{
+			mappingFieldName = "mapping"+mappingCount;
+#>
+		var mapping<#=mappingCount#> = 
+			mapping<#=mappingCount-1#>
+<#+
+		}
+			
+		if (entity.TypeKind == PersistentTypeKind.Entity)
+		{
+			var entityKeyFields = Variables.Internal.EntityKeyFields[entity];
+			bool hasKeyFields = entityKeyFields.Length > 0;
+#>
+			.MapType<#=Variables.Code.StringBefore("<", entityRealName)#>, <#=entityDTOName#>, string>(entity => entity.Key.Format(), objDto => objDto.<#=mappingKeyPropertyName#>)
+			.IgnoreProperty(objDto => objDto.OriginalObject)<#=Variables.Code.StringOptional(";", isLastEntity && !hasKeyFields)#>
+<#+
+			var lastKeyField = hasKeyFields ? entityKeyFields.Last() : null;
+			foreach(var keyField in entityKeyFields)
+			{
+				bool isLastKeyField = (keyField == lastKeyField);
+#>
+			.TrackChanges(dto => dto.<#=keyField.Name#>, false)<#=Variables.Code.StringOptional(";", isLastKeyField)#>
+<#+
+			}
+		}
+		else
+		{
+#>
+			.MapStructure<#=Variables.Code.StringBefore("<", entityRealName)#>, <#=Variables.Code.StringAfter(entityDTOName, ">")#>()
+			.IgnoreProperty(dto => dto.OriginalObject).IgnoreProperty(dto => dto.<#=mappingKeyPropertyName#>);
+<#+
+		}
+#>
+		UpdateMappingBuilder(<#=mappingFieldName#>);
+<#+
+		if (!isLastEntity)
+		{#>
+<#=Environment.NewLine#><#+}
+	}
+#>
+
+		return <#=mappingFieldName#>.Build();
+	}
+<#+
+	foreach(var pair in real2DtoMappings)
+	{
+		this.WriteLine("");
+		PushIndent();
+		this.WriteLine("protected virtual void UpdateMappingBuilder(Xtensive.ObjectMapping.IMappingBuilderAdapter<{0}, {1}> mapping)", pair.Key, pair.Value);
+		this.WriteLine("{}");
+		PopIndent();
+	}
+#>
+}
+<#+
+	this.PopIndent();
+#>
+}
+<#+
+	Variables.Manager.EndNewFile();
+}
+
+// Generates Dto Utils class
+void GenerateDtoUtilsClass()
+{
+	string dtoUtilsClassName = Variables.Code.Escape(Variables.DTO.DtoUtilsClass.ClassName);
+	StartNewFile(dtoUtilsClassName + ".cs", Variables.DTO.DtoUtilsClass);
+	
+    Variables.Manager.StartHeader();
+	WriteFileHeader();
+    Variables.Manager.EndHeader();
+#>
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+
+namespace <#= ResolveNamespaceForDto(Variables.DTO.DtoUtilsClass) #>
+{
+	public static class <#=dtoUtilsClassName#>
+	{
+		public static T Clone<T>(T obj) where T : class
+	    {
+			T result;
+			using(MemoryStream serializationStream = new MemoryStream())
+	        {
+				new BinaryFormatter().Serialize(serializationStream, obj);
+				serializationStream.Position = 0;
+				result = (T)new BinaryFormatter().Deserialize(serializationStream);
+				serializationStream.Close();
+			}
+			
+	        return result;
+	    }
+	}
+}
+<#+
+	Variables.Manager.EndNewFile();
+}
+
+// Generates Dto Repository class
+void GenerateDtoRepository()
+{
+	string dtoRepositoryClassName = Variables.Code.Escape(Variables.DTO.DtoRepositoryClass.ClassName);
+	string mappingBuilderProxyClassName = Variables.Code.Escape(Variables.DTO.DtoMappingProxyClass.ClassName);
+	StartNewFile(dtoRepositoryClassName + ".cs", Variables.DTO.DtoRepositoryClass);
+	
+    Variables.Manager.StartHeader();
+	WriteFileHeader();
+    Variables.Manager.EndHeader();
+#>
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+
+using Xtensive.Collections;
+using Xtensive.ObjectMapping;
+using Xtensive.Orm;
+using Xtensive.Orm.ObjectMapping;
+
+namespace <#= ResolveNamespaceForDto(Variables.DTO.DtoRepositoryClass) #>
+{
+	public static class <#=dtoRepositoryClassName#>
+	{
+	    private static readonly MapperSettings
+	        DefaultMappingSettings = new MapperSettings
+	                                 {
+	                                     EnableDynamicSourceHierarchies = true
+	                                 };
+
+	    private static <#=mappingBuilderProxyClassName#> dtoMappings;
+
+	    public static <#=mappingBuilderProxyClassName#> DtoMappings
+	    {
+	        get
+	        {
+	            if (dtoMappings == null)
+	            {
+	                dtoMappings = new <#=mappingBuilderProxyClassName#>();
+	            }
+	            return dtoMappings;
+	        }
+	    }
+
+	    private static Mapper CreateMapper(Session session)
+	    {
+	        return new Mapper(session ?? Session.Demand(), DtoMappings.Descriptor, DefaultMappingSettings);
+	    }
+
+	    public static TResultDto TransformToDto<TResultDto>(this IEntity entity, Session session)
+			where TResultDto : IObjectDto
+	    {
+	        Mapper mapper = CreateMapper(session);
+	        object mapResult = mapper.Transform(entity);
+	        return (TResultDto) mapResult;
+	    }
+
+	    public static TResultEntity ReplayToEntity<TSourceDto, TResultEntity>(this TSourceDto entityDto, Session session)
+	        where TResultEntity : class, IEntity
+	        where TSourceDto : IObjectDto
+	    {
+	        return ReplayToEntity<TSourceDto, TResultEntity>(entityDto, null, session);
+	    }
+
+	    public static TResultEntity ReplayToEntity<TSourceDto, TResultEntity>(this TSourceDto modifiedDto, IObjectDto originalDto, 
+			Session session)
+	        where TResultEntity : class, IEntity
+	        where TSourceDto : IObjectDto
+	    {
+	        TResultEntity result = default(TResultEntity);
+
+	        var originalList = new List<object>();
+			if (originalDto != null)
+			{
+				originalList.Add(originalDto);
+			}
+			
+	        var modifiedList = new List<object>
+	                           {
+	                               modifiedDto
+	                           };
+
+	        Mapper mapper = CreateMapper(session);
+	        ReadOnlyDictionary<object, object> keyMapping;
+	        using (var compareResult = mapper.Compare(originalList, modifiedList))
+	        {
+	            compareResult.Operations.Replay();
+	            keyMapping = compareResult.KeyMapping;
+	        }
+
+	        Dictionary<Key, IObjectDto> dtoObjectMappings;
+	        List<Key> entityKeys = RetrieveEntityKeys(modifiedList, keyMapping, true, out dtoObjectMappings);
+
+	        if (entityKeys.Count == 1 && modifiedList.Count == entityKeys.Count)
+	        {
+	            Key entityKey = entityKeys[0];
+	            result = Query.SingleOrDefault<TResultEntity>(entityKey);
+
+	            if (result != null)
+	            {
+	                modifiedDto.UpdateKeyFields(result.TransformToDto<TSourceDto>(session));
+	            }
+	        }
+
+	        return result;
+	    }
+
+	    private static string GetDtoKey(IObjectDto dto)
+	    {
+	        return dto._MappingKey;
+	    }
+
+	    private static void SetDtoKey(IObjectDto dto, string key)
+	    {
+	        dto._MappingKey = key;
+	    }
+
+	    private static List<Key> RetrieveEntityKeys(IEnumerable enumerable,
+	        IDictionary<object, object> keyMapping, bool updateDtoKeys)
+	    {
+	        Dictionary<Key, IObjectDto> dtoObjectMappings;
+	        return RetrieveEntityKeys(enumerable, keyMapping, updateDtoKeys, out dtoObjectMappings);
+	    }
+
+	    private static List<Key> RetrieveEntityKeys(IEnumerable enumerable,
+	        IDictionary<object, object> keyMapping, bool updateDtoKeys,
+	        out Dictionary<Key, IObjectDto> dtoObjectMappings)
+	    {
+	        var result = new List<Key>();
+	        dtoObjectMappings = updateDtoKeys ? new Dictionary<Key, IObjectDto>() : null;
+
+	        foreach (IObjectDto dtoItem in enumerable)
+	        {
+	            string key = GetDtoKey(dtoItem);
+
+	            if (key != null)
+	            {
+	                Key entityKey = Key.Parse(Domain.Current, (string) keyMapping[key]);
+	                if (entityKey != null)
+	                {
+	                    result.Add(entityKey);
+
+	                    if (updateDtoKeys)
+	                    {
+	                        //dtoItem.OriginalObject = Cloner.Default.Clone(dtoItem);
+	                        SetDtoKey(dtoItem, entityKey.Format());
+	                        dtoObjectMappings.Add(entityKey, dtoItem);
+	                    }
+	                }
+	            }
+	        }
+
+	        return result;
+	    }
+
+	    public static IEnumerable<TResultDto> TransformToDto<TSourceEntity, TResultDto>(
+	        this IEnumerable<TSourceEntity> entities, Session session)
+	        where TResultDto : IObjectDto
+	        where TSourceEntity : IEntity
+	    {
+	        IEnumerable<TResultDto> result = null;
+	        Mapper mapper = CreateMapper(session);
+
+	        object mapResult = mapper.Transform(entities.ToList());
+	        if (mapResult != null)
+	        {
+	            if (mapResult is List<object>)
+	            {
+	                var listObj = (List<object>) mapResult;
+	                result = listObj.Cast<TResultDto>();
+	            }
+	            else
+	            {
+	                result = new List<TResultDto>
+	                         {
+	                             (TResultDto) mapResult
+	                         };
+	            }
+	        }
+
+	        return result;
+	    }	
+	}
+}
+<#+
+	Variables.Manager.EndNewFile();
+}
+#>

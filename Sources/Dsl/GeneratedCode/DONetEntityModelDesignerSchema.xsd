@@ -1,0 +1,758 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema id="DONetEntityModelDesignerSchema" targetNamespace="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner" elementFormDefault="qualified" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner" xmlns:core="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import id="CoreSchema" namespace="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" />
+  <!-- EntityModel -->
+  <xsd:element name="entityModel" type="EntityModel" />
+  <xsd:complexType name="EntityModel" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>The root in which all other elements are embedded. Appears as a diagram.</xsd:documentation><xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- EntityModel Moniker -->
+  <xsd:element name="entityModelMoniker" type="EntityModelMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="EntityModelMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for EntityModel instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PersistentType -->
+  <xsd:element name="persistentType" abstract="true" type="PersistentType" />
+  <xsd:complexType name="PersistentType" abstract="true" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- PersistentType Moniker -->
+  <xsd:element name="persistentTypeMoniker" abstract="true" type="PersistentTypeMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="PersistentTypeMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for PersistentType instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="name" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Entity -->
+  <xsd:element name="entity" type="Entity" />
+  <xsd:complexType name="Entity" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- Entity Moniker -->
+  <xsd:element name="entityMoniker" type="EntityMoniker" substitutionGroup="entityBaseMoniker" />
+  <xsd:complexType name="EntityMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Entity instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EntityBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Structure -->
+  <xsd:element name="structure" type="Structure" />
+  <xsd:complexType name="Structure" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- Structure Moniker -->
+  <xsd:element name="structureMoniker" type="StructureMoniker" substitutionGroup="entityBaseMoniker" />
+  <xsd:complexType name="StructureMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Structure instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EntityBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Interface -->
+  <xsd:element name="interface" type="Interface" />
+  <xsd:complexType name="Interface" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- Interface Moniker -->
+  <xsd:element name="interfaceMoniker" type="InterfaceMoniker" substitutionGroup="persistentTypeMoniker" />
+  <xsd:complexType name="InterfaceMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for Interface instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PersistentTypeMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityBase -->
+  <xsd:element name="entityBase" abstract="true" type="EntityBase" />
+  <xsd:complexType name="EntityBase" abstract="true" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- EntityBase Moniker -->
+  <xsd:element name="entityBaseMoniker" abstract="true" type="EntityBaseMoniker" substitutionGroup="interfaceMoniker" />
+  <xsd:complexType name="EntityBaseMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for EntityBase instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="InterfaceMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PropertyBase -->
+  <xsd:element name="propertyBase" abstract="true" type="PropertyBase" />
+  <xsd:complexType name="PropertyBase" abstract="true" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- PropertyBase Moniker -->
+  <xsd:element name="propertyBaseMoniker" abstract="true" type="PropertyBaseMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="PropertyBaseMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for PropertyBase instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="name" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- ScalarProperty -->
+  <xsd:element name="scalarProperty" type="ScalarProperty" />
+  <xsd:complexType name="ScalarProperty" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- ScalarProperty Moniker -->
+  <xsd:element name="scalarPropertyMoniker" type="ScalarPropertyMoniker" substitutionGroup="propertyBaseMoniker" />
+  <xsd:complexType name="ScalarPropertyMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for ScalarProperty instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PropertyBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NavigationProperty -->
+  <xsd:element name="navigationProperty" type="NavigationProperty" />
+  <xsd:complexType name="NavigationProperty" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- NavigationProperty Moniker -->
+  <xsd:element name="navigationPropertyMoniker" type="NavigationPropertyMoniker" substitutionGroup="propertyBaseMoniker" />
+  <xsd:complexType name="NavigationPropertyMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NavigationProperty instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PropertyBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- StructureProperty -->
+  <xsd:element name="structureProperty" type="StructureProperty" />
+  <xsd:complexType name="StructureProperty" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- StructureProperty Moniker -->
+  <xsd:element name="structurePropertyMoniker" type="StructurePropertyMoniker" substitutionGroup="propertyBaseMoniker" />
+  <xsd:complexType name="StructurePropertyMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for StructureProperty instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PropertyBaseMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- TypedEntitySet -->
+  <xsd:element name="typedEntitySet" type="TypedEntitySet" />
+  <xsd:complexType name="TypedEntitySet" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- TypedEntitySet Moniker -->
+  <xsd:element name="typedEntitySetMoniker" type="TypedEntitySetMoniker" substitutionGroup="persistentTypeMoniker" />
+  <xsd:complexType name="TypedEntitySetMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for TypedEntitySet instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PersistentTypeMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityIndex -->
+  <xsd:element name="entityIndex" type="EntityIndex" />
+  <xsd:complexType name="EntityIndex" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- EntityIndex Moniker -->
+  <xsd:element name="entityIndexMoniker" type="EntityIndexMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="EntityIndexMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for EntityIndex instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="name" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- DomainType -->
+  <xsd:element name="domainType" type="DomainType" />
+  <xsd:complexType name="DomainType" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- DomainType Moniker -->
+  <xsd:element name="domainTypeMoniker" type="DomainTypeMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="DomainTypeMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for DomainType instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityModelHasPersistentTypes -->
+  <xsd:element name="entityModelHasPersistentTypes" abstract="true" type="EntityModelHasPersistentTypes" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="EntityModelHasPersistentTypes" abstract="true" >
+    <xsd:annotation>
+      <xsd:documentation>Embedding relationship between the Model and Elements</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end PersistentType -->
+          <xsd:element ref="persistentType" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityModelHasPersistentTypes Moniker -->
+  <xsd:element name="entityModelHasPersistentTypesMoniker" abstract="true" type="EntityModelHasPersistentTypesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="EntityModelHasPersistentTypesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for EntityModelHasPersistentTypes instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- InterfaceInheritInterfaces -->
+  <xsd:element name="inheritedInterfaces" type="InterfaceInheritInterfaces" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="InterfaceInheritInterfaces">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end Interface -->
+          <xsd:element ref="interfaceMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- InterfaceInheritInterfaces Moniker -->
+  <xsd:element name="interfaceInheritInterfacesMoniker" type="InterfaceInheritInterfacesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="InterfaceInheritInterfacesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for InterfaceInheritInterfaces instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityBaseHasBaseType -->
+  <xsd:element name="entityBaseHasBaseType" type="EntityBaseHasBaseType" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="EntityBaseHasBaseType">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end EntityBase -->
+          <xsd:element ref="entityBaseMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityBaseHasBaseType Moniker -->
+  <xsd:element name="entityBaseHasBaseTypeMoniker" abstract="true" type="EntityBaseHasBaseTypeMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="EntityBaseHasBaseTypeMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for EntityBaseHasBaseType instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- StructurePropertyHasType -->
+  <xsd:element name="structurePropertyHasType" abstract="true" type="StructurePropertyHasType" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="StructurePropertyHasType" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end Structure -->
+          <xsd:element ref="structureMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- StructurePropertyHasType Moniker -->
+  <xsd:element name="structurePropertyHasTypeMoniker" abstract="true" type="StructurePropertyHasTypeMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="StructurePropertyHasTypeMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for StructurePropertyHasType instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PersistentTypeHasProperties -->
+  <xsd:element name="persistentTypeHasProperties" abstract="true" type="PersistentTypeHasProperties" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="PersistentTypeHasProperties" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end PropertyBase -->
+          <xsd:element ref="propertyBase" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PersistentTypeHasProperties Moniker -->
+  <xsd:element name="persistentTypeHasPropertiesMoniker" abstract="true" type="PersistentTypeHasPropertiesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="PersistentTypeHasPropertiesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for PersistentTypeHasProperties instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PersistentTypeHasNavigationProperties -->
+  <xsd:element name="persistentTypeHasNavigationProperties" abstract="true" type="PersistentTypeHasNavigationProperties" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="PersistentTypeHasNavigationProperties" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end NavigationProperty -->
+          <xsd:element ref="navigationProperty" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PersistentTypeHasNavigationProperties Moniker -->
+  <xsd:element name="persistentTypeHasNavigationPropertiesMoniker" abstract="true" type="PersistentTypeHasNavigationPropertiesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="PersistentTypeHasNavigationPropertiesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for PersistentTypeHasNavigationProperties instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- PersistentTypeHasAssociations -->
+  <xsd:element name="persistentTypeHasAssociations" type="PersistentTypeHasAssociations" />
+  <xsd:complexType name="PersistentTypeHasAssociations" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>[This class or one of its base class has custom implementation, so the content is unbounded]</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+    </xsd:sequence>
+    <xsd:anyAttribute processContents="lax" />
+  </xsd:complexType>
+  
+  <!-- PersistentTypeHasAssociations Moniker -->
+  <xsd:element name="persistentTypeHasAssociationsMoniker" type="PersistentTypeHasAssociationsMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="PersistentTypeHasAssociationsMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for PersistentTypeHasAssociations instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="name" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NavigationPropertyHasAssociation -->
+  <xsd:element name="navigationPropertyHasAssociation" abstract="true" type="NavigationPropertyHasAssociation" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="NavigationPropertyHasAssociation" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end PersistentTypeHasAssociations -->
+          <xsd:element ref="persistentTypeHasAssociationsMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NavigationPropertyHasAssociation Moniker -->
+  <xsd:element name="navigationPropertyHasAssociationMoniker" abstract="true" type="NavigationPropertyHasAssociationMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="NavigationPropertyHasAssociationMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NavigationPropertyHasAssociation instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- TypedEntitySetHasItemType -->
+  <xsd:element name="typedEntitySetHasItemType" type="TypedEntitySetHasItemType" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="TypedEntitySetHasItemType">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end Interface -->
+          <xsd:element ref="interfaceMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- TypedEntitySetHasItemType Moniker -->
+  <xsd:element name="typedEntitySetHasItemTypeMoniker" abstract="true" type="TypedEntitySetHasItemTypeMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="TypedEntitySetHasItemTypeMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for TypedEntitySetHasItemType instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- InterfaceHasIndexes -->
+  <xsd:element name="interfaceHasIndexes" abstract="true" type="InterfaceHasIndexes" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="InterfaceHasIndexes" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end EntityIndex -->
+          <xsd:element ref="entityIndex" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- InterfaceHasIndexes Moniker -->
+  <xsd:element name="interfaceHasIndexesMoniker" abstract="true" type="InterfaceHasIndexesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="InterfaceHasIndexesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for InterfaceHasIndexes instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NavigationPropertyHasTypedEntitySet -->
+  <xsd:element name="navigationPropertyHasTypedEntitySet" type="NavigationPropertyHasTypedEntitySet" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="NavigationPropertyHasTypedEntitySet">
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end TypedEntitySet -->
+          <xsd:element ref="typedEntitySetMoniker" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <!-- Id -->
+        <xsd:attribute name="Id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Instance Guid of this element, needed because SerializeId is set to true.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- NavigationPropertyHasTypedEntitySet Moniker -->
+  <xsd:element name="navigationPropertyHasTypedEntitySetMoniker" type="NavigationPropertyHasTypedEntitySetMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="NavigationPropertyHasTypedEntitySetMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for NavigationPropertyHasTypedEntitySet instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+        <xsd:attribute name="Id" type="xsd:string" >
+          <xsd:annotation>
+            <xsd:documentation>Attribute to store the moniker string.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityModelHasDomainTypes -->
+  <xsd:element name="entityModelHasDomainTypes" abstract="true" type="EntityModelHasDomainTypes" substitutionGroup="core:modelElement" />
+  <xsd:complexType name="EntityModelHasDomainTypes" abstract="true" >
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElement">
+        <xsd:sequence minOccurs="0" maxOccurs="1">
+          <!-- Target end DomainType -->
+          <xsd:element ref="domainType" minOccurs="1" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>[Target role-player]</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- EntityModelHasDomainTypes Moniker -->
+  <xsd:element name="entityModelHasDomainTypesMoniker" abstract="true" type="EntityModelHasDomainTypesMoniker" substitutionGroup="core:modelElementMoniker" />
+  <xsd:complexType name="EntityModelHasDomainTypesMoniker">
+    <xsd:annotation>
+      <xsd:documentation>Moniker for EntityModelHasDomainTypes instance.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="core:ModelElementMoniker">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <!-- Enum AccessModifier -->
+  <xsd:simpleType name="AccessModifier">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Internal"/>
+      <xsd:enumeration value="Public"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum RequiredValue -->
+  <xsd:simpleType name="RequiredValue">
+    <xsd:restriction base="xsd:string">
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum PropertyKind -->
+  <xsd:simpleType name="PropertyKind">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Scalar"/>
+      <xsd:enumeration value="Structure"/>
+      <xsd:enumeration value="Navigation"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum PersistentTypeKind -->
+  <xsd:simpleType name="PersistentTypeKind">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Interface"/>
+      <xsd:enumeration value="Entity"/>
+      <xsd:enumeration value="Structure"/>
+      <xsd:enumeration value="ExternalType"/>
+      <xsd:enumeration value="TypedEntitySet"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Enum InheritanceModifiers -->
+  <xsd:simpleType name="InheritanceModifiers">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="None"/>
+      <xsd:enumeration value="Abstract"/>
+      <xsd:enumeration value="Sealed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+</xsd:schema>
+

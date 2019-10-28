@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityDiagram dslVersion="1.0.0.0" Id="a6f658f5-7ffb-4792-b357-7b0da66a1a56" absoluteBounds="0, 0, 11, 8.5" name="EntityModel1">
+  <entityModelMoniker Id="dbb347f1-a866-4b16-9675-a74fcc4fdab1" />
+  <nestedChildShapes>
+    <entityShape Id="18be6963-10ce-4a74-8efe-6e16a3497592" absoluteBounds="2.5, 0.5, 1.5, 1.5704703776041664" outlineDashStyle="Solid" outlineThickness="0.015625" fillColor="LightSteelBlue">
+      <entityMoniker name="/dbb347f1-a866-4b16-9675-a74fcc4fdab1/Entity2" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c06fa507-19c4-4c23-a847-268559f39d1b" absoluteBounds="2.515, 1.01, 1.4700000000000002, 0.44169108072916663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="206a66c9-c68f-4349-82cc-83117b021fab" absoluteBounds="2.515, 1.4616910807291665, 1.4700000000000002, 0.2493896484375" name="NavigationProperties" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a3596136-4d95-4726-98db-12831a4d5535" absoluteBounds="2.515, 1.7210807291666666, 1.4700000000000002, 0.2493896484375" name="Indexes" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+  </nestedChildShapes>
+</entityDiagram>

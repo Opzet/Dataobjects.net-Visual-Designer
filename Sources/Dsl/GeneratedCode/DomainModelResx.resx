@@ -1,0 +1,1595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DONetEntityModelDesignerDomainModel.Description" xml:space="preserve">
+    <value>DataObjects.Net Entity Model Designer</value>
+    <comment>Description for DslLibrary &apos;DONetEntityModelDesigner&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DONetEntityModelDesignerDomainModel.DisplayName" xml:space="preserve">
+    <value>DataObjects.Net Entity Model Designer</value>
+    <comment>DisplayName for DslLibrary &apos;DONetEntityModelDesigner&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel.Description" xml:space="preserve">
+    <value>The root in which all other elements are embedded. Appears as a diagram.</value>
+    <comment>Description for DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel.DisplayName" xml:space="preserve">
+    <value>Entity Model</value>
+    <comment>DisplayName for DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel/Namespace.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Namespace&apos; on DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel/Namespace.DisplayName" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>DisplayName for DomainProperty &apos;Namespace&apos; on DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel/ModelRoot.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;ModelRoot&apos; on DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel/ModelRoot.DisplayName" xml:space="preserve">
+    <value>Model Root</value>
+    <comment>DisplayName for DomainProperty &apos;ModelRoot&apos; on DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel/Version.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel.Version</value>
+    <comment>Description for DomainProperty &apos;Version&apos; on DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModel/Version.DisplayName" xml:space="preserve">
+    <value>Version</value>
+    <comment>DisplayName for DomainProperty &apos;Version&apos; on DomainClass &apos;EntityModel&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType.DisplayName" xml:space="preserve">
+    <value>Persistent Type</value>
+    <comment>DisplayName for DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Name.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Name&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Name.DisplayName" xml:space="preserve">
+    <value>Name</value>
+    <comment>DisplayName for DomainProperty &apos;Name&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Namespace.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Namespace&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Namespace.DisplayName" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>DisplayName for DomainProperty &apos;Namespace&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/TypeName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TypeName&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/TypeName.DisplayName" xml:space="preserve">
+    <value>Type Name</value>
+    <comment>DisplayName for DomainProperty &apos;TypeName&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Access.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Access&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Access.DisplayName" xml:space="preserve">
+    <value>Access</value>
+    <comment>DisplayName for DomainProperty &apos;Access&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/InheritsFrom.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;InheritsFrom&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/InheritsFrom.DisplayName" xml:space="preserve">
+    <value>Inherits From</value>
+    <comment>DisplayName for DomainProperty &apos;InheritsFrom&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/InheritsFromName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;InheritsFromName&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/InheritsFromName.DisplayName" xml:space="preserve">
+    <value>Inherits From Name</value>
+    <comment>DisplayName for DomainProperty &apos;InheritsFromName&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/TypeKind.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TypeKind&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/TypeKind.DisplayName" xml:space="preserve">
+    <value>Type Kind</value>
+    <comment>DisplayName for DomainProperty &apos;TypeKind&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/TypeDescription.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TypeDescription&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/TypeDescription.DisplayName" xml:space="preserve">
+    <value>Type Description</value>
+    <comment>DisplayName for DomainProperty &apos;TypeDescription&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Documentation.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Documentation&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/Documentation.DisplayName" xml:space="preserve">
+    <value>Documentation</value>
+    <comment>DisplayName for DomainProperty &apos;Documentation&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/DataContract.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;DataContract&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentType/DataContract.DisplayName" xml:space="preserve">
+    <value>Data Contract</value>
+    <comment>DisplayName for DomainProperty &apos;DataContract&apos; on DomainClass &apos;PersistentType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity.DisplayName" xml:space="preserve">
+    <value>Entity</value>
+    <comment>DisplayName for DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/HierarchyRootAttribute.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;HierarchyRootAttribute&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/HierarchyRootAttribute.DisplayName" xml:space="preserve">
+    <value>Hierarchy Root</value>
+    <comment>DisplayName for DomainProperty &apos;HierarchyRootAttribute&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/IsHierarchyRoot.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;IsHierarchyRoot&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/IsHierarchyRoot.DisplayName" xml:space="preserve">
+    <value>Is Hierarchy Root</value>
+    <comment>DisplayName for DomainProperty &apos;IsHierarchyRoot&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/KeyGenerator.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;KeyGenerator&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/KeyGenerator.DisplayName" xml:space="preserve">
+    <value>Key Generator</value>
+    <comment>DisplayName for DomainProperty &apos;KeyGenerator&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/TypeDiscriminatorValue.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TypeDiscriminatorValue&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Entity/TypeDiscriminatorValue.DisplayName" xml:space="preserve">
+    <value>Type Discriminator Value</value>
+    <comment>DisplayName for DomainProperty &apos;TypeDiscriminatorValue&apos; on DomainClass &apos;Entity&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Structure.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;Structure&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Structure.DisplayName" xml:space="preserve">
+    <value>Structure</value>
+    <comment>DisplayName for DomainClass &apos;Structure&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Interface.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;Interface&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Interface.DisplayName" xml:space="preserve">
+    <value>Interface</value>
+    <comment>DisplayName for DomainClass &apos;Interface&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Interface/InheritInterfaces.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;InheritInterfaces&apos; on DomainClass &apos;Interface&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Interface/InheritInterfaces.DisplayName" xml:space="preserve">
+    <value>Inherit Interfaces</value>
+    <comment>DisplayName for DomainProperty &apos;InheritInterfaces&apos; on DomainClass &apos;Interface&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Interface/InheritsIEntity.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;InheritsIEntity&apos; on DomainClass &apos;Interface&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.Interface/InheritsIEntity.DisplayName" xml:space="preserve">
+    <value>Inherits IEntity</value>
+    <comment>DisplayName for DomainProperty &apos;InheritsIEntity&apos; on DomainClass &apos;Interface&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBase.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;EntityBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBase.DisplayName" xml:space="preserve">
+    <value>Entity Base</value>
+    <comment>DisplayName for DomainClass &apos;EntityBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBase/InheritanceModifier.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;InheritanceModifier&apos; on DomainClass &apos;EntityBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBase/InheritanceModifier.DisplayName" xml:space="preserve">
+    <value>Inheritance Modifier</value>
+    <comment>DisplayName for DomainProperty &apos;InheritanceModifier&apos; on DomainClass &apos;EntityBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase.DisplayName" xml:space="preserve">
+    <value>Property Base</value>
+    <comment>DisplayName for DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Name.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Name&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Name.DisplayName" xml:space="preserve">
+    <value>Name</value>
+    <comment>DisplayName for DomainProperty &apos;Name&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Name.Category" xml:space="preserve">
+    <value>Common</value>
+    <comment>Category for DomainProperty &apos;Name&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/TypeName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TypeName&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/TypeName.DisplayName" xml:space="preserve">
+    <value>Type Name</value>
+    <comment>DisplayName for DomainProperty &apos;TypeName&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/PropertyAccess.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;PropertyAccess&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/PropertyAccess.DisplayName" xml:space="preserve">
+    <value>Property Access</value>
+    <comment>DisplayName for DomainProperty &apos;PropertyAccess&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/PropertyAccess.Category" xml:space="preserve">
+    <value>Code</value>
+    <comment>Category for DomainProperty &apos;PropertyAccess&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/IsBrowsable.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;IsBrowsable&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/IsBrowsable.DisplayName" xml:space="preserve">
+    <value>Is Browsable</value>
+    <comment>DisplayName for DomainProperty &apos;IsBrowsable&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/IsBrowsable.Category" xml:space="preserve">
+    <value>Designer</value>
+    <comment>Category for DomainProperty &apos;IsBrowsable&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Documentation.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Documentation&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Documentation.DisplayName" xml:space="preserve">
+    <value>Documentation</value>
+    <comment>DisplayName for DomainProperty &apos;Documentation&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Documentation.Category" xml:space="preserve">
+    <value>Code</value>
+    <comment>Category for DomainProperty &apos;Documentation&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/PropertyKind.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;PropertyKind&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/PropertyKind.DisplayName" xml:space="preserve">
+    <value>Property Kind</value>
+    <comment>DisplayName for DomainProperty &apos;PropertyKind&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/FieldAttribute.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;FieldAttribute&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/FieldAttribute.DisplayName" xml:space="preserve">
+    <value>Field</value>
+    <comment>DisplayName for DomainProperty &apos;FieldAttribute&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/FieldAttribute.Category" xml:space="preserve">
+    <value>Attributes</value>
+    <comment>Category for DomainProperty &apos;FieldAttribute&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/IsInherited.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;IsInherited&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/IsInherited.DisplayName" xml:space="preserve">
+    <value>Is Inherited Property</value>
+    <comment>DisplayName for DomainProperty &apos;IsInherited&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Constraints.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Constraints&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/Constraints.DisplayName" xml:space="preserve">
+    <value>Constraints</value>
+    <comment>DisplayName for DomainProperty &apos;Constraints&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/DataMember.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase.Data Member</value>
+    <comment>Description for DomainProperty &apos;DataMember&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyBase/DataMember.DisplayName" xml:space="preserve">
+    <value>Data Member</value>
+    <comment>DisplayName for DomainProperty &apos;DataMember&apos; on DomainClass &apos;PropertyBase&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty.DisplayName" xml:space="preserve">
+    <value>Scalar Property</value>
+    <comment>DisplayName for DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty/KeyAttribute.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;KeyAttribute&apos; on DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty/KeyAttribute.DisplayName" xml:space="preserve">
+    <value>Key</value>
+    <comment>DisplayName for DomainProperty &apos;KeyAttribute&apos; on DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty/KeyAttribute.Category" xml:space="preserve">
+    <value>Attributes</value>
+    <comment>Category for DomainProperty &apos;KeyAttribute&apos; on DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty/Type.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty.Type</value>
+    <comment>Description for DomainProperty &apos;Type&apos; on DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.ScalarProperty/Type.DisplayName" xml:space="preserve">
+    <value>Type</value>
+    <comment>DisplayName for DomainProperty &apos;Type&apos; on DomainClass &apos;ScalarProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty.DisplayName" xml:space="preserve">
+    <value>Navigation Property</value>
+    <comment>DisplayName for DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/Multiplicity.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Multiplicity&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/Multiplicity.DisplayName" xml:space="preserve">
+    <value>Multiplicity</value>
+    <comment>DisplayName for DomainProperty &apos;Multiplicity&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/ReturnType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;ReturnType&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/ReturnType.DisplayName" xml:space="preserve">
+    <value>Return Type</value>
+    <comment>DisplayName for DomainProperty &apos;ReturnType&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/PairFrom.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;PairFrom&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/PairFrom.DisplayName" xml:space="preserve">
+    <value>Paired From</value>
+    <comment>DisplayName for DomainProperty &apos;PairFrom&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/PairTo.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;PairTo&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/PairTo.DisplayName" xml:space="preserve">
+    <value>Paired To</value>
+    <comment>DisplayName for DomainProperty &apos;PairTo&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/KeyAttribute.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;KeyAttribute&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/KeyAttribute.DisplayName" xml:space="preserve">
+    <value>Key</value>
+    <comment>DisplayName for DomainProperty &apos;KeyAttribute&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationProperty/KeyAttribute.Category" xml:space="preserve">
+    <value>Attributes</value>
+    <comment>Category for DomainProperty &apos;KeyAttribute&apos; on DomainClass &apos;NavigationProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructureProperty.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;StructureProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructureProperty.DisplayName" xml:space="preserve">
+    <value>Structure Property</value>
+    <comment>DisplayName for DomainClass &apos;StructureProperty&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySet.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;TypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySet.DisplayName" xml:space="preserve">
+    <value>Typed Entity Set</value>
+    <comment>DisplayName for DomainClass &apos;TypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex.DisplayName" xml:space="preserve">
+    <value>Entity Index</value>
+    <comment>DisplayName for DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/Unique.Description" xml:space="preserve">
+    <value>Indicating whether the index is unique.</value>
+    <comment>Description for DomainProperty &apos;Unique&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/Unique.DisplayName" xml:space="preserve">
+    <value>Unique</value>
+    <comment>DisplayName for DomainProperty &apos;Unique&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/FillFactor.Description" xml:space="preserve">
+    <value>Fill factor for this index, must be a real number between 0 and 1.</value>
+    <comment>Description for DomainProperty &apos;FillFactor&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/FillFactor.DisplayName" xml:space="preserve">
+    <value>Fill Factor</value>
+    <comment>DisplayName for DomainProperty &apos;FillFactor&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/Name.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Name&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/Name.DisplayName" xml:space="preserve">
+    <value>Name</value>
+    <comment>DisplayName for DomainProperty &apos;Name&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/IndexName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;IndexName&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/IndexName.DisplayName" xml:space="preserve">
+    <value>Name</value>
+    <comment>DisplayName for DomainProperty &apos;IndexName&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/CalculatedName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;CalculatedName&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/CalculatedName.DisplayName" xml:space="preserve">
+    <value>Calculated Name</value>
+    <comment>DisplayName for DomainProperty &apos;CalculatedName&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/Fields.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Fields&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityIndex/Fields.DisplayName" xml:space="preserve">
+    <value>Fields</value>
+    <comment>DisplayName for DomainProperty &apos;Fields&apos; on DomainClass &apos;EntityIndex&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType.DisplayName" xml:space="preserve">
+    <value>Domain Type</value>
+    <comment>DisplayName for DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/Name.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Name&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/Name.DisplayName" xml:space="preserve">
+    <value>Name</value>
+    <comment>DisplayName for DomainProperty &apos;Name&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/Namespace.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Namespace&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/Namespace.DisplayName" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>DisplayName for DomainProperty &apos;Namespace&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/FullName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;FullName&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/FullName.DisplayName" xml:space="preserve">
+    <value>Full Name</value>
+    <comment>DisplayName for DomainProperty &apos;FullName&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/IsBuildIn.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType.Is BuildIn Type</value>
+    <comment>Description for DomainProperty &apos;IsBuildIn&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/IsBuildIn.DisplayName" xml:space="preserve">
+    <value>Is BuildIn Type</value>
+    <comment>DisplayName for DomainProperty &apos;IsBuildIn&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/BuildInID.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType.Build In ID</value>
+    <comment>Description for DomainProperty &apos;BuildInID&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.DomainType/BuildInID.DisplayName" xml:space="preserve">
+    <value>Build In ID</value>
+    <comment>DisplayName for DomainProperty &apos;BuildInID&apos; on DomainClass &apos;DomainType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes.Description" xml:space="preserve">
+    <value>Embedding relationship between the Model and Elements</value>
+    <comment>Description for DomainClass &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes.DisplayName" xml:space="preserve">
+    <value>Entity Model Has Persistent Types</value>
+    <comment>DisplayName for DomainClass &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes/EntityModel.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;EntityModel&apos; on DomainRelationship &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes/EntityModel.DisplayName" xml:space="preserve">
+    <value>Entity Model</value>
+    <comment>DisplayName for DomainRole &apos;EntityModel&apos; on DomainRelationship &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes/EntityModel.PropertyDisplayName" xml:space="preserve">
+    <value>Persistent Types</value>
+    <comment>PropertyDisplayName for DomainRole &apos;EntityModel&apos; on DomainRelationship &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes/Element.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;Element&apos; on DomainRelationship &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes/Element.DisplayName" xml:space="preserve">
+    <value>Element</value>
+    <comment>DisplayName for DomainRole &apos;Element&apos; on DomainRelationship &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasPersistentTypes/Element.PropertyDisplayName" xml:space="preserve">
+    <value>Entity Model</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Element&apos; on DomainRelationship &apos;EntityModelHasPersistentTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces.DisplayName" xml:space="preserve">
+    <value>Inheritance</value>
+    <comment>DisplayName for DomainClass &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/BaseType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;BaseType&apos; on DomainClass &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/BaseType.DisplayName" xml:space="preserve">
+    <value>Base Type</value>
+    <comment>DisplayName for DomainProperty &apos;BaseType&apos; on DomainClass &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/DerivedType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;DerivedType&apos; on DomainClass &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/DerivedType.DisplayName" xml:space="preserve">
+    <value>Derived Type</value>
+    <comment>DisplayName for DomainProperty &apos;DerivedType&apos; on DomainClass &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/SourceInheritInterface.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces.SourceInheritInterface</value>
+    <comment>Description for DomainRole &apos;SourceInheritInterface&apos; on DomainRelationship &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/SourceInheritInterface.DisplayName" xml:space="preserve">
+    <value>Source Inherit Interfaces X</value>
+    <comment>DisplayName for DomainRole &apos;SourceInheritInterface&apos; on DomainRelationship &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/SourceInheritInterface.PropertyDisplayName" xml:space="preserve">
+    <value>Inherited Interfaces</value>
+    <comment>PropertyDisplayName for DomainRole &apos;SourceInheritInterface&apos; on DomainRelationship &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/TargetInheritByInterface.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces.TargetInheritByInterface</value>
+    <comment>Description for DomainRole &apos;TargetInheritByInterface&apos; on DomainRelationship &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/TargetInheritByInterface.DisplayName" xml:space="preserve">
+    <value>Target Inherit By Interfaces Y</value>
+    <comment>DisplayName for DomainRole &apos;TargetInheritByInterface&apos; on DomainRelationship &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritInterfaces/TargetInheritByInterface.PropertyDisplayName" xml:space="preserve">
+    <value>Inheriting By Interfaces</value>
+    <comment>PropertyDisplayName for DomainRole &apos;TargetInheritByInterface&apos; on DomainRelationship &apos;InterfaceInheritInterfaces&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType.DisplayName" xml:space="preserve">
+    <value>Inheritance</value>
+    <comment>DisplayName for DomainClass &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/BaseType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;BaseType&apos; on DomainClass &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/BaseType.DisplayName" xml:space="preserve">
+    <value>Base Type</value>
+    <comment>DisplayName for DomainProperty &apos;BaseType&apos; on DomainClass &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/DerivedType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;DerivedType&apos; on DomainClass &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/DerivedType.DisplayName" xml:space="preserve">
+    <value>Derived Type</value>
+    <comment>DisplayName for DomainProperty &apos;DerivedType&apos; on DomainClass &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/SourceEntityBase.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType.SourceEntityBase</value>
+    <comment>Description for DomainRole &apos;SourceEntityBase&apos; on DomainRelationship &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/SourceEntityBase.DisplayName" xml:space="preserve">
+    <value>Source Entity Base</value>
+    <comment>DisplayName for DomainRole &apos;SourceEntityBase&apos; on DomainRelationship &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/SourceEntityBase.PropertyDisplayName" xml:space="preserve">
+    <value>Base Type</value>
+    <comment>PropertyDisplayName for DomainRole &apos;SourceEntityBase&apos; on DomainRelationship &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/TargetEntityBase.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType.TargetEntityBase</value>
+    <comment>Description for DomainRole &apos;TargetEntityBase&apos; on DomainRelationship &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/TargetEntityBase.DisplayName" xml:space="preserve">
+    <value>Target Entity Base</value>
+    <comment>DisplayName for DomainRole &apos;TargetEntityBase&apos; on DomainRelationship &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseHasBaseType/TargetEntityBase.PropertyDisplayName" xml:space="preserve">
+    <value>Base Type Of</value>
+    <comment>PropertyDisplayName for DomainRole &apos;TargetEntityBase&apos; on DomainRelationship &apos;EntityBaseHasBaseType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType.DisplayName" xml:space="preserve">
+    <value>Structure Property Has Type</value>
+    <comment>DisplayName for DomainClass &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType/StructureProperty.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType.StructureProperty</value>
+    <comment>Description for DomainRole &apos;StructureProperty&apos; on DomainRelationship &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType/StructureProperty.DisplayName" xml:space="preserve">
+    <value>Structure Property</value>
+    <comment>DisplayName for DomainRole &apos;StructureProperty&apos; on DomainRelationship &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType/StructureProperty.PropertyDisplayName" xml:space="preserve">
+    <value>Type</value>
+    <comment>PropertyDisplayName for DomainRole &apos;StructureProperty&apos; on DomainRelationship &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType/Structure.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType.Structure</value>
+    <comment>Description for DomainRole &apos;Structure&apos; on DomainRelationship &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType/Structure.DisplayName" xml:space="preserve">
+    <value>Structure</value>
+    <comment>DisplayName for DomainRole &apos;Structure&apos; on DomainRelationship &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyHasType/Structure.PropertyDisplayName" xml:space="preserve">
+    <value>Type Of</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Structure&apos; on DomainRelationship &apos;StructurePropertyHasType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties.DisplayName" xml:space="preserve">
+    <value>Persistent Type Has Properties</value>
+    <comment>DisplayName for DomainClass &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties/Properties.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties.Properties</value>
+    <comment>Description for DomainRole &apos;Properties&apos; on DomainRelationship &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties/Properties.DisplayName" xml:space="preserve">
+    <value>Properties</value>
+    <comment>DisplayName for DomainRole &apos;Properties&apos; on DomainRelationship &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties/Properties.PropertyDisplayName" xml:space="preserve">
+    <value>Properties</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Properties&apos; on DomainRelationship &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties/PersistentType.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties.PersistentType</value>
+    <comment>Description for DomainRole &apos;PersistentType&apos; on DomainRelationship &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties/PersistentType.DisplayName" xml:space="preserve">
+    <value>Persistent Type</value>
+    <comment>DisplayName for DomainRole &apos;PersistentType&apos; on DomainRelationship &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasProperties/PersistentType.PropertyDisplayName" xml:space="preserve">
+    <value>Persistent Type</value>
+    <comment>PropertyDisplayName for DomainRole &apos;PersistentType&apos; on DomainRelationship &apos;PersistentTypeHasProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties.DisplayName" xml:space="preserve">
+    <value>Persistent Type Has Navigation Properties</value>
+    <comment>DisplayName for DomainClass &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties/NavigationProperties.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties.NavigationProperties</value>
+    <comment>Description for DomainRole &apos;NavigationProperties&apos; on DomainRelationship &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties/NavigationProperties.DisplayName" xml:space="preserve">
+    <value>NavigationProperties</value>
+    <comment>DisplayName for DomainRole &apos;NavigationProperties&apos; on DomainRelationship &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties/NavigationProperties.PropertyDisplayName" xml:space="preserve">
+    <value>Navigation Properties</value>
+    <comment>PropertyDisplayName for DomainRole &apos;NavigationProperties&apos; on DomainRelationship &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties/PersistentTypeOfNavigationProperty.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties.PersistentTypeOfNavigationProperty</value>
+    <comment>Description for DomainRole &apos;PersistentTypeOfNavigationProperty&apos; on DomainRelationship &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties/PersistentTypeOfNavigationProperty.DisplayName" xml:space="preserve">
+    <value>Persistent Type Of Navigation Property</value>
+    <comment>DisplayName for DomainRole &apos;PersistentTypeOfNavigationProperty&apos; on DomainRelationship &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasNavigationProperties/PersistentTypeOfNavigationProperty.PropertyDisplayName" xml:space="preserve">
+    <value>Persistent Type Of Navigation Property</value>
+    <comment>PropertyDisplayName for DomainRole &apos;PersistentTypeOfNavigationProperty&apos; on DomainRelationship &apos;PersistentTypeHasNavigationProperties&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations.DisplayName" xml:space="preserve">
+    <value>Association</value>
+    <comment>DisplayName for DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/Name.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;Name&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/Name.DisplayName" xml:space="preserve">
+    <value>Association Name</value>
+    <comment>DisplayName for DomainProperty &apos;Name&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/End1.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;End1&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/End1.DisplayName" xml:space="preserve">
+    <value>End1</value>
+    <comment>DisplayName for DomainProperty &apos;End1&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/End2.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;End2&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/End2.DisplayName" xml:space="preserve">
+    <value>End2</value>
+    <comment>DisplayName for DomainProperty &apos;End2&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/SourceMultiplicity.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;SourceMultiplicity&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/SourceMultiplicity.DisplayName" xml:space="preserve">
+    <value>Source Multiplicity</value>
+    <comment>DisplayName for DomainProperty &apos;SourceMultiplicity&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/TargetMultiplicity.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;TargetMultiplicity&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/TargetMultiplicity.DisplayName" xml:space="preserve">
+    <value>Target Multiplicity</value>
+    <comment>DisplayName for DomainProperty &apos;TargetMultiplicity&apos; on DomainClass &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/SourcePersistentType.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations.SourcePersistentType</value>
+    <comment>Description for DomainRole &apos;SourcePersistentType&apos; on DomainRelationship &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/SourcePersistentType.DisplayName" xml:space="preserve">
+    <value>Source Persistent Type</value>
+    <comment>DisplayName for DomainRole &apos;SourcePersistentType&apos; on DomainRelationship &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/SourcePersistentType.PropertyDisplayName" xml:space="preserve">
+    <value>Persistent Type Associations</value>
+    <comment>PropertyDisplayName for DomainRole &apos;SourcePersistentType&apos; on DomainRelationship &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/TargetPersistentType.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations.TargetPersistentType</value>
+    <comment>Description for DomainRole &apos;TargetPersistentType&apos; on DomainRelationship &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/TargetPersistentType.DisplayName" xml:space="preserve">
+    <value>Target Persistent Type</value>
+    <comment>DisplayName for DomainRole &apos;TargetPersistentType&apos; on DomainRelationship &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeHasAssociations/TargetPersistentType.PropertyDisplayName" xml:space="preserve">
+    <value>Source Persistent Types</value>
+    <comment>PropertyDisplayName for DomainRole &apos;TargetPersistentType&apos; on DomainRelationship &apos;PersistentTypeHasAssociations&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation.DisplayName" xml:space="preserve">
+    <value>Navigation Property Has Association</value>
+    <comment>DisplayName for DomainClass &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation/NavigationProperty.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation.NavigationProperty</value>
+    <comment>Description for DomainRole &apos;NavigationProperty&apos; on DomainRelationship &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation/NavigationProperty.DisplayName" xml:space="preserve">
+    <value>Association</value>
+    <comment>DisplayName for DomainRole &apos;NavigationProperty&apos; on DomainRelationship &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation/NavigationProperty.PropertyDisplayName" xml:space="preserve">
+    <value>Association</value>
+    <comment>PropertyDisplayName for DomainRole &apos;NavigationProperty&apos; on DomainRelationship &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation/PersistentTypeHasAssociations.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation.PersistentTypeHasAssociations</value>
+    <comment>Description for DomainRole &apos;PersistentTypeHasAssociations&apos; on DomainRelationship &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation/PersistentTypeHasAssociations.DisplayName" xml:space="preserve">
+    <value>Persistent Type Has Associations</value>
+    <comment>DisplayName for DomainRole &apos;PersistentTypeHasAssociations&apos; on DomainRelationship &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasAssociation/PersistentTypeHasAssociations.PropertyDisplayName" xml:space="preserve">
+    <value>Navigation Properties</value>
+    <comment>PropertyDisplayName for DomainRole &apos;PersistentTypeHasAssociations&apos; on DomainRelationship &apos;NavigationPropertyHasAssociation&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType.DisplayName" xml:space="preserve">
+    <value>Item Type of EntitySet</value>
+    <comment>DisplayName for DomainClass &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/ResultTypeName.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainProperty &apos;ResultTypeName&apos; on DomainClass &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/ResultTypeName.DisplayName" xml:space="preserve">
+    <value>Typed EntitySet</value>
+    <comment>DisplayName for DomainProperty &apos;ResultTypeName&apos; on DomainClass &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/TypedEntitySet.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType.TypedEntitySet</value>
+    <comment>Description for DomainRole &apos;TypedEntitySet&apos; on DomainRelationship &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/TypedEntitySet.DisplayName" xml:space="preserve">
+    <value>Typed Entity Set</value>
+    <comment>DisplayName for DomainRole &apos;TypedEntitySet&apos; on DomainRelationship &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/TypedEntitySet.PropertyDisplayName" xml:space="preserve">
+    <value>Item Type</value>
+    <comment>PropertyDisplayName for DomainRole &apos;TypedEntitySet&apos; on DomainRelationship &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/TypeOfItem.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType.TypeOfItem</value>
+    <comment>Description for DomainRole &apos;TypeOfItem&apos; on DomainRelationship &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/TypeOfItem.DisplayName" xml:space="preserve">
+    <value>Type Of Item</value>
+    <comment>DisplayName for DomainRole &apos;TypeOfItem&apos; on DomainRelationship &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemType/TypeOfItem.PropertyDisplayName" xml:space="preserve">
+    <value>Typed Entity Sets</value>
+    <comment>PropertyDisplayName for DomainRole &apos;TypeOfItem&apos; on DomainRelationship &apos;TypedEntitySetHasItemType&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes.DisplayName" xml:space="preserve">
+    <value>Interface Has Indexes</value>
+    <comment>DisplayName for DomainClass &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes/Indexes.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes.Indexes</value>
+    <comment>Description for DomainRole &apos;Indexes&apos; on DomainRelationship &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes/Indexes.DisplayName" xml:space="preserve">
+    <value>Indexes</value>
+    <comment>DisplayName for DomainRole &apos;Indexes&apos; on DomainRelationship &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes/Indexes.PropertyDisplayName" xml:space="preserve">
+    <value>Indexes</value>
+    <comment>PropertyDisplayName for DomainRole &apos;Indexes&apos; on DomainRelationship &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes/InterfaceOfIndex.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes.InterfaceOfIndex</value>
+    <comment>Description for DomainRole &apos;InterfaceOfIndex&apos; on DomainRelationship &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes/InterfaceOfIndex.DisplayName" xml:space="preserve">
+    <value>Interface Of Index</value>
+    <comment>DisplayName for DomainRole &apos;InterfaceOfIndex&apos; on DomainRelationship &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceHasIndexes/InterfaceOfIndex.PropertyDisplayName" xml:space="preserve">
+    <value>Interface Of Index</value>
+    <comment>PropertyDisplayName for DomainRole &apos;InterfaceOfIndex&apos; on DomainRelationship &apos;InterfaceHasIndexes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet.DisplayName" xml:space="preserve">
+    <value>Navigation Property Has Typed Entity Set</value>
+    <comment>DisplayName for DomainClass &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet/OwnerNavigationProperty.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet.OwnerNavigationProperty</value>
+    <comment>Description for DomainRole &apos;OwnerNavigationProperty&apos; on DomainRelationship &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet/OwnerNavigationProperty.DisplayName" xml:space="preserve">
+    <value>Owner Navigation Property</value>
+    <comment>DisplayName for DomainRole &apos;OwnerNavigationProperty&apos; on DomainRelationship &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet/OwnerNavigationProperty.PropertyDisplayName" xml:space="preserve">
+    <value>Typed Entity Set</value>
+    <comment>PropertyDisplayName for DomainRole &apos;OwnerNavigationProperty&apos; on DomainRelationship &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet/TypedEntitySet.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet.TypedEntitySet</value>
+    <comment>Description for DomainRole &apos;TypedEntitySet&apos; on DomainRelationship &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet/TypedEntitySet.DisplayName" xml:space="preserve">
+    <value>Typed Entity Set</value>
+    <comment>DisplayName for DomainRole &apos;TypedEntitySet&apos; on DomainRelationship &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.NavigationPropertyHasTypedEntitySet/TypedEntitySet.PropertyDisplayName" xml:space="preserve">
+    <value>Typed Entity Set Navigation Properties</value>
+    <comment>PropertyDisplayName for DomainRole &apos;TypedEntitySet&apos; on DomainRelationship &apos;NavigationPropertyHasTypedEntitySet&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes.DisplayName" xml:space="preserve">
+    <value>Entity Model Has Domain Types</value>
+    <comment>DisplayName for DomainClass &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes/EntityModel.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;EntityModel&apos; on DomainRelationship &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes/EntityModel.DisplayName" xml:space="preserve">
+    <value>Entity Model</value>
+    <comment>DisplayName for DomainRole &apos;EntityModel&apos; on DomainRelationship &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes/EntityModel.PropertyDisplayName" xml:space="preserve">
+    <value>Domain Types</value>
+    <comment>PropertyDisplayName for DomainRole &apos;EntityModel&apos; on DomainRelationship &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes/DomainType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainRole &apos;DomainType&apos; on DomainRelationship &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes/DomainType.DisplayName" xml:space="preserve">
+    <value>Domain Type</value>
+    <comment>DisplayName for DomainRole &apos;DomainType&apos; on DomainRelationship &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityModelHasDomainTypes/DomainType.PropertyDisplayName" xml:space="preserve">
+    <value>Entity Model</value>
+    <comment>PropertyDisplayName for DomainRole &apos;DomainType&apos; on DomainRelationship &apos;EntityModelHasDomainTypes&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.AccessModifier/Internal.DisplayName" xml:space="preserve">
+    <value>Internal</value>
+    <comment>Display name for EnumerationLiteral &apos;Internal&apos; on DomainEnumeration &apos;AccessModifier&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.AccessModifier/Internal.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.AccessModifier.Internal</value>
+    <comment>Description for EnumerationLiteral &apos;Internal&apos; on DomainEnumeration &apos;AccessModifier&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.AccessModifier/Public.DisplayName" xml:space="preserve">
+    <value>Public</value>
+    <comment>Display name for EnumerationLiteral &apos;Public&apos; on DomainEnumeration &apos;AccessModifier&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.AccessModifier/Public.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.AccessModifier.Public</value>
+    <comment>Description for EnumerationLiteral &apos;Public&apos; on DomainEnumeration &apos;AccessModifier&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind/Scalar.DisplayName" xml:space="preserve">
+    <value>Scalar</value>
+    <comment>Display name for EnumerationLiteral &apos;Scalar&apos; on DomainEnumeration &apos;PropertyKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind/Scalar.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind.Scalar</value>
+    <comment>Description for EnumerationLiteral &apos;Scalar&apos; on DomainEnumeration &apos;PropertyKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind/Structure.DisplayName" xml:space="preserve">
+    <value>Structure</value>
+    <comment>Display name for EnumerationLiteral &apos;Structure&apos; on DomainEnumeration &apos;PropertyKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind/Structure.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind.Structure</value>
+    <comment>Description for EnumerationLiteral &apos;Structure&apos; on DomainEnumeration &apos;PropertyKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind/Navigation.DisplayName" xml:space="preserve">
+    <value>Navigation</value>
+    <comment>Display name for EnumerationLiteral &apos;Navigation&apos; on DomainEnumeration &apos;PropertyKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind/Navigation.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PropertyKind.Navigation</value>
+    <comment>Description for EnumerationLiteral &apos;Navigation&apos; on DomainEnumeration &apos;PropertyKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/Interface.DisplayName" xml:space="preserve">
+    <value>Interface</value>
+    <comment>Display name for EnumerationLiteral &apos;Interface&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/Interface.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind.Interface</value>
+    <comment>Description for EnumerationLiteral &apos;Interface&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/Entity.DisplayName" xml:space="preserve">
+    <value>Entity</value>
+    <comment>Display name for EnumerationLiteral &apos;Entity&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/Entity.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind.Entity</value>
+    <comment>Description for EnumerationLiteral &apos;Entity&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/Structure.DisplayName" xml:space="preserve">
+    <value>Structure</value>
+    <comment>Display name for EnumerationLiteral &apos;Structure&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/Structure.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind.Structure</value>
+    <comment>Description for EnumerationLiteral &apos;Structure&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/ExternalType.DisplayName" xml:space="preserve">
+    <value>ExternalType</value>
+    <comment>Display name for EnumerationLiteral &apos;ExternalType&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/ExternalType.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind.ExternalType</value>
+    <comment>Description for EnumerationLiteral &apos;ExternalType&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/TypedEntitySet.DisplayName" xml:space="preserve">
+    <value>TypedEntitySet</value>
+    <comment>Display name for EnumerationLiteral &apos;TypedEntitySet&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind/TypedEntitySet.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentTypeKind.TypedEntitySet</value>
+    <comment>Description for EnumerationLiteral &apos;TypedEntitySet&apos; on DomainEnumeration &apos;PersistentTypeKind&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers/None.DisplayName" xml:space="preserve">
+    <value>None</value>
+    <comment>Display name for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;InheritanceModifiers&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers/None.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;None&apos; on DomainEnumeration &apos;InheritanceModifiers&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers/Abstract.DisplayName" xml:space="preserve">
+    <value>Abstract</value>
+    <comment>Display name for EnumerationLiteral &apos;Abstract&apos; on DomainEnumeration &apos;InheritanceModifiers&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers/Abstract.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for EnumerationLiteral &apos;Abstract&apos; on DomainEnumeration &apos;InheritanceModifiers&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers/Sealed.DisplayName" xml:space="preserve">
+    <value>Sealed</value>
+    <comment>Display name for EnumerationLiteral &apos;Sealed&apos; on DomainEnumeration &apos;InheritanceModifiers&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers/Sealed.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.InheritanceModifiers.Sealed</value>
+    <comment>Description for EnumerationLiteral &apos;Sealed&apos; on DomainEnumeration &apos;InheritanceModifiers&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape</value>
+    <comment>Description for DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape.DisplayName" xml:space="preserve">
+    <value>Persistent Shape</value>
+    <comment>DisplayName for DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape/OutlineDashStyle.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape.Outline Dash Style</value>
+    <comment>Description for DomainProperty &apos;OutlineDashStyle&apos; on DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape/OutlineDashStyle.DisplayName" xml:space="preserve">
+    <value>Outline Dash Style</value>
+    <comment>DisplayName for DomainProperty &apos;OutlineDashStyle&apos; on DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape/OutlineThickness.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape.Outline Thickness</value>
+    <comment>Description for DomainProperty &apos;OutlineThickness&apos; on DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape/OutlineThickness.DisplayName" xml:space="preserve">
+    <value>Outline Thickness</value>
+    <comment>DisplayName for DomainProperty &apos;OutlineThickness&apos; on DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape/FillColor.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape.Fill Color</value>
+    <comment>Description for DomainProperty &apos;FillColor&apos; on DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.PersistentShape/FillColor.DisplayName" xml:space="preserve">
+    <value>Fill Color</value>
+    <comment>DisplayName for DomainProperty &apos;FillColor&apos; on DomainClass &apos;PersistentShape&apos;</comment>
+  </data>
+  <data name="PersistentShapePropertiesTitle" xml:space="preserve">
+    <value>Properties</value>
+    <comment>Compartment title</comment>
+  </data>
+  <data name="PersistentShapeNavigationPropertiesTitle" xml:space="preserve">
+    <value>Navigation Properties</value>
+    <comment>Compartment title</comment>
+  </data>
+  <data name="PersistentShapeTextNameDefaultText" xml:space="preserve">
+    <value>TextName</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="PersistentShapeTextDescriptionDefaultText" xml:space="preserve">
+    <value>TextDescription</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetShape.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;TypedEntitySetShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetShape.DisplayName" xml:space="preserve">
+    <value>Typed Entity Set Shape</value>
+    <comment>DisplayName for DomainClass &apos;TypedEntitySetShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityShape.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;EntityShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityShape.DisplayName" xml:space="preserve">
+    <value>Entity Shape</value>
+    <comment>DisplayName for DomainClass &apos;EntityShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceShape.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;InterfaceShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceShape.DisplayName" xml:space="preserve">
+    <value>Interface Shape</value>
+    <comment>DisplayName for DomainClass &apos;InterfaceShape&apos;</comment>
+  </data>
+  <data name="InterfaceShapeIndexesTitle" xml:space="preserve">
+    <value>Indexes</value>
+    <comment>Compartment title</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseShape.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;EntityBaseShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseShape.DisplayName" xml:space="preserve">
+    <value>Entity Base Shape</value>
+    <comment>DisplayName for DomainClass &apos;EntityBaseShape&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseInheritanceConnector.Description" xml:space="preserve">
+    <value>Inheritance connector between the types</value>
+    <comment>Description for DomainClass &apos;EntityBaseInheritanceConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityBaseInheritanceConnector.DisplayName" xml:space="preserve">
+    <value>Entity Base Inheritance Connector</value>
+    <comment>DisplayName for DomainClass &apos;EntityBaseInheritanceConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritanceConnector.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritanceConnector</value>
+    <comment>Description for DomainClass &apos;InterfaceInheritanceConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.InterfaceInheritanceConnector.DisplayName" xml:space="preserve">
+    <value>Interface Inheritance Connector</value>
+    <comment>DisplayName for DomainClass &apos;InterfaceInheritanceConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyTypeOfConnector.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyTypeOfConnector</value>
+    <comment>Description for DomainClass &apos;StructurePropertyTypeOfConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.StructurePropertyTypeOfConnector.DisplayName" xml:space="preserve">
+    <value>Structure Property Type Of Connector</value>
+    <comment>DisplayName for DomainClass &apos;StructurePropertyTypeOfConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.AssociationConnector.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.AssociationConnector</value>
+    <comment>Description for DomainClass &apos;AssociationConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.AssociationConnector.DisplayName" xml:space="preserve">
+    <value>Association Connector</value>
+    <comment>DisplayName for DomainClass &apos;AssociationConnector&apos;</comment>
+  </data>
+  <data name="AssociationConnectorTextSourceMultiplicityDefaultText" xml:space="preserve">
+    <value>TextSourceMultiplicity</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="AssociationConnectorTextTargetMultiplicityDefaultText" xml:space="preserve">
+    <value>TextTargetMultiplicity</value>
+    <comment>Text decorator default text</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemTypeConnector.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemTypeConnector</value>
+    <comment>Description for DomainClass &apos;TypedEntitySetHasItemTypeConnector&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.TypedEntitySetHasItemTypeConnector.DisplayName" xml:space="preserve">
+    <value>Typed Entity Set Has Item Type Connector</value>
+    <comment>DisplayName for DomainClass &apos;TypedEntitySetHasItemTypeConnector&apos;</comment>
+  </data>
+  <data name="FormatList" xml:space="preserve">
+    <value>DataObjects.Net Entity Model Designer (*.dom)|*.dom</value>
+    <comment>A list of file format specifiers for the Save dialog box</comment>
+  </data>
+  <data name="ModelExplorerTitle" xml:space="preserve">
+    <value>DataObjects.Net Entity Model Explorer</value>
+    <comment>Model Explorer Toolwindow title</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityDiagram.Description" xml:space="preserve">
+    <value>Description for TXSoftware.DataObjectsNetEntityModel.Dsl.EntityDiagram</value>
+    <comment>Description for DomainClass &apos;EntityDiagram&apos;</comment>
+  </data>
+  <data name="TXSoftware.DataObjectsNetEntityModel.Dsl.EntityDiagram.DisplayName" xml:space="preserve">
+    <value>DataObjects.Net Entity Model Diagram</value>
+    <comment>DisplayName for DomainClass &apos;EntityDiagram&apos;</comment>
+  </data>
+  <data name="DataObjects.Net Entity Model DesignerToolboxTab" xml:space="preserve">
+    <value>DataObjects.Net Entity Model Designer</value>
+    <comment>Toolbox item tab name</comment>
+  </data>
+  <data name="EntityToolboxItem" xml:space="preserve">
+    <value>Entity</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="EntityToolboxTooltip" xml:space="preserve">
+    <value>Entity</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="StructureToolboxItem" xml:space="preserve">
+    <value>Structure</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="StructureToolboxTooltip" xml:space="preserve">
+    <value>Structure</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="InheritanceToolboxItem" xml:space="preserve">
+    <value>Inheritance</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="InheritanceToolboxTooltip" xml:space="preserve">
+    <value>Inheritance</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="InterfaceToolboxItem" xml:space="preserve">
+    <value>Interface</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="InterfaceToolboxTooltip" xml:space="preserve">
+    <value>Interface</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="AssociationToolboxItem" xml:space="preserve">
+    <value>Association</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="AssociationToolboxTooltip" xml:space="preserve">
+    <value>Create an Association between two Entities</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="TypedEntitySetToolboxItem" xml:space="preserve">
+    <value>Typed EntitySet</value>
+    <comment>Toolbox item name</comment>
+  </data>
+  <data name="TypedEntitySetToolboxTooltip" xml:space="preserve">
+    <value>Typed Entity Set</value>
+    <comment>Toolbox tooltip text</comment>
+  </data>
+  <data name="UnresolvedToolboxItem" xml:space="preserve">
+    <value>ToolboxItem {0} was not found</value>
+    <comment>Invalid toolId</comment>
+  </data>
+  <data name="UnsupportedToolboxFormat" xml:space="preserve">
+    <value>Unsupported toolbox format: {0}</value>
+    <comment>Unsupported format Id</comment>
+  </data>
+  <data name="UnrecognizedElementType" xml:space="preserve">
+    <value>ElementType {0} is not recognized as a type of domain class which belongs to this domain model.</value>
+    <comment>Incorrect ElementType passed in to Model.CreateElement method</comment>
+  </data>
+  <data name="UnrecognizedElementLinkType" xml:space="preserve">
+    <value>ElementLinkType {0} is not recognized as a type of domain relationship which belongs to this domain model.</value>
+    <comment>Incorrect ElementLinkType passed in to Model.CreateElementLink method</comment>
+  </data>
+  <data name="AmbiguousSchema" xml:space="preserve">
+    <value>More than one schema found for target namespace &apos;{0}&apos;, use the first one at &apos;{1}&apos;.</value>
+    <comment>Serialization Warning: AmbiguousSchema</comment>
+  </data>
+  <data name="ExpectingFullFormRelationship" xml:space="preserve">
+    <value>Element &apos;{0}&apos; is treated as the target role-player of a relationship &apos;{1}&apos; instance, which should be serialized in full-form.</value>
+    <comment>Serialization Warning: ExpectingFullFormRelationship</comment>
+  </data>
+  <data name="ExpectingShortFormRelationship" xml:space="preserve">
+    <value>Instances of relationship &apos;{0}&apos; should be serialized in short-form.</value>
+    <comment>Serialization Warning: ExpectingShortFormRelationship</comment>
+  </data>
+  <data name="IgnoredPropertyValue" xml:space="preserve">
+    <value>Invalid property value &apos;{0}&apos; for property &apos;{1}&apos; with type &apos;{2}&apos;, ignored.</value>
+    <comment>Serialization Warning: IgnoredPropertyValue</comment>
+  </data>
+  <data name="MissingId" xml:space="preserve">
+    <value>Missing &apos;Id&apos; attribute, a new Guid &apos;{0}&apos; is auto-generated.</value>
+    <comment>Serialization Warning: MissingId</comment>
+  </data>
+  <data name="MonikerResolvedToDuplicateLink" xml:space="preserve">
+    <value>Resolving moniker &apos;{0}&apos; causes a duplicate link to be created, so the link and the moniker are ignored.</value>
+    <comment>Serialization Warning: MonikerResolvedToDuplicateLink</comment>
+  </data>
+  <data name="NoSchema" xml:space="preserve">
+    <value>Cannot find a schema that defines target namespace &apos;{0}&apos;, schema validation skipped.</value>
+    <comment>Serialization Warning: NoSchema</comment>
+  </data>
+  <data name="UnexpectedXmlElement" xml:space="preserve">
+    <value>Unexpected XML element &apos;{0}&apos;, ignored.</value>
+    <comment>Serialization Warning: UnexpectedXmlElement</comment>
+  </data>
+  <data name="AmbiguousMoniker" xml:space="preserve">
+    <value>Ambiguous moniker &apos;{0}&apos; encountered. It is used for both &apos;{1}&apos; and &apos;{2}&apos;.</value>
+    <comment>Serialization Error: AmbiguousMoniker</comment>
+  </data>
+  <data name="CannotMonikerizeElement" xml:space="preserve">
+    <value>Instances of DomainClass &apos;{0}&apos; cannot be serialized as a moniker.
+A DomainClass can be serialized as a moniker only if 
+1) it has a defined/inherited DomainProperty marked as IsMonikerKey=true, or 
+2) it is marked/inherited with SerializeId=true.</value>
+    <comment>Serialization Error: CannotMonikerizeElement</comment>
+  </data>
+  <data name="CannotOpenDocument" xml:space="preserve">
+    <value>Error encountered, check Error List window for details.</value>
+    <comment>Serialization Error: CannotOpenDocument</comment>
+  </data>
+  <data name="CannotSaveDocument" xml:space="preserve">
+    <value>Error encountered, check Error List window for details.</value>
+    <comment>Serialization Error: CannotSaveDocument</comment>
+  </data>
+  <data name="DanglingRelationship" xml:space="preserve">
+    <value>Relationship &apos;{0}&apos; instance is missing target role-player.</value>
+    <comment>Serialization Error: DanglingRelationship</comment>
+  </data>
+  <data name="InvalidPropertyValue" xml:space="preserve">
+    <value>Invalid property value &apos;{0}&apos; for property &apos;{1}&apos; with type &apos;{2}&apos;.</value>
+    <comment>Serialization Error: InvalidPropertyValue</comment>
+  </data>
+  <data name="MissingMoniker" xml:space="preserve">
+    <value>Missing moniker. A moniker is expected in attribute &apos;{0}&apos;.</value>
+    <comment>Serialization Error: MissingMoniker</comment>
+  </data>
+  <data name="MissingTransaction" xml:space="preserve">
+    <value>This must be called within the context of an active transaction.</value>
+    <comment>Serialization Error: MissingTransaction</comment>
+  </data>
+  <data name="UnresolvedMoniker" xml:space="preserve">
+    <value>Cannot resolve moniker &apos;{0}&apos;.</value>
+    <comment>Serialization Error: UnresolvedMoniker</comment>
+  </data>
+  <data name="VersionMismatch" xml:space="preserve">
+    <value>Unsupported version &apos;{0}&apos;, can only support &apos;{1}&apos;.</value>
+    <comment>Serialization Error: VersionMismatch</comment>
+  </data>
+  <data name="CannotCloseExistingDiagramDocument" xml:space="preserve">
+    <value>Diagram file &apos;{0}&apos; cannot be closed.</value>
+    <comment>User cancel closing diagram file. Hence, the DSL model file cannot be opened</comment>
+  </data>
+  <data name="BindingErrorOccurred" xml:space="preserve">
+    <value>Extensions for this designer may not be found as a MEF binding error has occurred. The error that occurred was:
+{0}</value>
+    <comment>MEF binding error occurred - exception message being logged in the error window so the user is aware.</comment>
+  </data>
+  <data name="InvalidSaveRootElementType" xml:space="preserve">
+    <value>&apos;{0}&apos; is not a valid root element type.</value>
+    <comment>Exception message used if an invalid root element type is passed to IDomainModelSerializer.SaveModel / SaveModelAndDiagram</comment>
+  </data>
+  <data name="InvalidSaveDiagramType" xml:space="preserve">
+    <value>&apos;{0}&apos; is not a valid diagram type.</value>
+    <comment>Exception message used if an invalid diagram type is passed to IDomainModelSerializer.SaveModelAndDiagram</comment>
+  </data>
+  <data name="MinimumMultiplicityMissingLink" xml:space="preserve">
+    <value>{0} {1} has no {2}.</value>
+    <comment>Multiplicity underflow validation.</comment>
+  </data>
+  <data name="SaveOperationCancelled" xml:space="preserve">
+    <value>Save operation cancelled.</value>
+    <comment>Message when save is cancelled on validation errors</comment>
+  </data>
+  <data name="SaveValidationFailed" xml:space="preserve">
+    <value>There were validation errors, continue save?</value>
+    <comment>Message when validation errors are found on save</comment>
+  </data>
+  <data name="UnloadableSaveValidationFailed" xml:space="preserve">
+    <value>There were validation errors. Continuing to save may cause the file to become unloadable, do you want to continue?</value>
+    <comment>Message when validation errors are found on save that will cause file to become unloadable</comment>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="PersistentShapeIconEntityDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Entity.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="PersistentShapeIconStructureDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Structure.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="PersistentShapeIconInterfaceDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Interface.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="PersistentShapeIconInheritDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\InheritArrow.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="PersistentShapeIconTypedEntitySetDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\EntitySet.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="EntityShapeIconHierarchyRootDefaultImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Hierarchy.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Icon decorator default image</comment>
+  </data>
+  <data name="EntityModelExplorerImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\DO-Model.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="DomainTypeExplorerImage" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\BuildInDomainType.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="EntityToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Entity.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="StructureToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Structure.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="InheritanceToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Inheritance.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="InterfaceToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Interface.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="AssociationToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\Association.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+  <data name="TypedEntitySetToolboxBitmap" type="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
+    <value>..\Resources\EntitySet.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Toolbox item image</comment>
+  </data>
+</root>
+
+

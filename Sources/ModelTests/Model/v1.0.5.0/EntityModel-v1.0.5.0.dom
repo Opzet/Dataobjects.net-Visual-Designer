@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd" namespace="Model.Version1_0_5_0" modelVersion="1.0.5.0" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner">
+  <domainTypes />
+  <persistentTypes>
+    <interface name="IEntity" namespace="Model.Version1_0_5_0.Interfaces">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Id" typeId="00000000-0000-0000-0000-000000000004">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Custom" value="456789" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Custom" value="5" /></key>
+        </scalarProperty>
+        <scalarProperty name="OId" typeId="00000000-0000-0000-0000-000000000006">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Custom" value="True" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <indexes>
+        <entityIndex name="Index1">
+          <unique valueType="Custom" value="True"></unique>
+          <fillFactor valueType="Default"></fillFactor>
+          <indexName valueType="Custom"><value>idxName</value></indexName>
+          <fields><keyFields><item value="Name" image="0" order="0" /></keyFields><includedFields /></fields>
+        </entityIndex>
+      </indexes>
+    </interface>
+    <entity name="EntityBase" namespace="Model.Version1_0_5_0.Entities">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Id" isInherited="true" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Custom" value="123456" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Custom"><value>Negative</value></direction><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="Age" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Enabled"><content><value useCustomExpression="0"><Value type="System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">123456789</Value></value></content></defaultValue></field>
+          <constraints><constraint type="0" valueType="Used"><content mode="1"><error message="" /></content></constraint><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="Used"><content mode="-1" min="1" max="99"><error message="Wrong Age" /></content></constraint><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+        <scalarProperty name="ScalarProperty4" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Custom"><value>Skip</value></version><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <inheritedInterfaces Id="bdbe8a2b-8453-442c-95e4-50d0296f929e">
+        <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IEntity" />
+      </inheritedInterfaces>
+      <indexes>
+        <entityIndex name="Index1">
+          <unique valueType="Default"></unique>
+          <fillFactor valueType="Default"></fillFactor>
+          <indexName valueType="Default"></indexName>
+          <fields><keyFields><item value="Age" image="2" order="0" /></keyFields><includedFields /></fields>
+        </entityIndex>
+      </indexes>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Enabled"><content default="0"><value useCustomExpression="0"><Value type="System.UInt64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">123456</Value></value></content></typeDiscriminatorValue>
+    </entity>
+    <interface name="IEntityWithHistory" namespace="Model.Version1_0_5_0.Interfaces">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <navigationProperties>
+        <navigationProperty name="HistoryItems">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>Many</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IEntityWithHistory/IEntityHistoryItems" />
+          </persistentTypeHasAssociations>
+          <typedEntitySet>
+            <navigationPropertyHasTypedEntitySet Id="06e89015-6dfc-42ad-a786-5522590c333c">
+              <typedEntitySetMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/HistoryEntitySet" />
+            </navigationPropertyHasTypedEntitySet>
+          </typedEntitySet>
+        </navigationProperty>
+      </navigationProperties>
+      <persistentTypeAssociations>
+        <persistentTypeHasAssociations name="IEntityHistoryItems">
+          <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IHistory" />
+          <end1 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="1"><pairTo valueType="Custom"><value>HistoryItems</value></pairTo></end1>
+          <end2 multiplicity="Many" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="1"><pairTo valueType="Custom"><value>Owner</value></pairTo></end2>
+        </persistentTypeHasAssociations>
+      </persistentTypeAssociations>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <inheritedInterfaces Id="3728edc4-8089-47f5-956c-2ab4beb3d0a5">
+        <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IEntity" />
+      </inheritedInterfaces>
+    </interface>
+    <interface name="IHistory" namespace="Model.Version1_0_5_0.Interfaces">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <navigationProperties>
+        <navigationProperty name="Owner">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>One</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IEntityWithHistory/IEntityHistoryItems" />
+          </persistentTypeHasAssociations>
+        </navigationProperty>
+      </navigationProperties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <inheritedInterfaces Id="84054cee-85a8-43fd-a863-145697b32657">
+        <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IEntity" />
+      </inheritedInterfaces>
+    </interface>
+    <typedEntitySet name="HistoryEntitySet" namespace="Model.Version1_0_5_0.TypedEntitySets">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <itemType>
+        <typedEntitySetHasItemType>
+          <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IHistory" />
+        </typedEntitySetHasItemType>
+      </itemType>
+    </typedEntitySet>
+    <entity name="EntityBaseWithHistory" namespace="Model.Version1_0_5_0.Entities">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Id" isInherited="true" typeId="00000000-0000-0000-0000-000000000004">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Custom" value="5" /></key>
+        </scalarProperty>
+        <scalarProperty name="More" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Custom"><value>sMore</value></mappingName><indexed valueType="Custom" value="True" /><lazyLoad valueType="Custom" value="True" /><length valueType="Custom" value="512" /><nullable valueType="Custom" value="False" /><nullableOnUpgrade valueType="Custom" value="True" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Custom" value="True" /><version valueType="Custom"><value>Auto</value></version><defaultValue valueType="Enabled"><content><value useCustomExpression="0"><Value /></value></content></defaultValue></field>
+          <constraints><constraint type="0" valueType="Used"><content mode="1"><error message="Email is invalid" /></content></constraint><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="Used"><content mode="0" min="0" max="400"><error message="Length is invalid" /></content></constraint><constraint type="3" valueType="Used"><content mode="-1"><error message="" /></content></constraint><constraint type="4" valueType="Used"><content mode="-1"><error message="" /></content></constraint><constraint type="5" valueType="Used"><content mode="-1"><error message="" /></content></constraint><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="3" setter="3"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+      <navigationProperties>
+        <navigationProperty name="HistoryItems" isInherited="true">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>Many</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/EntityBaseWithHistory/IEntityWithHistoryIHistory" />
+          </persistentTypeHasAssociations>
+          <typedEntitySet>
+            <navigationPropertyHasTypedEntitySet Id="be4a8a3b-2a1a-4dcd-8159-32f0c40e6238">
+              <typedEntitySetMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/HistoryEntitySet" />
+            </navigationPropertyHasTypedEntitySet>
+          </typedEntitySet>
+        </navigationProperty>
+      </navigationProperties>
+      <persistentTypeAssociations>
+        <persistentTypeHasAssociations name="IEntityWithHistoryIHistory">
+          <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IHistory" />
+          <end1 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="1"><pairTo valueType="Custom"><value>HistoryItems</value></pairTo></end1>
+          <end2 multiplicity="Many" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="1"><pairTo valueType="Custom"><value>Owner</value></pairTo></end2>
+        </persistentTypeHasAssociations>
+      </persistentTypeAssociations>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <inheritedInterfaces Id="3124013b-71f2-4a77-8d7a-2b8cf913854c">
+        <interfaceMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/IEntityWithHistory" />
+      </inheritedInterfaces>
+      <baseType>
+        <entityBaseHasBaseType>
+          <entityMoniker name="/4f110f56-21d1-4f8e-90c4-7e2b2f2bcccd/EntityBase" />
+        </entityBaseHasBaseType>
+      </baseType>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <structure name="Address" access="Internal">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="SByteField" typeId="00000000-0000-0000-0000-000000000002">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="Used"><content mode="-1"><error message="" /><min valueType="Enabled"><content><value useCustomExpression="0"><Value type="System.SByte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">0</Value></value></content></min><max valueType="Enabled"><content><value useCustomExpression="0"><Value type="System.SByte, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">50</Value></value></content></max></content></constraint><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="3" setter="3"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="Int16Field" typeId="00000000-0000-0000-0000-000000000003">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="Int32Field" typeId="00000000-0000-0000-0000-000000000004">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="Int64Field" typeId="00000000-0000-0000-0000-000000000005">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="ByteField" typeId="00000000-0000-0000-0000-000000000006">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="UInt16Field" typeId="00000000-0000-0000-0000-000000000007">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="UInt32Field" typeId="00000000-0000-0000-0000-000000000008">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="UInt64Field" typeId="00000000-0000-0000-0000-000000000009">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="DateTimeField" typeId="00000000-0000-0000-0000-000000000010">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="Used"><content mode="-1"><error message="" /></content></constraint><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="Used"><content mode="0"><error message="" /></content></constraint><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="GuidField" typeId="00000000-0000-0000-0000-000000000011">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Custom"><value>Default</value></direction><position valueType="Custom" value="0" /></key>
+        </scalarProperty>
+        <scalarProperty name="ByteArrayField" typeId="00000000-0000-0000-0000-000000000012">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="StringField" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="BoolField" typeId="00000000-0000-0000-0000-000000000013">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+        <scalarProperty name="TimeSpanField" typeId="00000000-0000-0000-0000-000000000014">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+      </properties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+    </structure>
+  </persistentTypes>
+</entityModel>

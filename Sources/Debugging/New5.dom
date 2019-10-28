@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entityModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4" modelVersion="1.0.5.0" xmlns="http://schemas.microsoft.com/dsltools/DONetEntityModelDesigner">
+  <domainTypes />
+  <persistentTypes>
+    <entity name="Person">
+      <dataContract valueType="Enabled"><content name="" namespace=""><isReference valueType="Custom" value="True" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Name" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Custom" value="0" /></key>
+        </scalarProperty>
+      </properties>
+      <navigationProperties>
+        <navigationProperty name="Cars">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>Many</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Person/PersonCars" />
+          </persistentTypeHasAssociations>
+        </navigationProperty>
+        <navigationProperty name="Parent">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>One</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Person/PersonParent" />
+          </persistentTypeHasAssociations>
+        </navigationProperty>
+      </navigationProperties>
+      <persistentTypeAssociations>
+        <persistentTypeHasAssociations name="PersonCars">
+          <entityMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Car" />
+          <end1 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="1"><pairTo valueType="Custom"><value>Cars</value></pairTo></end1>
+          <end2 multiplicity="Many" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="1"><pairTo valueType="Custom"><value>Person</value></pairTo></end2>
+        </persistentTypeHasAssociations>
+        <persistentTypeHasAssociations name="PersonParent">
+          <entityMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Person" />
+          <end1 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="0"><pairTo valueType="Custom"><value>Parent</value></pairTo></end1>
+          <end2 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="0"><pairTo valueType="Custom"><value>Parent</value></pairTo></end2>
+        </persistentTypeHasAssociations>
+      </persistentTypeAssociations>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Enabled"><value kind="None" name="" type="" /></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <entity name="Car">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Name" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="2" setter="0"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+      </properties>
+      <navigationProperties>
+        <navigationProperty name="Person">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>One</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Person/PersonCars" />
+          </persistentTypeHasAssociations>
+        </navigationProperty>
+      </navigationProperties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <entity name="Book">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Id" typeId="00000000-0000-0000-0000-000000000004">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Enabled"><direction valueType="Default" /><position valueType="Default" /></key>
+        </scalarProperty>
+      </properties>
+      <navigationProperties>
+        <navigationProperty name="Creator">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <multiplicity>One</multiplicity>
+          <key valueType="Disabled"></key>
+          <persistentTypeHasAssociations>
+            <persistentTypeHasAssociationsMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Book/BookCreator" />
+          </persistentTypeHasAssociations>
+        </navigationProperty>
+      </navigationProperties>
+      <persistentTypeAssociations>
+        <persistentTypeHasAssociations name="BookCreator">
+          <entityMoniker name="/0d8b32d1-b9ae-41a4-a34c-8162c23ab0e4/Person" />
+          <end1 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="0"><pairTo valueType="Custom"><value>Creator</value></pairTo></end1>
+          <end2 multiplicity="One" onOwnerRemove="Default" onTargetRemove="Default" useAssociationAttribute="0"><pairTo valueType="Custom"><value>Creator</value></pairTo></end2>
+        </persistentTypeHasAssociations>
+      </persistentTypeAssociations>
+      <inheritsIEntity>Auto</inheritsIEntity>
+      <hierarchyRoot valueType="Enabled"><value inheritanceSchema="Default"><includeTypeId valueType="Default" /><mappingName valueType="Default" /></value></hierarchyRoot>
+      <keyGenerator valueType="Disabled"></keyGenerator>
+      <typeDiscriminatorValue valueType="Disabled"></typeDiscriminatorValue>
+    </entity>
+    <structure name="Address">
+      <dataContract valueType="Default"><content name="" namespace=""><isReference valueType="Default" /></content></dataContract>
+      <properties>
+        <scalarProperty name="Street" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+        <scalarProperty name="City" typeId="00000000-0000-0000-0000-000000000001">
+          <field><mappingName valueType="Default" /><indexed valueType="Default" /><lazyLoad valueType="Default" /><length valueType="Default" /><nullable valueType="Default" /><nullableOnUpgrade valueType="Default" /><precision valueType="Default" /><scale valueType="Default" /><typeDiscriminator valueType="Default" /><version valueType="Default" /><defaultValue valueType="Disabled" /></field>
+          <constraints><constraint type="0" valueType="NotUsed" /><constraint type="1" valueType="NotUsed" /><constraint type="2" valueType="NotUsed" /><constraint type="3" valueType="NotUsed" /><constraint type="4" valueType="NotUsed" /><constraint type="5" valueType="NotUsed" /><constraint type="6" valueType="NotUsed" /><constraint type="7" valueType="NotUsed" /><constraint type="8" valueType="NotUsed" /></constraints>
+          <dataMember valueType="Default"><content name=""><emitDefaultValue valueType="Default" /><isRequired valueType="Default" /><order valueType="Default" /></content></dataMember>
+          <propertyAccess getter="4" setter="4"></propertyAccess>
+          <key valueType="Disabled"></key>
+        </scalarProperty>
+      </properties>
+      <inheritsIEntity>Auto</inheritsIEntity>
+    </structure>
+  </persistentTypes>
+</entityModel>
